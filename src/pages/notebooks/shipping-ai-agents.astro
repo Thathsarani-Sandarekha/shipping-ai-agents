@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import Sketch from '../../components/Sketch.astro';
+import { url } from '../../lib/url';
+import { allChapters } from '../../lib/chapters';
+const chapters = await allChapters();
+---
+<Base title="Shipping AI Agents" page="cover" description="A Head First style notebook about taking AI agents from prototype to production on AWS, Microsoft Azure and Google Cloud.">
+  <div class="hero-top">
+    <div>
+      <p class="kick">Ship It with Nimesha &middot; Notebook #1</p>
+      <h1 class="hero-title">Shipping<br />AI Agents</h1>
+      <p class="hero-sub">From &ldquo;it works on my laptop&rdquo; to real users on AWS, Microsoft Azure and Google Cloud</p>
+    </div>
+    <div class="badge">No cloud experience needed!</div>
+  </div>
+  <div class="scene"><Sketch name="cover-scene" /></div>
+  <p class="hero-blurb">Learn what really changes when an AI agent goes live, where it can run on each cloud, and how to make it safe, reliable and affordable. Told with sketches, stories and simple English.</p>
+  <div class="actions">
+    <a class="btn primary" href={url('how/')}>Start reading</a>
+    <a class="btn" id="resume" href={url()} hidden>Continue reading</a>
+    <a class="btn" href={url(`chapters/${chapters.find((c) => c.data.number === 12)?.id}/`)}>Go to the deploy guide</a>
+    <a class="btn" href={url('shipping-ai-agents.pdf')}>Download the PDF</a>
+  </div>
+  <div class="two" style="margin-top:14px">
+    <div class="sticky">The four &ldquo;homes&rdquo; an agent can live in</div>
+    <div class="sticky r blue">AWS, Azure and Google Cloud side by side</div>
+    <div class="sticky green">Step-by-step deploys on each cloud</div>
+  </div>
+  <p class="byline"><b>Nimesha Jinarajadasa</b><br />First edition, October 2026</p>
+  <div class="paper index" slot="after">
+    <h2><span>What's inside</span></h2>
+    <ol>
+      {chapters.map((c) => (
+        <li><a href={url(`chapters/${c.id}/`)}><span class="n">{c.data.number}</span><span class="t">{c.data.title}<span class="q">{c.data.question}</span></span></a></li>
+      ))}
+    </ol>
+  </div>
+</Base>

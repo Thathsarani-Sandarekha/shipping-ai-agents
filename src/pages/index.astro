@@ -1,39 +1,93 @@
 ---
+// The site front page: Ship It with Nimesha. Notebooks are listed in src/lib/notebooks.ts.
 import Base from '../layouts/Base.astro';
 import Sketch from '../components/Sketch.astro';
+import Strip from '../components/Strip.astro';
+import YourTurn from '../components/YourTurn.astro';
+import NoSillyQuestions from '../components/NoSillyQuestions.astro';
+import QA from '../components/QA.astro';
 import { url } from '../lib/url';
+import { REPO } from '../lib/site';
+import { notebooks } from '../lib/notebooks';
 import { allChapters } from '../lib/chapters';
-const chapters = await allChapters();
+const chapterCount = (await allChapters()).length;
 ---
-<Base title="Shipping AI Agents" page="home">
+<Base title="Ship It with Nimesha" page="hub">
   <div class="hero-top">
     <div>
-      <p class="kick">A visual notebook</p>
-      <h1 class="hero-title">Shipping<br />AI Agents</h1>
-      <p class="hero-sub">From &ldquo;it works on my laptop&rdquo; to real users on AWS, Microsoft Azure and Google Cloud</p>
+      <p class="kick">AI agents &middot; deployment &middot; infrastructure</p>
+      <h1 class="hero-title">Ship It<br /><span class="with">with</span> Nimesha</h1>
+      <p class="hero-sub">Taking AI agents to production, one sketch at a time.</p>
     </div>
-    <div class="badge">No cloud experience needed!</div>
+    <div class="badge">Real talk about real infra!</div>
   </div>
-  <div class="scene"><Sketch name="cover-scene" /></div>
-  <p class="hero-blurb">Learn what really changes when an AI agent goes live, where it can run on each cloud, and how to make it safe, reliable and affordable. Told with sketches, stories and simple English.</p>
+
+  <Strip who="nimesha" text="Hi, I'm Nimesha! Pull up a chair. Let's get your agent off your laptop." />
+
+  <p class="hero-blurb">Building an agent is the fun part. Running it for real users is where the questions start: where does it live, who is allowed in, what happens to a conversation, and what will the bill look like? Here we talk those questions through, with sketches, stories, puzzles and plain English.</p>
+
   <div class="actions">
-    <a class="btn primary" href={url('how/')}>Start reading</a>
+    <a class="btn primary" href={url(notebooks[0].start)}>Start with Notebook #1</a>
     <a class="btn" id="resume" href={url()} hidden>Continue reading</a>
-    <a class="btn" href={url(`chapters/${chapters.find((c) => c.data.number === 12)?.id}/`)}>Go to the deploy guide</a>
-    <a class="btn" href={url('shipping-ai-agents.pdf')}>Download the PDF</a>
+    <a class="btn" href="#join-in">Share your example</a>
   </div>
-  <div class="two" style="margin-top:14px">
-    <div class="sticky">The four &ldquo;homes&rdquo; an agent can live in</div>
-    <div class="sticky r blue">AWS, Azure and Google Cloud side by side</div>
-    <div class="sticky green">Step-by-step deploys on each cloud</div>
+
+  <h2><span>What we talk about here</span></h2>
+  <div class="topics">
+    <div class="sticky">Where should my agent live?</div>
+    <div class="sticky r blue">AWS, Azure or Google Cloud?</div>
+    <div class="sticky pink">How do I keep it safe?</div>
+    <div class="sticky r green">What happens when it remembers?</div>
   </div>
-  <p class="byline"><b>Nimesha Jinarajadasa</b><br />First edition, October 2026</p>
-  <div class="paper index" slot="after">
-    <h2><span>What's inside</span></h2>
-    <ol>
-      {chapters.map((c) => (
-        <li><a href={url(`chapters/${c.id}/`)}><span class="n">{c.data.number}</span><span class="t">{c.data.title}<span class="q">{c.data.question}</span></span></a></li>
+
+  <div slot="after">
+    <section class="paper shelf" aria-labelledby="shelf">
+      <h2 id="shelf"><span>The notebooks</span></h2>
+      {notebooks.map((n) => (
+        <article class="nb">
+          <a class="nb-cover" href={url(n.href)} aria-hidden="true" tabindex="-1"><Sketch name={n.cover} /></a>
+          <div class="nb-body">
+            <p class="nb-no">Notebook #{n.number}</p>
+            <h3><a href={url(n.href)}>{n.title}</a></h3>
+            <p>{n.blurb}</p>
+            <p class="nb-meta">{chapterCount} chapters &middot; PDF &middot; {n.edition}</p>
+            <div class="actions">
+              <a class="btn primary" href={url(n.start)}>Start reading</a>
+              <a class="btn" href={url(n.href)}>See the chapters</a>
+              <a class="btn" href={url(n.pdf)}>PDF</a>
+            </div>
+          </div>
+        </article>
       ))}
-    </ol>
+      <article class="nb next">
+        <div class="nb-body">
+          <p class="nb-no">Notebook #{notebooks.length + 1}</p>
+          <h3>In the works&hellip;</h3>
+          <p>What should we take apart next? Tell me the agent or infrastructure topic you're stuck on.</p>
+          <div class="actions"><a class="btn" href={`${REPO}/issues/new?template=chapter-idea.yml`}>Suggest a topic</a></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="paper" id="join-in">
+      <YourTurn>
+        <p>These notebooks get better with your stories. You don't need to write code to help.</p>
+        <ul class="check">
+          <li><b>Share an example</b>: some code, a production story or a diagram. <a href={`${REPO}/issues/new?template=example.yml`}>Suggest it</a></li>
+          <li><b>Spot something out of date?</b> Cloud services change fast. <a href={`${REPO}/issues/new?template=fix.yml`}>Report it</a></li>
+          <li><b>Fix it yourself</b> with the <i>Edit this page</i> link at the end of every chapter.</li>
+          <li><b>Read the guide</b> for helpers: <a href={`${REPO}/blob/main/CONTRIBUTING.md`}>how to contribute</a></li>
+        </ul>
+      </YourTurn>
+
+      <NoSillyQuestions>
+        <QA q="Do I need cloud experience?">No. Every new word is explained the first time it appears.</QA>
+        <QA q="Is it free?">Yes. Read it here or download the PDF.</QA>
+        <QA q="Which clouds do you cover?">AWS, Microsoft Azure and Google Cloud, side by side and fairly.</QA>
+        <QA q="Can I share it with my team?">Yes, with credit. You may not sell it. The <a href={`${REPO}/blob/main/LICENSE-CONTENT.md`}>license</a> has the details.</QA>
+      </NoSillyQuestions>
+
+      <p class="byline"><b>Nimesha Jinarajadasa</b><br />Host of Ship It with Nimesha &middot; <a href={REPO}>on GitHub</a></p>
+    </section>
   </div>
 </Base>

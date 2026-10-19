@@ -5,7 +5,9 @@ import { url } from '../lib/url';
 import { allChapters, readingOrder } from '../lib/chapters';
 import { GOATCOUNTER, REPO } from '../lib/site';
 
+// page="hub" is the site front page: no notebook sidebar and no Previous / Next.
 const { title, page, description } = Astro.props as { title: string; page: string; description?: string };
+const hub = page === 'hub';
 const chapters = await allChapters();
 const order = await readingOrder();
 const i = order.findIndex((o) => o.id === page);
@@ -13,7 +15,7 @@ const prev = i > 0 ? order[i - 1] : null;
 const next = i >= 0 && i < order.length - 1 ? order[i + 1] : null;
 const parts: string[] = [];
 chapters.forEach((c) => { if (!parts.includes(c.data.part)) parts.push(c.data.part); });
-const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping AI Agents`;
+const fullTitle = hub ? 'Ship It with Nimesha' : page === 'cover' ? 'Shipping AI Agents | Ship It with Nimesha' : `${title} | Shipping AI Agents`;
 ---
 <!doctype html>
 <html lang="en">
@@ -21,7 +23,7 @@ const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>{fullTitle}</title>
-  <meta name="description" content={description ?? 'A visual notebook about taking AI agents from prototype to production on AWS, Microsoft Azure and Google Cloud.'} />
+  <meta name="description" content={description ?? 'Ship It with Nimesha: Head First style notebooks about taking AI agents from prototype to production on AWS, Microsoft Azure and Google Cloud.'} />
   <meta name="author" content="Nimesha Jinarajadasa" />
   <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -36,16 +38,17 @@ const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping 
 </head>
 <body data-page={page}>
   <header class="bar">
-    <button id="menu" aria-controls="toc" aria-expanded="false">Contents</button>
-    <a class="brand" href={url()}>Shipping AI Agents</a>
-    <span class="where">{page === 'home' ? 'A visual notebook' : title}</span>
+    {!hub && <button id="menu" aria-controls="toc" aria-expanded="false">Contents</button>}
+    <a class="brand" href={url()}><span class="mono" aria-hidden="true">N</span><span>Ship It <i>with Nimesha</i></span></a>
+    <span class="where">{hub ? 'AI agents, from laptop to production' : page === 'cover' ? 'Notebook #1: Shipping AI Agents' : <>Shipping AI Agents <span class="dot">&middot;</span> {title}</>}</span>
     <button id="theme" aria-label="Switch between light and dark">Theme</button>
   </header>
-  <div class="layout">
-    <nav class="toc" id="toc" aria-label="Contents">
-      <h2>Contents</h2>
+  <div class={hub ? 'layout hub' : 'layout'}>
+    {!hub && <nav class="toc" id="toc" aria-label="Contents">
+      <a class="tohub" href={url()}>&larr; Ship It with Nimesha</a>
+      <h2>Shipping AI Agents</h2>
       <ol>
-        <li><a href={url()} data-v="home" aria-current={page === 'home' ? 'page' : undefined}><span class="n">&#9733;</span><span>Front page</span><span class="ok"></span></a></li>
+        <li><a href={url('notebooks/shipping-ai-agents/')} data-v="cover" aria-current={page === 'cover' ? 'page' : undefined}><span class="n">&#9733;</span><span>Notebook cover</span><span class="ok"></span></a></li>
         <li><a href={url('how/')} data-v="how" aria-current={page === 'how' ? 'page' : undefined}><span class="n">?</span><span>How to use this notebook</span><span class="ok">&#10003;</span></a></li>
         {parts.map((part, pi) => (
           <>
@@ -58,11 +61,11 @@ const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping 
         ))}
         <li><a href={url('back/')} data-v="back" aria-current={page === 'back' ? 'page' : undefined}><span class="n">A</span><span>Word list and answers</span><span class="ok">&#10003;</span></a></li>
       </ol>
-    </nav>
+    </nav>}
     <main>
       <article class="paper">
         <slot />
-        {page !== 'home' && (
+        {!hub && page !== 'cover' && (
           <nav class="pagenav" aria-label="Previous and next">
             {prev && <a class="prev" href={url(prev.href)}>Previous<b>{prev.label}</b></a>}
             {next && <a class="next" href={url(next.href)}>Next<b>{next.label}</b></a>}
@@ -70,8 +73,8 @@ const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping 
         )}
       </article>
       <slot name="after" />
-      <p class="foot">Cloud services for agents change fast. This notebook describes them as of October 2026. Always check each provider's latest documents before you decide.</p>
-      <p class="foot">Found a mistake or have an example to share? <a href={`${REPO}/blob/main/CONTRIBUTING.md`}>Help improve this notebook</a>. Text and drawings are shared under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</p>
+      {!hub && <p class="foot">Cloud services for agents change fast. This notebook describes them as of October 2026. Always check each provider's latest documents before you decide.</p>}
+      <p class="foot">Found a mistake or have an example to share? <a href={`${REPO}/blob/main/CONTRIBUTING.md`}>Help improve the notebooks</a>. Text and drawings are shared under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</p>
     </main>
   </div>
   <script is:inline>
@@ -81,7 +84,7 @@ const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping 
     try { var o = JSON.parse(localStorage.getItem(KEY) || '{}'); st.read = o.read || []; st.last = o.last || null; st.theme = o.theme || null; } catch (e) {}
     function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
     function paint() { document.querySelectorAll('.toc a[data-v]').forEach(function (a) { a.classList.toggle('read', st.read.indexOf(a.getAttribute('data-v')) > -1); }); }
-    if (page !== 'home') { st.last = location.pathname; save(); }
+    if (page !== 'hub' && page !== 'cover') { st.last = location.pathname; save(); }
     paint();
     // Tells GoatCounter that someone scrolled to the end of this page (once per reader, per page).
     function finished() { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'finished/' + page, title: 'Finished: ' + document.title, event: true }); }
@@ -96,6 +99,7 @@ const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping 
       st.theme = dark ? 'light' : 'dark'; root.setAttribute('data-theme', st.theme); save();
     };
     var toc = document.getElementById('toc'), menu = document.getElementById('menu'), scrim = null;
+    if (!toc || !menu) return;
     function close() { toc.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); if (scrim) { scrim.remove(); scrim = null; } }
     menu.onclick = function () {
       if (toc.classList.contains('open')) return close();

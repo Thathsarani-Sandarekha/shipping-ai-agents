@@ -2,7 +2,7 @@
 
 **[Read it online →](https://nimeshmora.github.io/shipping-ai-agents/)** &nbsp;·&nbsp; [Download the PDF](https://nimeshmora.github.io/shipping-ai-agents/shipping-ai-agents.pdf)
 
-A free, Head First style notebook about taking AI agents from a prototype on your laptop to production
+Notebook #1 of **[Ship It with Nimesha](https://nimeshmora.github.io/shipping-ai-agents/)**: a free, Head First style notebook about taking AI agents from a prototype on your laptop to production
 on **AWS**, **Microsoft Azure** and **Google Cloud**. It uses sketches, puzzles and plain language,
 and you don't need any cloud experience to start.
 
@@ -62,6 +62,9 @@ The site is built with [Astro](https://astro.build). Each chapter is one MDX fil
 
 | What | Where |
 |---|---|
+| Site front page (Ship It with Nimesha) | `src/pages/index.astro` |
+| List of notebooks shown on the front page | `src/lib/notebooks.ts` |
+| Notebook cover | `src/pages/notebooks/shipping-ai-agents.astro` |
 | Chapters | `src/content/chapters/*.mdx` (one file per chapter) |
 | Drawings | `src/sketches/*.svg` |
 | Box components (Careful!, Your turn and so on) | `src/components/` |
