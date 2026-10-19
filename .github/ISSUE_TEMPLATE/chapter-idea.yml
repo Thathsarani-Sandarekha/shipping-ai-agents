@@ -1,0 +1,29 @@
+name: New chapter idea
+description: Propose a topic that the notebook doesn't cover yet.
+title: "[Chapter idea] "
+labels: ["chapter idea"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Working title
+      placeholder: "Agents talking to agents"
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: What question does the chapter answer?
+    validations:
+      required: true
+  - type: textarea
+    id: outline
+    attributes:
+      label: Rough outline
+      description: The main points, and where it fits among the existing chapters.
+  - type: checkboxes
+    id: write
+    attributes:
+      label: Next step
+      options:
+        - label: I'd like to write this chapter.

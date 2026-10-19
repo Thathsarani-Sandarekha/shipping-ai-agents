@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Strip from '../../components/Strip.astro';
 import { allChapters } from '../../lib/chapters';
+import { REPO } from '../../lib/site';
 
 export async function getStaticPaths() {
   const chapters = await allChapters();
@@ -19,5 +20,10 @@ const checked = d.lastChecked ? d.lastChecked.toLocaleDateString('en-GB', { day:
     {d.quote && <Strip who={d.quote.who} text={d.quote.text} />}
     <Content />
     {checked && <p class="checked">Facts in this chapter last checked on {checked}.</p>}
+    <p class="contribute">
+      <a href={`${REPO}/edit/main/src/content/chapters/${entry.id}.mdx`}>Edit this page</a>
+      <a href={`${REPO}/issues/new?template=example.yml&chapter=${encodeURIComponent(`Chapter ${d.number}: ${d.title}`)}`}>Suggest an example</a>
+      <a href={`${REPO}/issues/new?template=fix.yml&chapter=${encodeURIComponent(`Chapter ${d.number}: ${d.title}`)}`}>Report a mistake or outdated fact</a>
+    </p>
   </section>
 </Base>

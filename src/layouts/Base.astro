@@ -3,6 +3,7 @@ import '../styles/notebook.css';
 import '../styles/site.css';
 import { url } from '../lib/url';
 import { allChapters, readingOrder } from '../lib/chapters';
+import { GOATCOUNTER, REPO } from '../lib/site';
 
 const { title, page, description } = Astro.props as { title: string; page: string; description?: string };
 const chapters = await allChapters();
@@ -29,6 +30,9 @@ const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping 
   <script is:inline>
     try { var s = JSON.parse(localStorage.getItem('sai-notebook') || '{}'); if (s.theme) document.documentElement.setAttribute('data-theme', s.theme); } catch (e) {}
   </script>
+  {import.meta.env.PROD && GOATCOUNTER && (
+    <script is:inline async data-goatcounter={`https://${GOATCOUNTER}.goatcounter.com/count`} src="https://gc.zgo.at/count.js"></script>
+  )}
 </head>
 <body data-page={page}>
   <header class="bar">
@@ -67,6 +71,7 @@ const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping 
       </article>
       <slot name="after" />
       <p class="foot">Cloud services for agents change fast. This notebook describes them as of October 2026. Always check each provider's latest documents before you decide.</p>
+      <p class="foot">Found a mistake or have an example to share? <a href={`${REPO}/blob/main/CONTRIBUTING.md`}>Help improve this notebook</a>. Text and drawings are shared under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</p>
     </main>
   </div>
   <script is:inline>
@@ -78,9 +83,11 @@ const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping 
     function paint() { document.querySelectorAll('.toc a[data-v]').forEach(function (a) { a.classList.toggle('read', st.read.indexOf(a.getAttribute('data-v')) > -1); }); }
     if (page !== 'home') { st.last = location.pathname; save(); }
     paint();
+    // Tells GoatCounter that someone scrolled to the end of this page (once per reader, per page).
+    function finished() { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'finished/' + page, title: 'Finished: ' + document.title, event: true }); }
     var end = document.querySelector('.pagenav');
     if (end && 'IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting && st.read.indexOf(page) < 0) { st.read.push(page); save(); paint(); } }); }).observe(end);
+      new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting && st.read.indexOf(page) < 0) { st.read.push(page); save(); paint(); finished(); } }); }).observe(end);
     }
     var resume = document.getElementById('resume');
     if (resume && st.last && st.last !== location.pathname) { resume.hidden = false; resume.href = st.last; }

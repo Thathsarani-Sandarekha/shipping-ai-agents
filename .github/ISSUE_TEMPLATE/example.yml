@@ -1,0 +1,35 @@
+name: Suggest an example
+description: Share code, a real-world story or a diagram that would help readers.
+title: "[Example] "
+labels: ["example"]
+body:
+  - type: input
+    id: chapter
+    attributes:
+      label: Chapter
+      placeholder: "Chapter 12: Deploying Botley for real"
+    validations:
+      required: true
+  - type: dropdown
+    id: cloud
+    attributes:
+      label: Which cloud does it use?
+      multiple: true
+      options: [AWS, Microsoft Azure, Google Cloud, Any / not cloud specific]
+  - type: textarea
+    id: example
+    attributes:
+      label: The example
+      description: Paste code, describe the situation, or attach a sketch. Remove any keys, account IDs or secrets.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What does it help a reader understand?
+  - type: checkboxes
+    id: pr
+    attributes:
+      label: Next step
+      options:
+        - label: I'd like to write this into the chapter myself and send a pull request.

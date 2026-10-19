@@ -30,6 +30,21 @@ Add a file called `public/CNAME` that contains only your domain (for example `ag
 set `site` to `https://agents.example.com` and `base` to `'/'` in `astro.config.mjs`,
 then add the domain under **Settings > Pages > Custom domain** and follow GitHub's DNS steps.
 
+## Visitor counts
+
+The site uses [GoatCounter](https://www.goatcounter.com): free, no cookies, and no cookie banner needed.
+The code is set in `src/lib/site.ts` (`GOATCOUNTER`). Counting only runs on the live site.
+
+Besides page views, a **"Finished: …"** event is counted the first time a reader scrolls to the end of a page,
+so you can compare how many people open a chapter with how many read it to the end.
+
+## Contributors
+
+Every chapter ends with **Edit this page**, **Suggest an example** and **Report a mistake** links.
+The guide for helpers is in [CONTRIBUTING.md](CONTRIBUTING.md). Issue forms live in `.github/ISSUE_TEMPLATE/`,
+and every pull request is checked by `.github/workflows/check.yml` to make sure the site still builds.
+Text and drawings are licensed under CC BY-NC-SA 4.0 ([LICENSE-CONTENT.md](LICENSE-CONTENT.md)); code under MIT ([LICENSE](LICENSE)).
+
 ## Work on it on your computer
 
 You need Node.js 22 or newer.

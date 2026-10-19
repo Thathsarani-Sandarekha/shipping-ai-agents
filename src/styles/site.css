@@ -18,6 +18,7 @@
 figure.fig{margin:8pt 0 12pt}
 .strip{margin:0 0 6pt}
 .blank{display:block;border-bottom:1.3px solid var(--rule);height:1.2rem;margin:2px 0 6px}
+.contribute{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--f-hand);font-size:.85rem;margin-top:8px}
 .checked{font-family:var(--f-hand);color:var(--muted);font-size:.85rem;margin-top:20px}
 .paper code{background:var(--soft)}
 .paper pre{background:var(--soft);border-color:var(--rule)}
