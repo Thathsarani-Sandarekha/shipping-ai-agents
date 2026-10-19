@@ -62,3 +62,12 @@ main>.paper.index{margin-top:28px}
  .nb{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:480px){.brand i{display:none}}
+
+/* "Go dark" / "Go light" button */
+#theme{display:inline-flex;align-items:center;gap:6px}
+#theme svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#theme .i-moon{fill:currentColor;stroke:none}
+#theme .i-sun,#theme.is-dark .i-moon{display:none}
+#theme.is-dark .i-sun{display:inline}
+#theme:not(.is-dark){background:var(--ink);color:var(--paper)}
+#theme:not(.is-dark):hover{background:#3a3d42}
