@@ -1,29 +1,30 @@
-name: New chapter idea
-description: Propose a topic that the notebook doesn't cover yet.
-title: "[Chapter idea] "
-labels: ["chapter idea"]
+name: Suggest a topic
+description: Suggest a topic for a new notebook or chapter.
+title: "[Topic] "
+labels: ["topic idea"]
 body:
   - type: input
     id: title
     attributes:
-      label: Working title
-      placeholder: "Agents talking to agents"
+      label: Topic
+      placeholder: "Running agents that call other agents"
     validations:
       required: true
   - type: textarea
     id: question
     attributes:
-      label: What question does the chapter answer?
+      label: What do you want to understand?
+      description: The question you would like answered, or the problem you are trying to solve.
     validations:
       required: true
   - type: textarea
     id: outline
     attributes:
-      label: Rough outline
-      description: The main points, and where it fits among the existing chapters.
+      label: Anything else?
+      description: Links, examples, or where it fits among the existing chapters.
   - type: checkboxes
     id: write
     attributes:
-      label: Next step
+      label: Helping out
       options:
-        - label: I'd like to write this chapter.
+        - label: I'd like to help write this.

@@ -3,7 +3,7 @@ export const notebooks = [
   {
     number: 1,
     title: 'Shipping AI Agents',
-    blurb: 'From “it works on my laptop” to real users on AWS, Microsoft Azure and Google Cloud. Where an agent can live, how to make it safe, and what it really costs.',
+    blurb: 'Taking an AI agent from a prototype to production on AWS, Microsoft Azure and Google Cloud. Covers hosting options, security, sessions, memory, cost and a full deployment walkthrough.',
     href: 'notebooks/shipping-ai-agents/',
     start: 'how/',
     pdf: 'shipping-ai-agents.pdf',

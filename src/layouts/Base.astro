@@ -40,7 +40,7 @@ const fullTitle = hub ? 'Ship It with Nimesha' : page === 'cover' ? 'Shipping AI
   <header class="bar">
     {!hub && <button id="menu" aria-controls="toc" aria-expanded="false">Contents</button>}
     <a class="brand" href={url()}><span class="mono" aria-hidden="true">N</span><span>Ship It <i>with Nimesha</i></span></a>
-    <span class="where">{hub ? 'AI agents, from laptop to production' : page === 'cover' ? 'Notebook #1: Shipping AI Agents' : <>Shipping AI Agents <span class="dot">&middot;</span> {title}</>}</span>
+    <span class="where">{hub ? 'Notebooks on deploying AI agents' : page === 'cover' ? 'Notebook #1: Shipping AI Agents' : <>Shipping AI Agents <span class="dot">&middot;</span> {title}</>}</span>
     <button id="theme" aria-label="Switch between light and dark">Theme</button>
   </header>
   <div class={hub ? 'layout hub' : 'layout'}>

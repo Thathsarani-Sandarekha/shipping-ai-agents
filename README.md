@@ -38,7 +38,7 @@ This notebook is open to contributions, and you don't have to write code to help
 - **Spotted a mistake or something out of date?** Cloud services change fast. [Report it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=fix.yml).
 - **Have a good example?** Code, a production story or a diagram: [suggest it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=example.yml).
 - **Small fix?** Click **Edit this page** at the bottom of any chapter.
-- **Idea for a new chapter?** [Propose it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=chapter-idea.yml) before you start writing.
+- **Idea for a new topic or chapter?** [Suggest it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=chapter-idea.yml) before you start writing.
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for the writing style and how to send a pull request.
 

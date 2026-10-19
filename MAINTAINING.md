@@ -34,7 +34,7 @@ so you can compare how many people open a chapter with how many read it to the e
 
 ## Reviewing contributions
 
-- Issue forms are in `.github/ISSUE_TEMPLATE/` and tag issues `fix`, `example` or `chapter idea`.
+- Issue forms are in `.github/ISSUE_TEMPLATE/` and tag issues `fix`, `example` or `topic idea`.
 - Every pull request runs `.github/workflows/check.yml`, which makes sure the site still builds.
 - Check that new facts link to official documentation and that `lastChecked` was updated.
 
