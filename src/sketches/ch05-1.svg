@@ -1,0 +1,27 @@
+<svg viewbox="0 0 680 262">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4">
+<path d="M30 170 V100 l55 -40 l55 40 v70z" fill="#d6f0f2"></path><rect fill="#fff" height="40" width="30" x="70" y="130"></rect>
+<path d="M50 112 h20 v14 h-20z" fill="#fff"></path><path d="M100 112 h20 v14 h-20z" fill="#fff"></path>
+<rect fill="#e8defa" height="114" rx="4" width="110" x="196" y="56"></rect>
+<g fill="#fff"><rect height="16" width="20" x="210" y="70"></rect><rect height="16" width="20" x="240" y="70"></rect><rect height="16" width="20" x="270" y="70"></rect><rect height="16" width="20" x="210" y="98"></rect><rect height="16" width="20" x="240" y="98"></rect><rect height="16" width="20" x="270" y="98"></rect></g>
+<rect fill="#fff" height="38" width="30" x="236" y="132"></rect><path d="M226 128 h50"></path>
+<rect fill="#dbe8ff" height="130" rx="4" width="120" x="360" y="40"></rect>
+<g fill="#fff"><rect height="14" width="18" x="374" y="72"></rect><rect height="14" width="18" x="402" y="72"></rect><rect height="14" width="18" x="430" y="72"></rect><rect height="14" width="18" x="374" y="96"></rect><rect height="14" width="18" x="402" y="96"></rect><rect height="14" width="18" x="430" y="96"></rect><rect height="14" width="18" x="374" y="120"></rect><rect height="14" width="18" x="402" y="120"></rect><rect height="14" width="18" x="430" y="120"></rect></g>
+<rect fill="#fff1a6" height="16" width="56" x="392" y="48"></rect>
+<rect fill="#e4e4e4" height="74" width="130" x="532" y="96"></rect><path d="M548 96 V34 h22 v62 M586 96 V20 h24 v76 M626 96 V50 h20 v46" fill="#cfcfcf"></path>
+<g fill="#fff1a6"><rect height="22" width="26" x="540" y="140"></rect><rect height="22" width="26" x="572" y="140"></rect><rect height="22" width="26" x="604" y="140"></rect><rect height="22" width="26" x="556" y="116"></rect><rect height="22" width="26" x="588" y="116"></rect></g>
+<path d="M10 172 H670"></path>
+</g>
+<text class="hk" font-size="11" text-anchor="middle" x="420" y="60">HOTEL</text>
+<text class="hb" font-size="15" text-anchor="middle" x="85" y="196">Console agents</text><text class="hk" font-size="12.5" text-anchor="middle" x="85" y="214">furnished show home</text>
+<text class="hb" font-size="15" text-anchor="middle" x="251" y="196">Managed agent runtime</text><text class="hk" font-size="12.5" text-anchor="middle" x="251" y="214">serviced apartment for agents</text>
+<text class="hb" font-size="15" text-anchor="middle" x="420" y="196">Serverless</text><text class="hk" font-size="12.5" text-anchor="middle" x="420" y="214">hotel room, paid by the night</text>
+<text class="hb" font-size="15" text-anchor="middle" x="597" y="196">Kubernetes</text><text class="hk" font-size="12.5" text-anchor="middle" x="597" y="214">run your own building</text>
+<path d="M60 232 H620" fill="none" marker-end="url(#ah)" marker-start="url(#ah)" stroke="#23406e" stroke-width="2"></path>
+<text class="h" font-size="13" x="64" y="254">the cloud does more for you</text>
+<text class="h" font-size="13" text-anchor="end" x="616" y="254">you control more (and do more)</text>
+</svg>

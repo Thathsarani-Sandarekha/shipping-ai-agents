@@ -1,0 +1,26 @@
+/* Extra styles for Markdown content (tables, headings, task lists) */
+.paper h2{display:table;background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 3px}
+.paper h2 span{background:none}
+.paper table:not(.fo){width:100%;border-collapse:collapse;margin:6pt 0 12pt;font-size:.78rem;line-height:1.4}
+.paper table:not(.fo) th{font-family:var(--f-sans);font-weight:700;background:var(--ink);color:var(--paper);text-align:left;padding:6px 8px;font-size:.72rem}
+.paper table:not(.fo) td{border-bottom:1px solid var(--rule);padding:6px 8px;vertical-align:top}
+.paper table:not(.fo) td:first-child{font-weight:700;font-family:var(--f-sans);font-size:.72rem}
+.paper table:not(.fo) tr:nth-child(even) td{background:var(--soft)}
+.paper .steps td:first-child{font-weight:700}
+.paper .steps pre{margin:0;font-size:.66rem}
+@media (max-width:700px){.paper table:not(.fo):not(.t){display:block;overflow-x:auto}}
+.contains-task-list{list-style:none;padding-left:0}
+.task-list-item input{margin:0 8px 0 0;width:15px;height:15px;vertical-align:-2px;accent-color:var(--ink)}
+.qa .a>p{display:inline}
+.sticky p{margin:0 0 4pt}.sticky p:last-child{margin:0}.sticky ul{margin:2pt 0 0;padding-left:14pt}
+.fbox .fb>:last-child{margin-bottom:4pt}
+.fnote{font-size:.85rem;margin-left:6px}
+figure.fig{margin:8pt 0 12pt}
+.strip{margin:0 0 6pt}
+.blank{display:block;border-bottom:1.3px solid var(--rule);height:1.2rem;margin:2px 0 6px}
+.checked{font-family:var(--f-hand);color:var(--muted);font-size:.85rem;margin-top:20px}
+.paper code{background:var(--soft)}
+.paper pre{background:var(--soft);border-color:var(--rule)}
+main>.paper.index{margin-top:28px}
+.brand{min-width:0;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:480px){.bar{gap:8px;padding:8px 12px}.brand{font-size:.95rem}.where{display:none}.bar button{padding:5px 8px}}

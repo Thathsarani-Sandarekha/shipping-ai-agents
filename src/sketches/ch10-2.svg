@@ -1,0 +1,10 @@
+<svg viewbox="0 0 680 170">
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.6">
+<path d="M60 60 h520 q30 0 30 30 q0 30 -30 30 h-520 q-30 0 -30 -30 q0 -30 30 -30z" fill="#fff1a6"></path>
+<rect fill="#c62828" height="40" rx="6" width="44" x="520" y="70"></rect>
+</g>
+<g class="hk" font-size="14"><text x="70" y="86">Name: Priya Shah</text><text x="70" y="108">Given by: company login</text>
+<text x="270" y="86">For: Botley</text><text x="270" y="108">Valid until: 10:30</text></g>
+<text fill="#fff" font-family="Sans" font-size="10" font-weight="700" text-anchor="middle" x="542" y="95">SEAL</text>
+<text class="h" font-size="14" text-anchor="middle" x="340" y="150">A login token (JWT) is like a festival wristband. If anyone changes it, the seal breaks.</text>
+</svg>

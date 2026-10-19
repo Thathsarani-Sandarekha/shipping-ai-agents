@@ -1,0 +1,23 @@
+<svg viewbox="0 0 680 170">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(110,80) scale(0.6)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g>
+<path d="M170 60 q60 -50 110 0 q-50 50 -110 0" fill="none" marker-end="url(#ah)" stroke="#23406e" stroke-width="2"></path>
+<text class="h" font-size="14" x="190" y="112">think... search... think...</text>
+<text class="h" font-size="14" x="190" y="130">search again... think...</text>
+<g stroke="#1b1b1b" stroke-width="2.6"><rect fill="#fff1a6" height="110" rx="12" width="200" x="420" y="30"></rect><rect fill="#fff" height="60" rx="6" width="160" x="440" y="60"></rect></g>
+<text class="hb" font-size="14" text-anchor="middle" x="520" y="52">AI METER</text>
+<text class="hk" font-size="15" text-anchor="middle" x="520" y="86">tokens: 48,210</text>
+<text class="hk" font-size="15" text-anchor="middle" x="520" y="108">cost: still going up</text>
+</svg>

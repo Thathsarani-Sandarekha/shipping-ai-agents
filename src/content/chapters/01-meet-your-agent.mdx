@@ -1,0 +1,106 @@
+---
+number: 1
+title: "Meet your agent"
+kicker: "Chapter one"
+subtitle: "A chatbot talks. An agent gets things done."
+question: "What is an agent, and how is it different from a normal app?"
+part: "The basics"
+quote: {"who": "botley", "text": "Hi, I'm Botley! Let me show you what an agent does."}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+An **AI agent** is a computer program that you give a goal to. For example: “Book me a trip to Lisbon next Tuesday.” The agent works out the steps by itself. Then it uses other systems to do them. It searches for flights, checks your calendar, compares prices and makes the booking. After each step, it checks if it is getting closer to the goal.
+
+<Sketch name="ch01-1" />
+
+Every agent has three parts:
+
+<Columns>
+<div>
+
+<Sticky color="yellow" tilt="left">
+
+**The brain:** an AI model (often called an “LLM”). It reads, thinks and decides what to do next.
+
+</Sticky>
+
+</div>
+<div>
+
+<Sticky color="blue" tilt="right">
+
+**The hands:** tools. These are the systems it can use, like email, calendars, databases and websites.
+
+</Sticky>
+
+</div>
+<div>
+
+<Sticky color="green" tilt="left">
+
+**The notebook:** memory. What has been said and done so far, and what it knows about you.
+
+</Sticky>
+
+</div>
+</Columns>
+
+<Sketch name="ch01-2" caption={"The agent loop: understand, plan, act, check. Then again, until the job is done."} />
+
+## How is that different from a normal app?
+
+A normal app follows steps that a programmer wrote down. You press a button, and the same thing happens every time. An agent decides some of its own steps while it works. This one difference changes almost every decision in this notebook.
+
+|   | A normal app | An AI agent |
+|---|---|---|
+| Predictable? | Yes. Same input, same result. | Not always. The same question can get a different answer. |
+| Speed | Answers in a blink. | Can take seconds or minutes. Sometimes longer. |
+| Actions | Only does what the code says. | Chooses which tools to use, and when. |
+| Memory | Usually forgets you between clicks. | Often needs to remember the whole conversation, and sometimes you too. |
+| Cost | About the same for every request. | You pay for every word the AI reads and writes. Long tasks cost more. |
+| Who it works for | Usually itself. | Often a real person, using that person's access rights. |
+
+<Sticky color="pink" tilt="left" width="62%">
+
+Keep this table in mind. Most problems later in this notebook come from one of these six rows.
+
+</Sticky>
+
+<NoSillyQuestions>
+
+<QA q={"Is every chatbot an agent?"}>
+
+No. A chatbot that only answers questions is just having a conversation. It becomes an agent when it can use tools and choose its own steps to reach a goal.
+
+</QA>
+
+<QA q={"What is an LLM?"}>
+
+It stands for “large language model”. It is an AI that has learned from a huge amount of text. It is the thinking part of the agent. Most teams rent one from a provider and pay each time they use it.
+
+</QA>
+
+<QA q={"What is a “tool”?"}>
+
+Any system the agent is allowed to use. A search engine, a calendar, a customer database or a payment system. Tools make agents useful. They also make them risky.
+
+</QA>
+
+<QA q={"Do I need to know how to code?"}>
+
+No. Code only appears in the Geek corner boxes, and you can skip those. Everything else is in plain English.
+
+</QA>
+
+</NoSillyQuestions>
+
+<Takeaways>
+
+- An agent is an AI model (brain), tools (hands) and memory (notebook).
+- It works in a loop: understand, plan, act, check.
+- Agents are less predictable than normal apps. They can be slow, cost money for each step, and often act for real people.
+- These differences are why putting an agent live needs extra care.
+
+</Takeaways>

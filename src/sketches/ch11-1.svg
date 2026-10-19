@@ -1,0 +1,39 @@
+<svg viewbox="0 0 680 520">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<rect fill="#1b1b1b" height="44" rx="22" width="240" x="150" y="6"></rect>
+<path d="M270 74 l150 38 l-150 38 l-150 -38z" fill="#fff"></path>
+<path d="M270 174 l150 38 l-150 38 l-150 -38z" fill="#fff"></path>
+<path d="M270 274 l150 38 l-150 38 l-150 -38z" fill="#fff"></path>
+<path d="M270 374 l150 38 l-150 38 l-150 -38z" fill="#fff"></path>
+<rect fill="#d6f0f2" height="48" rx="10" width="190" x="480" y="88"></rect>
+<rect fill="#f7e7c6" height="48" rx="10" width="190" x="480" y="188"></rect>
+<rect fill="#dcdcdc" height="48" rx="10" width="190" x="480" y="288"></rect>
+<rect fill="#e8defa" height="60" rx="10" width="190" x="480" y="382"></rect>
+<rect fill="#dbe8ff" height="52" rx="10" width="240" x="150" y="462"></rect>
+</g>
+<g fill="none" stroke="#1b1b1b" stroke-width="2.2">
+<path d="M270 52 v18" marker-end="url(#ak)"></path>
+<path d="M422 112 h54" marker-end="url(#ak)"></path><path d="M270 152 v18" marker-end="url(#ak)"></path>
+<path d="M422 212 h54" marker-end="url(#ak)"></path><path d="M270 252 v18" marker-end="url(#ak)"></path>
+<path d="M422 312 h54" marker-end="url(#ak)"></path><path d="M270 352 v18" marker-end="url(#ak)"></path>
+<path d="M422 412 h54" marker-end="url(#ak)"></path><path d="M270 452 v6" marker-end="url(#ak)"></path>
+</g>
+<text fill="#fff" font-family="Sans" font-size="13" font-weight="700" text-anchor="middle" x="270" y="34">A new agent is ready to go live</text>
+<g class="hk" font-size="13" text-anchor="middle">
+<text x="270" y="108">Simple job, and no</text><text x="270" y="124">developers free?</text>
+<text x="270" y="208">A short task triggered</text><text x="270" y="224">by an event?</text>
+<text x="270" y="308">Already run Kubernetes, or</text><text x="270" y="324">hosting your own AI model?</text>
+<text x="270" y="408">Many users, conversations,</text><text x="270" y="424">acting on people’s behalf?</text>
+</g>
+<g class="h" font-size="13"><text x="436" y="104">yes</text><text x="436" y="204">yes</text><text x="436" y="304">yes</text><text x="436" y="404">yes</text>
+<text x="278" y="166">no</text><text x="278" y="266">no</text><text x="278" y="366">no</text><text x="278" y="460">no</text></g>
+<g class="hb" font-size="15" text-anchor="middle">
+<text x="575" y="117">Console agent</text><text x="575" y="217">Function</text><text x="575" y="317">Kubernetes</text>
+<text x="575" y="408">Managed agent runtime</text><text x="270" y="484">Serverless container</text>
+</g>
+<g class="hk" font-size="12" text-anchor="middle"><text x="575" y="428">on the cloud you already use</text><text x="270" y="503">part of a bigger app, easy to move</text></g>
+</svg>

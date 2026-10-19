@@ -1,0 +1,110 @@
+---
+number: 10
+title: "Who is allowed in?"
+kicker: "Chapter ten · under the hood"
+subtitle: "Identity explained: the front door, the back door, and the keys for each"
+question: "Who can call the agent, and what can the agent reach?"
+part: "Under the hood"
+quote: {"who": "sam", "text": "Who can talk to Botley, and what can Botley touch?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+In Chapter 7 we said the agent needs its own badge, and a valet key to act for users. In a real deployment, that means setting up two doors.
+
+<Sketch name="ch10-1" />
+
+<Columns>
+<div>
+
+### The front door (inbound)
+
+Who is allowed to send requests to the agent? Every request must show proof of who sent it. This is called **inbound authentication**.
+
+</div>
+<div>
+
+### The back door (outbound)
+
+When the agent goes out to use tools, what is it allowed to touch, and as whom? This is called **outbound authentication**.
+
+</div>
+</Columns>
+
+## The front door on each cloud
+
+| Cloud | How callers prove who they are |
+|---|---|
+| AWS AgentCore | You choose **one** of two options for each runtime. **AWS IAM** (the default): the request is signed with AWS keys, using a method called SigV4. Good when your own backend calls the agent. **Login tokens (JWT)** from a login service such as Amazon Cognito, Microsoft Entra ID or Okta. You give AgentCore the login service's address (a “discovery URL”) and the app IDs that are allowed. |
+| Azure Foundry | Callers sign in with Microsoft Entra ID, and need permission on the Foundry project. |
+| Google Agent Runtime | Callers use Google Cloud identities, and need IAM permission to call the agent. |
+
+<Sketch name="ch10-2" />
+
+A **JWT** (JSON Web Token) is a small piece of signed text. It says who the user is, who issued it, which app it is for, and when it expires. The agent can check the signature, so nobody can change the name inside without being caught.
+
+<Careful>
+
+**On AWS, choose the login-token option if the agent must act as each user.** With IAM signing, the request proves which *system* called, but not which *person*. Per-user features, like keeping each user's own tool keys, need the user's login token.
+
+</Careful>
+
+## The back door: two kinds of keys
+
+<Columns>
+<div>
+
+### The agent's own badge
+
+For company resources that do not belong to one user, such as a database of flight prices. On AWS this is an **IAM execution role**. On Azure it is the agent's **Entra agent identity**. On Google it is a **service account**. Give it least privilege: only the exact access it needs.
+
+</div>
+<div>
+
+### A valet key for each user
+
+For things that belong to a person, like Priya's calendar. The agent gets a limited, expiring key through OAuth, after the user says yes. AWS AgentCore Identity keeps these keys in a **token vault**, so the agent code never has to store them itself.
+
+</div>
+</Columns>
+
+<Sketch name="ch10-3" caption={"The first time, the user says “yes”. The valet key is kept in a vault for next time."} />
+
+<NoSillyQuestions>
+
+<QA q={"What is SigV4?"}>
+
+AWS's way of signing a request with secret AWS keys. It is like a wax seal on a letter: AWS can tell who sent it and that nobody changed it on the way.
+
+</QA>
+
+<QA q={"What is a discovery URL?"}>
+
+A web address where a login service publishes its public details, such as how to check its signatures. AgentCore reads it to know how to check your users' tokens.
+
+</QA>
+
+<QA q={"Can a runtime accept both AWS IAM and login tokens?"}>
+
+Not at the same time on AWS AgentCore. One runtime uses one of them. You can create a separate version or runtime for the other.
+
+</QA>
+
+<QA q={"Why not just give the agent one master password?"}>
+
+Then everyone would act as one person, there would be no record of who did what, and one leak would expose everything. That is exactly Botley's Monday.
+
+</QA>
+
+</NoSillyQuestions>
+
+<Takeaways>
+
+- Every agent has two doors: inbound (who can call it) and outbound (what it can reach).
+- AWS AgentCore uses either AWS IAM signing or login tokens (JWT) at the front door.
+- Use login tokens when the agent must know which person is calling.
+- The agent's own badge is for shared company resources. Give it least privilege.
+- Per-user access uses OAuth valet keys, stored safely in a token vault.
+
+</Takeaways>

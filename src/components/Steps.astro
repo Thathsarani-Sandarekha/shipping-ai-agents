@@ -1,0 +1,8 @@
+---
+// A deploy recipe table. rows: [number, step name, command, what happens (may contain simple HTML)]
+const { rows } = Astro.props as { rows: [string, string, string, string][] };
+---
+<div class="tw"><table class="t steps">
+  <tr><th style="width:5%">#</th><th style="width:15%">Step</th><th style="width:45%">What you type</th><th>What happens</th></tr>
+  {rows.map(([n, step, cmd, what]) => <tr><td>{n}</td><td>{step}</td><td><pre>{cmd}</pre></td><td set:html={what} /></tr>)}
+</table></div>

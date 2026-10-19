@@ -1,0 +1,19 @@
+<svg viewbox="0 0 680 230">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<path d="M14 40 h100 v120 h-100z" fill="#fff"></path><path d="M30 64 h68 M30 84 h68 M30 104 h52 M30 124 h60" stroke-width="1.6"></path>
+<path d="M170 70 l50 -24 l50 24 v70 l-50 24 l-50 -24z" fill="#fff1a6"></path><path d="M170 70 l50 24 l50 -24 M220 94 v70"></path>
+<path d="M330 150 V74 l70 -36 l70 36 v76z" fill="#eef4ff"></path><rect fill="#fff" height="46" width="44" x="378" y="104"></rect>
+<g fill="#fff1a6"><rect height="40" rx="4" width="50" x="520" y="40"></rect><rect height="40" rx="4" width="50" x="590" y="40"></rect><rect height="40" rx="4" width="50" x="520" y="100"></rect><rect height="40" rx="4" width="50" x="590" y="100"></rect></g>
+<path d="M500 22 h162 v136 h-162z" fill="none" stroke-dasharray="6 5"></path>
+</g>
+<g fill="none" stroke="#1b1b1b" stroke-width="2.4"><path d="M118 100 h44" marker-end="url(#ak)"></path><path d="M274 100 h48" marker-end="url(#ak)"></path><path d="M474 100 h22" marker-end="url(#ak)"></path></g>
+<text class="hb" font-size="15" text-anchor="middle" x="64" y="186">Recipe</text><text class="hk" font-size="12.5" text-anchor="middle" x="64" y="206">(a “Dockerfile”)</text>
+<text class="hb" font-size="15" text-anchor="middle" x="220" y="192">Packed box</text><text class="hk" font-size="12.5" text-anchor="middle" x="220" y="212">(an “image”)</text>
+<text class="hb" font-size="15" text-anchor="middle" x="400" y="178">Warehouse</text><text class="hk" font-size="12.5" text-anchor="middle" x="400" y="198">(a “registry”)</text>
+<text class="hb" font-size="15" text-anchor="middle" x="580" y="178">Running copies</text><text class="hk" font-size="12.5" text-anchor="middle" x="580" y="198">(“containers”, in the cloud)</text>
+<text class="h" font-size="14" x="230" y="28">sealed: the code and everything it needs</text>
+</svg>

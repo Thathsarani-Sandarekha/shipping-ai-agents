@@ -1,0 +1,43 @@
+<svg viewbox="0 0 680 230">
+<g fill="none" stroke="#1b1b1b" stroke-width="2.4"><rect height="222" rx="8" width="330" x="4" y="4"></rect><rect height="222" rx="8" width="330" x="346" y="4"></rect></g>
+<g><path d="M162 89 L166 108 L180 89" fill="#fff" stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4"></path><rect fill="#fff" height="74" rx="14" stroke="#1b1b1b" stroke-width="2.4" width="210" x="20" y="18"></rect><rect fill="#fff" height="6" width="14" x="164" y="87"></rect><text class="hk" font-size="14" text-anchor="middle" x="125.0" y="42.9">To book a flight, first</text><text class="hk" font-size="14" text-anchor="middle" x="125.0" y="59.9">go to an airline site,</text><text class="hk" font-size="14" text-anchor="middle" x="125.0" y="76.9">then search for...</text></g>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(200,150) scale(0.6)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" transform="translate(70,140) scale(0.75)">
+<path d="M-28 78 q0 -46 28 -46 q28 0 28 46z" fill="#d9ecff"></path>
+<circle cx="0" cy="0" fill="#fff" r="20"></circle><path d="M-19 -2 q0 -24 19 -24 q19 0 19 24 q-6 -12 -19 -13 q-13 1 -19 13z" fill="#777"></path>
+<circle cx="-7" cy="-2" fill="#1b1b1b" r="2"></circle><circle cx="7" cy="-2" fill="#1b1b1b" r="2"></circle>
+<path d="M-6 7 h12" fill="none"></path></g>
+<text class="h" font-size="14" x="252" y="110">you still do</text><text class="h" font-size="14" x="252" y="128">all the work</text>
+<text class="hb" font-size="15" text-anchor="middle" x="169" y="216">A chatbot tells you how.</text>
+<g><path d="M512 75 L516 94 L530 75" fill="#fff" stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4"></path><rect fill="#fff" height="60" rx="14" stroke="#1b1b1b" stroke-width="2.4" width="200" x="380" y="18"></rect><rect fill="#fff" height="6" width="14" x="514" y="73"></rect><text class="hk" font-size="14" text-anchor="middle" x="480.0" y="44.4">Done! You fly to</text><text class="hk" font-size="14" text-anchor="middle" x="480.0" y="61.4">Lisbon on Tuesday.</text></g>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(540,150) scale(0.6)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g>
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.2">
+<rect fill="#fff1a6" height="30" rx="3" transform="rotate(-8 613 165)" width="58" x="584" y="150"></rect>
+<rect fill="#fff" height="44" rx="3" width="54" x="600" y="92"></rect><path d="M600 104 h54"></path></g>
+<text class="hk" font-size="11" text-anchor="middle" transform="rotate(-8 613 165)" x="613" y="170">TICKET</text>
+<text class="hk" font-size="12" text-anchor="middle" x="627" y="126">TUE</text>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" transform="translate(420,140) scale(0.75)">
+<path d="M-28 78 q0 -46 28 -46 q28 0 28 46z" fill="#d9ecff"></path>
+<circle cx="0" cy="0" fill="#fff" r="20"></circle><path d="M-19 -2 q0 -24 19 -24 q19 0 19 24 q-6 -12 -19 -13 q-13 1 -19 13z" fill="#777"></path>
+<circle cx="-7" cy="-2" fill="#1b1b1b" r="2"></circle><circle cx="7" cy="-2" fill="#1b1b1b" r="2"></circle>
+<path d="M-7 6 q7 6 14 0" fill="none"></path></g>
+<text class="hb" font-size="15" text-anchor="middle" x="511" y="216">An agent does it for you.</text>
+</svg>

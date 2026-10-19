@@ -1,0 +1,105 @@
+---
+number: 12
+title: "Deploying Botley for real"
+kicker: "Chapter twelve"
+subtitle: "Step by step on AWS, Azure and Google Cloud, with what each command really does"
+question: "Step-by-step deploy commands for AWS, Azure and Google Cloud."
+part: "Choose, deploy, launch"
+quote: {"who": "maya", "text": "Enough theory. Let's put Botley live!"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+Time to put Botley live. This chapter follows the real commands for each cloud. You don't need to remember them. The aim is to understand what each step does, so the commands stop looking like magic.
+
+<Sketch name="ch12-1" />
+
+## Before you start
+
+- [ ] A cloud account, and permission to create resources in it.
+- [ ] The cloud's own command-line tool installed and signed in (`aws`, `az` or `gcloud`).
+- [ ] Access to the AI model your agent uses, turned on in that cloud.
+- [ ] Botley's code split into a brain and a small adapter (Chapter 3), and tested on your laptop.
+- [ ] No passwords or keys in the code (Chapter 4).
+
+<Careful>
+
+**Commands change.** These cloud tools are new and change often. The commands below are correct as of October 2026. Before you start, run each tool's `--help` and check its latest documents.
+
+</Careful>
+
+<ProviderBand name={"Recipe 1: AWS"} color="#b85c00">Tool: the AgentCore CLI. Home: Bedrock AgentCore Runtime.</ProviderBand>
+
+<Steps rows={[["1", "Install the tool", "npm install -g @aws/agentcore", "Installs the AgentCore CLI. It needs Node.js."], ["2", "Make a project", "agentcore create \\\n  --name TravelDesk \\\n  --no-agent", "Creates a project folder with a settings file called <code>agentcore.json</code>."], ["3", "Add Botley's code", "agentcore add agent \\\n  --name Botley \\\n  --type byo \\\n  --code-location ./app/Botley \\\n  --entrypoint main.py \\\n  --build CodeZip", "“byo” means bring your own code. CodeZip sends a zip file. Choose Container if you need a full container."], ["4", "Add memory", "agentcore add memory", "Adds an AgentCore Memory resource to the project, for short-term and long-term memory."], ["5", "Try it locally", "agentcore dev", "Runs Botley on your laptop, so you can test it before it goes live."], ["6", "Deploy", "agentcore deploy", "Uses AWS CDK to create everything: the runtime, memory and permissions. Run it again after every change."], ["7", "Test it live", "agentcore invoke \"Hello Botley\"", "Sends a message to the live agent and shows the answer."], ["8", "Watch it", "(AWS console: CloudWatch)", "Logs appear in CloudWatch, in a log group under <code>/aws/bedrock-agentcore/runtimes/</code>."]]} />
+
+<ProviderBand name={"Recipe 2: Azure"} color="#0f6cbd">Tool: the Azure Developer CLI (azd). Home: Foundry Hosted Agents.</ProviderBand>
+
+<Steps rows={[["1", "Sign in", "azd auth login", "Connects azd to your Azure account."], ["2", "Add the adapter", "(add a hosting library)", "Add Microsoft's hosting library to Botley's code, for example <code>azure-ai-agentserver-responses</code>. It opens the window on port 8088."], ["3", "Set up the project", "azd ai agent init \\\n  --protocol responses \\\n  --deploy-mode code", "Run this in Botley's folder. It installs the agent extension if needed and adds the agent to <code>azure.yaml</code>."], ["4", "Create the cloud parts", "azd provision", "Uses Bicep blueprints to create the Foundry project, model and other resources."], ["5", "Try it locally", "azd ai agent run\nazd ai agent invoke --local \"Hi\"", "Runs Botley on your laptop on port 8088, then sends it a test message."], ["6", "Deploy", "azd deploy", "Builds and uploads Botley and registers the new version in Foundry. (<code>azd up</code> does steps 4 and 6 together.)"], ["7", "Test and watch", "azd ai agent invoke \"Hi\"\nazd ai agent show\nazd ai agent monitor --follow", "Calls the live agent, checks its health, and streams its logs."], ["8", "Clean up", "azd down", "Deletes everything in the resource group. Be careful: this cannot be undone."]]} />
+
+<ProviderBand name={"Recipe 3: Google Cloud"} color="#1e7e34">Tool: Google’s agents CLI, for agents built with ADK. Home: Agent Runtime.</ProviderBand>
+
+<Steps rows={[["1", "Install and sign in", "uv tool install google-agents-cli\ngcloud auth login\ngcloud config set project MY_PROJECT", "Installs the CLI, signs you in, and chooses your Google Cloud project."], ["2", "Add deploy files", "agents-cli scaffold enhance . \\\n  --deployment-target agent_runtime", "Adds the files needed to deploy your existing ADK project to Agent Runtime."], ["3", "Set up the basics", "agents-cli infra single-project", "Creates service accounts, permissions and other basics, using Terraform."], ["4", "Deploy", "agents-cli deploy \\\n  --project MY_PROJECT \\\n  --region us-east1", "Packs and deploys Botley. It can take 5 to 10 minutes. Add <code>--no-wait</code>, then check later with <code>--status</code>."], ["5", "Sessions", "(nothing to do)", "For ADK agents on Agent Runtime, Agent Platform Sessions is handled for you after deploy."], ["6", "Add memory", "(in Botley's code)", "Connect Memory Bank with ADK's memory service, and add a memory tool such as <code>PreloadMemoryTool</code>."], ["7", "Test it", "(Google Cloud console, or the SDK)", "Chat with Botley in the console, or call it from code."]]} />
+
+<Note>
+
+Not using ADK? You can still deploy to Agent Runtime with Google's Python SDK, or put Botley's container on Cloud Run with `gcloud run deploy`.
+
+</Note>
+
+## After it is live
+
+| You want to... | What to do |
+|---|---|
+| Change Botley | Change the code or instructions, test it locally, run your evals, then run the deploy command again. Each deploy creates a new version. |
+| Go back | Point traffic back to the last good version. Keep the old version until the new one has proved itself. |
+| Stop paying | Delete what you don't need. Unused memory stores, registries and test agents still cost money. |
+| Do it every time, safely | Put these same commands into an automatic CI/CD line with an eval gate (Chapter 7). |
+
+<NoSillyQuestions>
+
+<QA q={"Why does every cloud need a “blueprint” tool like CDK, Bicep or Terraform?"}>
+
+A deployed agent is not one thing. It is a runtime, a memory store, permissions, logs and more. Writing them down as code means you can rebuild the same setup any time, and see exactly what changed.
+
+</QA>
+
+<QA q={"Do I have to use these agent CLIs?"}>
+
+No. They are shortcuts. Underneath, they call the normal cloud APIs and blueprints. Big teams often call those directly from their CI/CD line.
+
+</QA>
+
+<QA q={"Why test locally first?"}>
+
+It is faster and free. Most mistakes, like the wrong port or a missing library, show up on your laptop in seconds instead of after a ten-minute deploy.
+
+</QA>
+
+<QA q={"How do I know it really worked?"}>
+
+Send a test message, check the health and logs, and run your eval set against the live version. A deploy that “finished” is not the same as a deploy that works.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Put these AWS steps in the right order: **deploy**, **try it locally**, **make a project**, **test it live**, **add Botley's code**.
+
+<Blank />
+
+<Blank />
+
+</YourTurn>
+
+<Takeaways>
+
+- Every deploy command reads settings, packs the code, builds cloud parts from a blueprint, and starts the new version.
+- AWS uses the AgentCore CLI, Azure uses azd, and Google uses the agents CLI (for ADK agents).
+- Always try the agent locally before deploying.
+- Check the live agent with a test message, logs and evals.
+- Each deploy is a new version. Keep the old one until the new one is proven.
+
+</Takeaways>

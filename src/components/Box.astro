@@ -1,0 +1,8 @@
+---
+import { icons } from './icons';
+const { kind, icon, title, note } = Astro.props as { kind: string; icon: string; title: string; note?: string };
+---
+<aside class={`fbox ${kind}`}>
+  <div class="fh"><Fragment set:html={icons[icon]} />{title}{note && <span class="hand fnote">{note}</span>}</div>
+  <div class="fb"><slot /></div>
+</aside>

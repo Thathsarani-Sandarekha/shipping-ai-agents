@@ -1,0 +1,14 @@
+<svg viewbox="0 0 680 210">
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4" transform="translate(60 110)"><path d="M0 40 v-18 q0 -8 8 -10 l24 -4 l20 -22 h60 l20 26 h14 q8 0 8 8 v20z" fill="#ffd9e2"></path><path d="M58 -10 h22 v20 h-36z M86 -10 h22 l14 20 h-36z" fill="#fff"></path><circle cx="34" cy="42" fill="#fff" r="14"></circle><circle cx="120" cy="42" fill="#fff" r="14"></circle></g>
+<g fill="#f5c400" stroke="#1b1b1b" stroke-width="2"><circle cx="26" cy="70" r="10"></circle><circle cx="36" cy="60" r="10"></circle><circle cx="22" cy="50" r="10"></circle></g>
+<text class="hk" font-size="13.5" text-anchor="middle" x="130" y="40">repairs, insurance, parking...</text>
+<text class="hb" font-size="15" text-anchor="middle" x="150" y="184">Owning a car</text>
+<text class="hk" font-size="12.5" text-anchor="middle" x="150" y="202">you pay even when it sits at home</text>
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4" transform="translate(420 110)"><path d="M0 40 v-18 q0 -8 8 -10 l24 -4 l20 -22 h60 l20 26 h14 q8 0 8 8 v20z" fill="#f5c400"></path><path d="M58 -10 h22 v20 h-36z M86 -10 h22 l14 20 h-36z" fill="#fff"></path><circle cx="34" cy="42" fill="#fff" r="14"></circle><circle cx="120" cy="42" fill="#fff" r="14"></circle></g>
+<g stroke="#1b1b1b" stroke-width="2.2"><rect fill="#fff" height="18" rx="3" width="44" x="478" y="78"></rect></g>
+<text class="hk" font-size="12" text-anchor="middle" x="500" y="92">TAXI</text>
+<g stroke="#1b1b1b" stroke-width="2.2"><rect fill="#fff" height="40" rx="6" width="64" x="600" y="40"></rect></g>
+<text class="hk" font-size="11" text-anchor="middle" x="632" y="58">METER</text><text class="hk" font-size="13" text-anchor="middle" x="632" y="74">$ 12.40</text>
+<text class="hb" font-size="15" text-anchor="middle" x="510" y="184">Taking a taxi = serverless</text>
+<text class="hk" font-size="12.5" text-anchor="middle" x="510" y="202">you only pay for the rides you take</text>
+</svg>

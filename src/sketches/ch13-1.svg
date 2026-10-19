@@ -1,0 +1,31 @@
+<svg viewbox="0 0 680 250">
+<path d="M30 170 C130 170 150 120 230 120 S330 175 400 165 S500 100 560 100 S640 80 662 62" fill="none" stroke="#d9cfa8" stroke-linecap="round" stroke-width="22"></path>
+<path d="M30 170 C130 170 150 120 230 120 S330 175 400 165 S500 100 560 100 S640 80 662 62" fill="none" stroke="#1b1b1b" stroke-dasharray="8 8" stroke-width="2"></path>
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<path d="M118 156 v-46 l32 10 l-32 10" fill="#fff1a6"></path><path d="M244 116 v-46 l32 10 l-32 10" fill="#e8defa"></path>
+<path d="M404 160 v-46 l32 10 l-32 10" fill="#dbe8ff"></path><path d="M566 96 v-46 l32 10 l-32 10" fill="#dcf5d6"></path>
+</g>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(36,150) scale(0.36)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g>
+<g class="hb" font-size="15">
+<text x="40" y="216">1. Package the prototype</text>
+<text x="150" y="40">2. Run it managed</text>
+<text x="330" y="216">3. Make it safe to trust</text>
+<text text-anchor="end" x="668" y="150">4. Ship and run it</text>
+</g>
+<g class="hk" font-size="12.5">
+<text x="40" y="234">contract · container · first deploy</text>
+<text x="150" y="58">managed runtime · compare clouds · memory</text>
+<text x="330" y="234">tools · identity · safety · traces · evals</text>
+<text text-anchor="end" x="668" y="168">pipeline · canary · cost · on-call</text>
+</g>
+<text class="m" font-size="15" text-anchor="end" x="668" y="28">PRODUCTION</text>
+</svg>

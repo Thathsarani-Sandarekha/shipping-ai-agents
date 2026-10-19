@@ -1,0 +1,42 @@
+<svg viewbox="0 0 680 300">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6">
+<path d="M180 250 V110 l90 -60 l90 60 V250z" fill="#fff7e0"></path>
+<rect fill="#d9ecff" height="60" rx="4" width="84" x="228" y="150"></rect>
+<rect fill="#fff" height="118" rx="6" width="112" x="380" y="96"></rect>
+<path d="M436 214 v36"></path>
+<rect fill="#dcf5d6" height="30" rx="4" width="54" x="110" y="92"></rect>
+<path d="M137 122 v128"></path>
+<path d="M0 250 H680"></path>
+<g transform="translate(520 196)"><path d="M0 30 v-22 q0 -10 10 -12 l26 -4 l20 -22 h52 l18 26 h12 q10 0 10 10 v24z" fill="#ffd9e2"></path>
+<circle cx="28" cy="34" fill="#fff" r="14"></circle><circle cx="104" cy="34" fill="#fff" r="14"></circle></g>
+<rect fill="#fff1a6" height="30" rx="3" transform="rotate(-8 595 165)" width="70" x="560" y="150"></rect>
+</g>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(270,186) scale(0.45)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g>
+<text class="hb" font-size="15" text-anchor="middle" x="436" y="118">MENU</text>
+<text class="hk" font-size="12.5" text-anchor="middle" x="436" y="142">/invocations</text>
+<text class="hk" font-size="12.5" text-anchor="middle" x="436" y="162">“Tell me what</text>
+<text class="hk" font-size="12.5" text-anchor="middle" x="436" y="178">you need”</text>
+<text class="hb" font-size="14" text-anchor="middle" x="137" y="112">OPEN</text>
+<text class="hk" font-size="13" text-anchor="middle" transform="rotate(-8 595 165)" x="595" y="170">Order #42</text>
+<text class="h" font-size="15" x="20" y="40">“Are you open?”</text><text class="h" font-size="15" x="20" y="58">sign = /ping</text>
+<path d="M70 66 q30 20 56 22" fill="none" marker-end="url(#ah)" stroke="#23406e" stroke-width="2"></path>
+<text class="h" font-size="15" x="200" y="290">the window = the address and port</text>
+<path d="M260 274 q6 -30 8 -58" fill="none" marker-end="url(#ah)" stroke="#23406e" stroke-width="2"></path>
+<text class="h" font-size="15" x="520" y="290">order number = session ID</text>
+<path d="M600 274 q16 -40 2 -84" fill="none" marker-end="url(#ah)" stroke="#23406e" stroke-width="2"></path>
+<text class="h" font-size="15" x="392" y="40">the menu = what you</text><text class="h" font-size="15" x="392" y="58">can ask for (the endpoint)</text>
+<path d="M440 64 v24" fill="none" marker-end="url(#ah)" stroke="#23406e" stroke-width="2"></path>
+</svg>

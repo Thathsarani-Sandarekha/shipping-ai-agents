@@ -1,0 +1,28 @@
+<svg viewbox="0 0 680 230">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" transform="translate(60,96) scale(0.62)">
+<rect fill="#fff" height="66" rx="6" width="100" x="-50" y="-40"></rect><rect fill="#eef4ff" height="50" rx="3" width="84" x="-42" y="-32"></rect>
+<path d="M-64 30 h128 l-8 10 h-112z" fill="#e4e4e4"></path>
+<circle cx="-12" cy="-12" fill="#1b1b1b" r="3"></circle><circle cx="12" cy="-12" fill="#1b1b1b" r="3"></circle><path d="M-10 6 q10 8 20 0" fill="none"></path></g>
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<rect fill="#fff1a6" height="70" rx="10" width="104" x="130" y="60"></rect>
+<rect fill="#fff" height="70" rx="10" width="104" x="264" y="60"></rect>
+<rect fill="#d9ecff" height="70" rx="10" width="104" x="398" y="60"></rect>
+<rect fill="#dcf5d6" height="70" rx="10" width="138" x="532" y="60"></rect>
+</g>
+<g fill="none" stroke="#1b1b1b" stroke-width="2.2"><path d="M236 95 h24" marker-end="url(#ak)"></path><path d="M370 95 h24" marker-end="url(#ak)"></path><path d="M504 95 h24" marker-end="url(#ak)"></path></g>
+<g class="hb" font-size="14" text-anchor="middle"><text x="182" y="88">1. Read</text><text x="316" y="88">2. Pack</text><text x="450" y="88">3. Build</text><text x="601" y="88">4. Start</text></g>
+<g class="hk" font-size="11.5" text-anchor="middle">
+<text x="182" y="106">the project’s</text><text x="182" y="120">settings file</text>
+<text x="316" y="106">zip or container,</text><text x="316" y="120">then upload it</text>
+<text x="450" y="106">create cloud parts</text><text x="450" y="120">from a blueprint</text>
+<text x="601" y="106">run the new version,</text><text x="601" y="120">give you its address</text>
+</g>
+<text class="h" font-size="13" text-anchor="middle" x="60" y="160">you type</text><text class="h" font-size="13" text-anchor="middle" x="60" y="176">one command</text>
+<text class="h" font-size="13" text-anchor="middle" x="450" y="170">the blueprint is “infrastructure as code”:</text>
+<text class="h" font-size="13" text-anchor="middle" x="450" y="188">CDK on AWS, Bicep on Azure, Terraform on Google</text>
+<text class="h" font-size="14" text-anchor="middle" x="340" y="222">Every cloud’s deploy command does these same four jobs for you.</text>
+</svg>

@@ -1,0 +1,11 @@
+---
+import { icons } from './icons';
+const { title, left, right, lines } = Astro.props as { title: string; left: string; right: string; lines: [string, string][] };
+---
+<aside class="fbox faceoff">
+  <div class="fh"><Fragment set:html={icons.versus} />{title}</div>
+  <div class="fb"><table class="fo">
+    <tr><th class="l">{left}</th><th>{right}</th></tr>
+    {lines.map(([who, text]) => who === 'L' ? <tr><td class="l">{text}</td><td></td></tr> : <tr><td class="l"></td><td>{text}</td></tr>)}
+  </table></div>
+</aside>

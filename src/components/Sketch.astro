@@ -1,0 +1,8 @@
+---
+// Shows a drawing from src/sketches. Usage: <Sketch name="ch08-1" caption="..." />
+const files = import.meta.glob('../sketches/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const { name, caption } = Astro.props as { name: string; caption?: string };
+const svg = files[`../sketches/${name}.svg`];
+if (!svg) throw new Error(`Sketch not found: src/sketches/${name}.svg`);
+---
+<figure class="fig"><Fragment set:html={svg} />{caption && <figcaption class="cap">{caption}</figcaption>}</figure>

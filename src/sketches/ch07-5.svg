@@ -1,0 +1,25 @@
+<svg viewbox="0 0 680 220">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<rect fill="#fff" height="60" rx="10" width="100" x="10" y="60"></rect>
+<rect fill="#fff" height="60" rx="10" width="110" x="140" y="60"></rect>
+<path d="M300 50 l22 -10 h30 l22 10 v34 l-22 10 h-30 l-22 -10z" fill="#c62828" transform="translate(-12 18)"></path>
+<rect fill="#fff1a6" height="60" rx="10" width="110" x="400" y="60"></rect>
+<rect fill="#dcf5d6" height="60" rx="10" width="130" x="540" y="60"></rect>
+</g>
+<g fill="none" stroke="#1b1b1b" stroke-width="2.4">
+<path d="M112 90 h24" marker-end="url(#ak)"></path><path d="M252 90 h34" marker-end="url(#ak)"></path><path d="M366 90 h30" marker-end="url(#ak)"></path><path d="M512 90 h24" marker-end="url(#ak)"></path>
+</g>
+<path d="M455 124 q0 70 -200 70 q-150 0 -190 -66" fill="none" marker-end="url(#ah)" stroke="#23406e" stroke-dasharray="5 5" stroke-width="2"></path>
+<text class="hb" font-size="14" text-anchor="middle" x="60" y="86">A change</text><text class="hk" font-size="12" text-anchor="middle" x="60" y="104">code or prompt</text>
+<text class="hb" font-size="14" text-anchor="middle" x="195" y="86">Auto tests</text><text class="hk" font-size="12" text-anchor="middle" x="195" y="104">does it run?</text>
+<text fill="#fff" font-family="Sans" font-size="11" font-weight="700" text-anchor="middle" x="331" y="100">EVALS</text>
+<text class="h" font-size="13" text-anchor="middle" x="331" y="150">worse? STOP</text>
+<text class="hb" font-size="14" text-anchor="middle" x="455" y="86">Canary</text><text class="hk" font-size="12" text-anchor="middle" x="455" y="104">10% of users first</text>
+<text class="hb" font-size="14" text-anchor="middle" x="605" y="86">Everyone</text><text class="hk" font-size="12" text-anchor="middle" x="605" y="104">all looks good</text>
+<text class="h" font-size="14" text-anchor="middle" x="260" y="214">problems in the canary? go back to the old version</text>
+<text class="h" font-size="14" x="10" y="36">CI/CD: every change goes down this line, and it has to pass the gate.</text>
+</svg>

@@ -1,0 +1,8 @@
+---
+const p = Astro.props as { name: string; tag: string; kind: string; like: string; plain: string; when: string; gives: string; careful: string };
+const rows: [string, string][] = [['In plain words', p.plain], ['Choose it when', p.when], ['What you get', p.gives], ['Careful', p.careful]];
+---
+<div class="card">
+  <div class="cl"><div class="cn">{p.name}</div><span class={`tag ${p.kind}`}>{p.tag}</span><div class="like">{p.like}</div></div>
+  <div class="cr">{rows.map(([k, v]) => <div class="row"><div class="k">{k}</div><div class="v">{v}</div></div>)}</div>
+</div>

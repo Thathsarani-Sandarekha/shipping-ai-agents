@@ -1,0 +1,20 @@
+<svg viewbox="0 0 680 236">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6">
+<circle cx="90" cy="100" fill="#fff1a6" r="44"></circle><circle cx="90" cy="100" fill="#fff" r="14"></circle>
+<path d="M134 100 H300 v26 h-18 v-14 h-16 v20 h-18 v-20 h-30" fill="none"></path>
+<path d="M134 92 H300 v8" fill="none"></path>
+</g>
+<text class="hb" font-size="15" text-anchor="middle" x="90" y="172">Valet key</text>
+<g class="hk" font-size="15">
+<text x="360" y="50">✓ opens the car door</text>
+<text x="360" y="76">✓ starts the engine</text>
+<text x="360" y="102">✗ doesn’t open the boot or glovebox</text>
+<text style="fill:#c62828" x="360" y="128">✗ stops working when you collect the car</text>
+</g>
+<text class="h" font-size="15" text-anchor="middle" x="340" y="212">Acting “on behalf of” a user = a valet key: only what’s needed,</text>
+<text class="h" font-size="15" text-anchor="middle" x="340" y="231">only for as long as needed, and it can be taken back at any time.</text>
+</svg>

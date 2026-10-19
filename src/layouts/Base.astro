@@ -1,0 +1,107 @@
+---
+import '../styles/notebook.css';
+import '../styles/site.css';
+import { url } from '../lib/url';
+import { allChapters, readingOrder } from '../lib/chapters';
+
+const { title, page, description } = Astro.props as { title: string; page: string; description?: string };
+const chapters = await allChapters();
+const order = await readingOrder();
+const i = order.findIndex((o) => o.id === page);
+const prev = i > 0 ? order[i - 1] : null;
+const next = i >= 0 && i < order.length - 1 ? order[i + 1] : null;
+const parts: string[] = [];
+chapters.forEach((c) => { if (!parts.includes(c.data.part)) parts.push(c.data.part); });
+const fullTitle = page === 'home' ? 'Shipping AI Agents' : `${title} | Shipping AI Agents`;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description ?? 'A visual notebook about taking AI agents from prototype to production on AWS, Microsoft Azure and Google Cloud.'} />
+  <meta name="author" content="Nimesha Jinarajadasa" />
+  <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono&family=Kalam:wght@400;700&family=Permanent+Marker&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&display=swap" />
+  <script is:inline>
+    try { var s = JSON.parse(localStorage.getItem('sai-notebook') || '{}'); if (s.theme) document.documentElement.setAttribute('data-theme', s.theme); } catch (e) {}
+  </script>
+</head>
+<body data-page={page}>
+  <header class="bar">
+    <button id="menu" aria-controls="toc" aria-expanded="false">Contents</button>
+    <a class="brand" href={url()}>Shipping AI Agents</a>
+    <span class="where">{page === 'home' ? 'A visual notebook' : title}</span>
+    <button id="theme" aria-label="Switch between light and dark">Theme</button>
+  </header>
+  <div class="layout">
+    <nav class="toc" id="toc" aria-label="Contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href={url()} data-v="home" aria-current={page === 'home' ? 'page' : undefined}><span class="n">&#9733;</span><span>Front page</span><span class="ok"></span></a></li>
+        <li><a href={url('how/')} data-v="how" aria-current={page === 'how' ? 'page' : undefined}><span class="n">?</span><span>How to use this notebook</span><span class="ok">&#10003;</span></a></li>
+        {parts.map((part, pi) => (
+          <>
+            {pi > 0 && <li class="sep">{part}</li>}
+            {chapters.filter((c) => c.data.part === part).map((c) => (
+              <li><a href={url(`chapters/${c.id}/`)} data-v={`ch-${c.data.number}`} aria-current={page === `ch-${c.data.number}` ? 'page' : undefined}>
+                <span class="n">{c.data.number}</span><span>{c.data.title}</span><span class="ok">&#10003;</span></a></li>
+            ))}
+          </>
+        ))}
+        <li><a href={url('back/')} data-v="back" aria-current={page === 'back' ? 'page' : undefined}><span class="n">A</span><span>Word list and answers</span><span class="ok">&#10003;</span></a></li>
+      </ol>
+    </nav>
+    <main>
+      <article class="paper">
+        <slot />
+        {page !== 'home' && (
+          <nav class="pagenav" aria-label="Previous and next">
+            {prev && <a class="prev" href={url(prev.href)}>Previous<b>{prev.label}</b></a>}
+            {next && <a class="next" href={url(next.href)}>Next<b>{next.label}</b></a>}
+          </nav>
+        )}
+      </article>
+      <slot name="after" />
+      <p class="foot">Cloud services for agents change fast. This notebook describes them as of October 2026. Always check each provider's latest documents before you decide.</p>
+    </main>
+  </div>
+  <script is:inline>
+  (function () {
+    var KEY = 'sai-notebook', root = document.documentElement, page = document.body.getAttribute('data-page');
+    var st = { read: [], last: null, theme: null };
+    try { var o = JSON.parse(localStorage.getItem(KEY) || '{}'); st.read = o.read || []; st.last = o.last || null; st.theme = o.theme || null; } catch (e) {}
+    function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+    function paint() { document.querySelectorAll('.toc a[data-v]').forEach(function (a) { a.classList.toggle('read', st.read.indexOf(a.getAttribute('data-v')) > -1); }); }
+    if (page !== 'home') { st.last = location.pathname; save(); }
+    paint();
+    var end = document.querySelector('.pagenav');
+    if (end && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting && st.read.indexOf(page) < 0) { st.read.push(page); save(); paint(); } }); }).observe(end);
+    }
+    var resume = document.getElementById('resume');
+    if (resume && st.last && st.last !== location.pathname) { resume.hidden = false; resume.href = st.last; }
+    document.getElementById('theme').onclick = function () {
+      var dark = root.getAttribute('data-theme') === 'dark' || (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+      st.theme = dark ? 'light' : 'dark'; root.setAttribute('data-theme', st.theme); save();
+    };
+    var toc = document.getElementById('toc'), menu = document.getElementById('menu'), scrim = null;
+    function close() { toc.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); if (scrim) { scrim.remove(); scrim = null; } }
+    menu.onclick = function () {
+      if (toc.classList.contains('open')) return close();
+      toc.classList.add('open'); menu.setAttribute('aria-expanded', 'true');
+      scrim = document.createElement('div'); scrim.className = 'scrim'; scrim.onclick = close; document.body.appendChild(scrim);
+    };
+    document.addEventListener('keydown', function (e) {
+      if (e.target.closest && e.target.closest('input, textarea')) return;
+      if (e.key === 'Escape') close();
+      var a = e.key === 'ArrowRight' ? document.querySelector('.pagenav .next') : e.key === 'ArrowLeft' ? document.querySelector('.pagenav .prev') : null;
+      if (a) location.href = a.href;
+    });
+  })();
+  </script>
+</body>
+</html>

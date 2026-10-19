@@ -1,0 +1,30 @@
+<svg viewbox="0 0 680 320">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<rect fill="#fff" height="110" rx="6" width="150" x="10" y="40"></rect>
+<path d="M30 66 h110 M30 86 h100 M30 106 h110 M30 126 h80" stroke-width="1.4"></path>
+<rect fill="#fff" height="150" rx="4" width="150" x="520" y="30"></rect>
+<rect fill="#fff1a6" height="38" rx="3" width="126" x="532" y="42"></rect><rect fill="#d9ecff" height="38" rx="3" width="126" x="532" y="88"></rect><rect fill="#dcf5d6" height="38" rx="3" width="126" x="532" y="134"></rect>
+</g>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(330,104) scale(0.6)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g>
+<g stroke="#1b1b1b" stroke-width="2.6"><circle cx="366" cy="118" fill="#eef4ff" r="12"></circle><path d="M374 126 l12 12"></path></g>
+<g fill="none" stroke="#1b1b1b" stroke-width="2.4"><path d="M164 96 h110" marker-end="url(#ak)"></path><path d="M396 96 h118" marker-end="url(#ak)"></path></g>
+<g class="hk" font-size="12.5" text-anchor="middle"><text x="595" y="66">Priya: preferences</text><text x="595" y="112">Priya: facts</text><text x="595" y="158">Priya: summaries</text></g>
+<text class="hb" font-size="15" text-anchor="middle" x="85" y="172">1. Short-term</text><text class="hk" font-size="12.5" text-anchor="middle" x="85" y="190">every message, word for word</text>
+<text class="hb" font-size="15" text-anchor="middle" x="330" y="196">2. An AI picks out</text><text class="hb" font-size="15" text-anchor="middle" x="330" y="214">what is worth keeping</text><text class="hk" font-size="12.5" text-anchor="middle" x="330" y="232">in the background, after a short wait</text>
+<text class="hb" font-size="15" text-anchor="middle" x="595" y="202">3. Long-term notes</text><text class="hk" font-size="12.5" text-anchor="middle" x="595" y="220">filed under the user</text>
+<path d="M595 236 q0 50 -120 52 h-260 q-110 0 -122 -40" fill="none" marker-end="url(#ah)" stroke="#23406e" stroke-dasharray="5 5" stroke-width="2"></path>
+<text class="h" font-size="14" text-anchor="middle" x="340" y="312">4. Next time, the agent searches the notes and adds the useful ones to its instructions</text>
+</svg>

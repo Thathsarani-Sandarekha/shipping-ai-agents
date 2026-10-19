@@ -1,0 +1,69 @@
+---
+number: 11
+title: "Choosing where to deploy"
+kicker: "Chapter eleven"
+subtitle: "A simple decision guide you can take into a real meeting"
+question: "A simple decision guide you can use in a meeting."
+part: "Choose, deploy, launch"
+quote: {"who": "sam", "text": "OK. I need to make a decision this week."}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+You now know the four homes and the three providers. In real life, the choice usually comes down to a few honest questions. Start here:
+
+<Sketch name="ch11-1" caption={"Use this to start the discussion. Real decisions need a closer look."} />
+
+## Six questions every company should ask
+
+| Question | Why it matters |
+|---|---|
+| Which cloud do we already use? | Staying there lets you reuse your contracts, security setup, data and skills. This usually decides the provider. |
+| Who does the agent act for? | If it acts for individual staff or customers, you need sign-in and access rights for each person. Managed runtimes include this. Other homes need extra work. |
+| How long does one task take? | Tasks of a few seconds suit functions. Long chats or long jobs suit managed runtimes or containers. |
+| How does usage change? | If usage is low or goes up and down, homes that scale to zero save money. If it is busy all the time, always-on containers or Kubernetes may cost less. |
+| How tied to one provider can we be? | Console agents and managed runtimes tie you to one provider. Containers and Kubernetes are easier to move. |
+| What can our team look after? | Kubernetes needs a dedicated team. Console agents and managed runtimes need the fewest people to run. |
+
+<Columns>
+<div>
+
+<Sticky color="yellow" tilt="left">
+
+**Questions to ask the team building it:**
+
+- How do you keep users' conversations apart?
+- Whose identity does the agent use?
+- Can we see what it did last Tuesday?
+- What stops a bad change from going live?
+- What is the monthly spending limit?
+
+</Sticky>
+
+</div>
+<div>
+
+<Sticky color="blue" tilt="right">
+
+**Warning signs in a plan:**
+
+- “It works in the demo” is the only proof
+- one shared account or key for everyone
+- no evals and no traces
+- no way to go back to the old version
+- no answer about prompt injection
+
+</Sticky>
+
+</div>
+</Columns>
+
+<Takeaways>
+
+- Start from your situation, not from a product name.
+- The cloud you already use usually picks the provider. The agent's needs pick the home.
+- Ask about separate conversations, identity, records, release checks and spending limits.
+- Most companies use several homes at the same time.
+
+</Takeaways>

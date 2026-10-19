@@ -1,0 +1,79 @@
+---
+number: 4
+title: "Pack it up"
+kicker: "Chapter four"
+subtitle: "Containers: the box that changed how software moves"
+question: "What is a container, and why does everyone use them?"
+part: "The basics"
+quote: {"who": "maya", "text": "Why does it run on my laptop but not on the server?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+The first time Maya copied Botley onto a cloud server, it crashed straight away. Her laptop had the right version of Python, fourteen extra code libraries and a settings file that nobody remembered. The server had none of those things.
+
+<Sketch name="ch04-1" caption={"“But it works on my machine!”"} />
+
+## An idea from shipping
+
+Before the 1950s, ships were loaded one sack and one barrel at a time. It was slow, and things often got lost or broken. Then the world agreed on one standard steel box. Any crane, ship, train or truck could move it. Nobody needed to know what was inside.
+
+<Sketch name="ch04-2" />
+
+A **software container** does the same thing for software. You put the agent in a sealed box, together with everything it needs to run: the right language version, the libraries and the settings. Any cloud that understands containers can run the box. And it works the same way everywhere.
+
+<Sketch name="ch04-3" caption={"One packed box. As many running copies as you need."} />
+
+### Three words people often mix up
+
+| Word | Kitchen version | What it really is |
+|---|---|---|
+| Image | A packed frozen meal. | The sealed package. It holds the agent and everything it needs. On its own, it does nothing. |
+| Container | The same meal, heated up and served. | A running copy of the image. You can run one copy or five hundred. |
+| Registry | The freezer warehouse. | The place where images are stored, so the cloud can collect them. For example Amazon ECR, Azure Container Registry or Google Artifact Registry. |
+
+<Careful>
+
+**Chips matter.** Computers use different kinds of processor chip. The two main kinds are “x86” (also called amd64) and “ARM”. An image built for one kind will not run on the other. It is like a plug that doesn't fit the socket. AWS AgentCore needs ARM64 images, but many laptops build x86 images. Most teams build for both.
+
+**Never put passwords in the box.** Passwords and secret keys must never go inside the image. Anyone who gets a copy of the image would get the keys too. Instead, the cloud gives the secrets to the running container from a safe storage place, called a vault.
+
+</Careful>
+
+<NoSillyQuestions>
+
+<QA q={"Is a container the same as a virtual machine?"}>
+
+No. A virtual machine is like a whole house, with its own water pipes and electricity. A container is like a flat that shares the building's pipes and electricity. It is lighter, and it starts in seconds.
+
+</QA>
+
+<QA q={"What is Docker?"}>
+
+Docker is the most popular tool for building and running containers. People often say “Docker” when they mean containers in general.
+
+</QA>
+
+<QA q={"Do I always need a container?"}>
+
+No. Console agents need no packing at all. AWS AgentCore also accepts a simple zip file of your code (up to 250 MB) and does the rest. Functions often take plain code too. Containers matter more as things grow, or when you need to run the same thing on any cloud.
+
+</QA>
+
+<QA q={"Why does everyone like them so much?"}>
+
+Because the same box runs the same way on a laptop, in testing and in the cloud, on any provider. So the “it works on my machine” problem goes away, and changing clouds is much easier.
+
+</QA>
+
+</NoSillyQuestions>
+
+<Takeaways>
+
+- A container seals the agent with everything it needs, so it runs the same anywhere.
+- Image is the packed box. Container is a running copy. Registry is the warehouse.
+- Build for the right kind of chip. AWS AgentCore needs ARM64.
+- Secrets never go in the box. The cloud gives them to the agent when it runs.
+
+</Takeaways>

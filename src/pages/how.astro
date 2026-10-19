@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Sketch from '../components/Sketch.astro';
+import { url } from '../lib/url';
+import { allChapters } from '../lib/chapters';
+const chapters = await allChapters();
+---
+<Base title="How to use this notebook" page="how">
+  <section class="chapter">
+    <div class="ch-head"><div><div class="ch-kicker">Before we start</div><h1>How to use this notebook</h1>
+      <div class="ch-sub">Our brains remember pictures and stories much better than walls of text. So that is how this notebook works.</div></div></div>
+    <p>Most cloud guides are written for experts. This notebook is for everyone else. Maybe you are a developer putting your first agent live. Maybe you are a manager who has to approve the plan and the bill. Or maybe you keep hearing words like <i>serverless</i> and <i>runtime</i> and want to know what they mean.</p>
+    <p>You will meet three characters along the way:</p>
+    <Sketch name="cast" />
+    <p class="small"><b>Maya</b> builds agents. <b>Botley</b> is the agent she built. <b>Sam</b> is her boss, and he wants Botley ready for everyone by Monday.</p>
+    <h2>Boxes you will see</h2>
+    <div class="tw"><table class="t">
+      <tr><th style="width:36%">Box</th><th>What it is for</th></tr>
+      <tr><td>There are no silly questions</td><td>Questions people often want to ask but don't.</td></tr>
+      <tr><td>Think about it</td><td>Stop and guess the answer before you read on. It helps you remember.</td></tr>
+      <tr><td>Careful!</td><td>Mistakes that real teams make.</td></tr>
+      <tr><td>Your turn</td><td>A short exercise. The answers are at the back.</td></tr>
+      <tr><td>Face-off</td><td>Two ideas argue with each other.</td></tr>
+      <tr><td>Geek corner</td><td>A little bit of code. You can skip it.</td></tr>
+      <tr><td>Key takeaways</td><td>The main points of the chapter.</td></tr>
+    </table></div>
+    <h2>What's inside</h2>
+    <div class="tw"><table class="t">
+      <tr><th style="width:7%">#</th><th style="width:34%">Chapter</th><th>The question it answers</th></tr>
+      {chapters.map((c) => <tr><td>{c.data.number}</td><td><a href={url(`chapters/${c.id}/`)}>{c.data.title}</a></td><td>{c.data.question}</td></tr>)}
+      <tr><td></td><td><a href={url('back/')}>Back of the book</a></td><td>Word list and exercise answers.</td></tr>
+    </table></div>
+  </section>
+</Base>

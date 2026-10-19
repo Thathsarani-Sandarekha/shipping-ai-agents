@@ -1,0 +1,6 @@
+---
+// A sticky note. color: yellow | blue | pink | green. tilt: left | right.
+const { color = 'yellow', tilt = 'left', width } = Astro.props as { color?: string; tilt?: string; width?: string };
+const cls = ['sticky', color !== 'yellow' ? color : '', tilt === 'right' ? 'r' : ''].join(' ');
+---
+<div class={cls} style={width ? `width:${width};margin:6pt auto 12pt` : undefined}><slot /></div>

@@ -1,0 +1,13 @@
+---
+// The character speech bubble under each chapter title.
+const chars = import.meta.glob('../sketches/chars/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const { who, text } = Astro.props as { who: string; text: string };
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const w = Math.min(560, 40 + text.length * 8.1);
+const svg = `<svg viewBox='0 0 680 84' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='${esc(text).replace(/'/g, '&#39;')}'>${chars[`../sketches/chars/${who}.svg`]}`
+  + `<path d='M104 30 L84 40 L104 46' fill='#fff' stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round'/>`
+  + `<rect x='102' y='12' width='${w}' height='48' rx='16' fill='#fff' stroke='#1b1b1b' stroke-width='2.4'/>`
+  + `<rect x='100' y='32' width='6' height='12' fill='#fff'/>`
+  + `<text class='hk' x='${102 + w / 2}' y='42' text-anchor='middle' font-size='16'>${esc(text)}</text></svg>`;
+---
+<div class="fig strip"><Fragment set:html={svg} /></div>

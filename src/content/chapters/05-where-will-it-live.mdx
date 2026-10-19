@@ -1,0 +1,172 @@
+---
+number: 5
+title: "Where will it live?"
+kicker: "Chapter five"
+subtitle: "Serverless, Kubernetes and managed runtimes. The four homes for an agent, explained simply."
+question: "What do serverless, Kubernetes and managed runtimes mean?"
+part: "The basics"
+quote: {"who": "botley", "text": "There are so many choices. Where should I live?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+Botley is now packed in a container (Chapter 4), and it follows the drive-thru rules (Chapter 3). Next, Maya has to choose where it will live. Cloud providers have hundreds of services. But for agents, there are four main kinds of “home”. Each one gives you a different mix of help from the cloud and control for you.
+
+<Sketch name="ch05-1" />
+
+## Home 1: Console agents (the furnished show home)
+
+You build the agent by filling in forms on the cloud provider's website. You write its instructions, choose which tools it can use, and pick which documents it can read. There is nothing to pack and no servers to manage. Often there is no code at all. You can move in today. But it is a show home, so you can't knock down walls. When the agent needs to do more complex things, you will outgrow it.
+
+## Home 2: Serverless (the taxi)
+
+**“Serverless” does not mean there are no servers.** There are always servers. It means they are someone else's job. You give the cloud your packed agent. The cloud finds a computer to run it on. When many people arrive, it adds more copies. When they leave, it removes them. You pay mostly for what you use.
+
+<Sketch name="ch05-2" />
+
+|   | Owning a car (your own servers) | Taking taxis (serverless) |
+|---|---|---|
+| Who looks after it? | You do: repairs, insurance, servicing. | The taxi company. |
+| When nobody travels | You still pay for the car in your driveway. | You pay nothing. This is called **scaling to zero**. |
+| When 50 people need a ride | You would need to buy 50 cars first. | 50 taxis arrive. This is called **autoscaling**. |
+| The downside | Hard to change, but always ready. | The first taxi may take a moment to arrive. This is called a **cold start**. |
+
+There are two kinds of serverless. The difference matters a lot for agents:
+
+<Sketch name="ch05-3" />
+
+<Columns>
+<div>
+
+### Functions
+
+A small piece of code that wakes up when something happens, like a new email or an uploaded file. It does its job and goes back to sleep. This is great for short tasks. But each run has a time limit. On AWS Lambda, for example, the limit is 15 minutes. It also forgets everything between runs.
+
+<Note>
+
+Examples: AWS Lambda, Azure Functions, Google Cloud Run functions.
+
+</Note>
+
+</div>
+<div>
+
+### Serverless containers
+
+Your whole packed container, running as a service. Like a food truck, it brings its full kitchen, stays as long as needed, and leaves when it is quiet. There is no short time limit, and it works on any cloud. But it is not made for agents. It knows nothing about conversations, memory or users. You have to build those parts yourself.
+
+<Note>
+
+Examples: AWS ECS on Fargate, Azure Container Apps, Google Cloud Run.
+
+</Note>
+
+</div>
+</Columns>
+
+## Home 3: Kubernetes (running your own building)
+
+<Sketch name="ch05-4" caption={"Kubernetes is the control tower for a large number of containers."} />
+
+<Columns>
+<div>
+
+Some companies run hundreds of containers. Someone has to decide which computer each container runs on, restart the ones that crash, and add more when it gets busy. **Kubernetes** is the standard software that does this job.
+
+The cloud providers will run Kubernetes itself for you. On AWS it is called EKS, on Azure AKS, and on Google GKE. But your own team still has to set up, secure and look after everything that runs on it.
+
+</div>
+<div>
+
+<Sticky color="blue" tilt="right">
+
+**Choose Kubernetes when:**
+
+- you already use it for other apps
+- you want to run your own AI models on special chips (GPUs)
+- you need strict control over your network
+- you run a LOT of agents and services
+
+**Don't choose it when** you have one or two agents and no team to look after it.
+
+</Sticky>
+
+</div>
+</Columns>
+
+## Home 4: Managed agent runtime (the serviced apartment for agents)
+
+This is the newest kind of home. It exists because of all the things that went wrong on Botley's Monday. A managed agent runtime is a home built just for agents. You bring your packed agent, made with any tools you like. The building already has the services agents need.
+
+<Sketch name="ch05-5" caption={"A managed agent runtime: a building designed for agents, with the services they need built in."} />
+
+“Each guest gets their own sealed room” is meant quite literally. Each conversation runs in its own tiny, separate virtual machine. AWS calls it a **microVM**. Azure calls it a **VM-isolated sandbox**. If one user's conversation goes wrong or is attacked, the others are safe.
+
+## The four homes side by side
+
+|   | Console agents | Managed agent runtime | Serverless | Kubernetes |
+|---|---|---|---|---|
+| Who does the work? | Mostly the cloud | Mostly the cloud | Shared | Mostly your team |
+| How flexible? | A little | Very | Very | The most |
+| Agent features included? | Some | Many: separate sessions, identity, memory, monitoring | None. You build them. | None. You build them. |
+| Time limits | Set by the provider | Long sessions are fine | Functions: short. Containers: long. | You decide |
+| Easy to move clouds? | No | Partly. The agent moves, the extra services don't. | Yes, for containers | Yes |
+| Best for | Quick tests, simple helpers | Live agents with many users | Agents inside bigger apps, short tasks | Big setups, your own AI models |
+
+<NoSillyQuestions>
+
+<QA q={"Is serverless always cheaper?"}>
+
+It is cheaper when usage is low or goes up and down, because you pay nothing when nobody uses it. If it is busy all day and all night, always-on containers or Kubernetes can cost less. Check the numbers before you decide.
+
+</QA>
+
+<QA q={"What is a cold start? Should I worry?"}>
+
+If a serverless service has scaled down to zero, the first user has to wait a few seconds while it starts again. For a chat agent this can feel slow. You can pay a little extra to keep one copy always running.
+
+</QA>
+
+<QA q={"Can we use more than one home?"}>
+
+Yes, and most companies do. For example, a console agent for a small HR test, a managed runtime for the customer helper, and a function that tidies up documents at night.
+
+</QA>
+
+<QA q={"If managed runtimes are so good, why use anything else?"}>
+
+They tie you more closely to one cloud. They are new and still changing quickly. And for very simple or very large setups, other homes can be cheaper or more flexible.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Which home would you choose first for each situation? Pick from: **console agent, managed agent runtime, function, serverless container** or **Kubernetes**.
+
+1. An insurance office wants every claim form that arrives by email to be read, summarized and saved automatically. <Blank />
+2. A bank wants a helper for 20,000 staff. It books travel for each person, remembers what they like, and keeps a full record of everything. <Blank />
+3. The HR team wants to try a helper that answers questions about the staff handbook. They want it next week, and they have no developers. <Blank />
+4. A big shop already runs 300 services on Kubernetes. It wants to run its own AI model to keep data private. <Blank />
+5. A small company has a “summarize my notes” button in its web app. It must be able to move to another cloud, and it is quiet at night. <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- There are four homes: console agents, managed agent runtimes, serverless and Kubernetes.
+- Serverless means the servers are someone else's job. You pay mostly for what you use.
+- Functions are short and forget things. Serverless containers run your whole box for longer.
+- Kubernetes gives you the most control, but you need a team to run it.
+- Managed agent runtimes include what agents need: separate sessions, identity, memory and monitoring.
+- Most companies use more than one home.
+
+</Takeaways>

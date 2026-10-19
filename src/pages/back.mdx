@@ -1,0 +1,93 @@
+---
+layout: ../layouts/Prose.astro
+title: "Word list and answers"
+kicker: "Back of the book"
+subtitle: "Every tricky word in this notebook, in plain English, and the answers to the exercises"
+slug: back
+---
+
+import { Sticky, Note } from '../components/index.ts';
+
+| Word | What it means |
+|---|---|
+| AI agent | A program that takes a goal, plans the steps and uses tools to get it done. |
+| LLM | Large language model. The AI “brain” that reads, thinks and writes. |
+| Tool | Any system an agent is allowed to use, like search, a calendar, a database or payments. |
+| Prototype | A first working version that shows an idea can work. |
+| Production | The real, live service that customers or staff use every day. |
+| Deploy, deployment target | To deploy is to put software in the cloud so people can use it. The deployment target is the cloud service you put it on. |
+| Service | A program that is always running at a known address, waiting for requests. |
+| API, endpoint | An API is a list of requests one program can make to another. An endpoint is one item on that list. |
+| Port | A numbered “door” on a computer where requests arrive. |
+| Health check | A tiny endpoint that says “I'm working”, so the cloud knows when to restart the agent. |
+| Session, session ID | A session is one conversation. The session ID is the label that keeps it apart from everyone else's. |
+| Image, container, registry | An image is the packed box of software. A container is a running copy of it. A registry is the warehouse where images are kept. |
+| Serverless | The cloud looks after the servers. You pay mostly for what you use. |
+| Function | A short piece of code that runs when something happens, then stops. |
+| Scale to zero, autoscaling | Shrinking to nothing (and costing nothing) when nobody uses it. Growing on its own when it gets busy. |
+| Cold start | The short wait while a service that scaled to zero starts up again. |
+| Kubernetes | Standard software for running and managing a large number of containers. |
+| Managed agent runtime | A cloud service made just for running agents. It includes separate sessions, identity, memory and monitoring. |
+| MicroVM, sandbox | A tiny, sealed-off virtual machine that keeps one conversation apart from all the others. |
+| Identity, OAuth | Identity is who the agent is. OAuth is the standard “valet key” way to let it act for a user. |
+| Least privilege | Giving access to only what is needed, and nothing more. |
+| Prompt injection | Hidden instructions in text that an agent reads, trying to take control of it. |
+| Policy, guardrail | A fixed rule outside the AI that limits what the agent can do. |
+| Trace, observability | A trace is a step-by-step record of one request. Observability means being able to see inside your running system. |
+| Eval, regression | An eval is a set of tests that scores the agent's answers. A regression is a change that made things worse. |
+| CI/CD | The automatic line that tests and releases every change. |
+| Canary, rollback | A canary release goes to a few users first. Rollback means going back to the last good version. |
+| Token | A small piece of text. AI models charge by the token. |
+| Lock-in | How hard it would be to move to another provider later. |
+| Idle timeout | How long a session's room waits for a new message before it is closed. |
+| Short-term, long-term memory | Short-term memory is this conversation, word for word. Long-term memory is useful notes about a user, kept across conversations. |
+| Extraction, consolidation | Picking useful facts out of a conversation, and merging them with the notes you already have. |
+| Namespace, scope | The label that says whose notes these are, so each user's memory stays apart. |
+| Embedding | A list of numbers that describes what a piece of text means, so notes can be searched by meaning. |
+| Inbound, outbound | Inbound is who can call the agent. Outbound is what the agent can reach. |
+| JWT, SigV4 | A JWT is a signed login token that says who a user is. SigV4 is AWS's way of signing a request with AWS keys. |
+| Token vault | A safe place where the cloud keeps users' OAuth valet keys for the agent. |
+| Infrastructure as code | Describing cloud resources in files (CDK, Bicep, Terraform) so the same setup can be built again. |
+
+## Answers
+
+### Chapter 2, Think about it: one account for 5,000 people
+
+- **The bill and the limits.** Every request uses the same account. AI providers limit how many requests one account can make each minute. So at busy times Botley slows down or fails for everyone. And nobody can tell which team spent what.
+- **Everything happens as Maya.** There is no record of who really asked for what. And if Maya leaves or her account is closed, Botley stops working for the whole company.
+
+### Chapter 5, Your turn: choose the home
+
+| # | Answer | Why |
+|---|---|---|
+| 1 | Function | It is short, it starts when an email arrives, and there is no conversation to remember. |
+| 2 | Managed agent runtime | Many users, acting for each person, memory and a full record. This is exactly what it is built for. |
+| 3 | Console agent | The fastest test with no developers. They can move to a runtime later if it grows. |
+| 4 | Kubernetes | They already use it, and running their own AI model needs GPUs and strict control. |
+| 5 | Serverless container | It is part of a bigger app, it must be able to move clouds, and it can scale to zero at night. |
+
+### Chapter 8, Your turn: Priya's three messages
+
+- **Same room:** the 9:00 and 9:10 messages. The gap was only 10 minutes, so the room was still waiting.
+- **At 9:40, no.** After the 9:10 message there were 30 quiet minutes, more than the 15-minute idle timeout. The room was deleted and wiped, and the history inside it went too.
+- **The fix:** keep the conversation outside the room, in AgentCore Memory or a database, filed under Priya's user ID and the session ID.
+
+### Chapter 9, Your turn: where does it go?
+
+| # | Answer | Why |
+|---|---|---|
+| 1 | Long-term | A lasting preference. Useful in every future trip. |
+| 2 | Short-term only | It only matters for this trip. |
+| 3 | Nowhere | Card numbers are secrets. Never keep them in memory. |
+| 4 | Long-term | A lasting fact about the person that affects future bookings, like meals. |
+| 5 | Short-term only | Part of this chat, but not worth keeping. |
+
+### Chapter 12, Your turn: AWS steps in order
+
+Make a project, add Botley's code, try it locally, deploy, test it live.
+
+<Sticky color="yellow" tilt="left">
+
+**Please note.** Cloud services for agents change fast. Names change, new features arrive and limits move. This notebook describes the services as of October 2026. Always check each provider's latest documents and prices before you decide.
+
+</Sticky>

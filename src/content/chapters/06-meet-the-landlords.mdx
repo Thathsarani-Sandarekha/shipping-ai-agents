@@ -1,0 +1,74 @@
+---
+number: 6
+title: "Meet the landlords"
+kicker: "Chapter six"
+subtitle: "AWS, Microsoft Azure and Google Cloud. The same kinds of home, with different names."
+question: "What do AWS, Azure and Google Cloud offer, and when should you pick each one?"
+part: "The basics"
+quote: {"who": "sam", "text": "AWS, Azure or Google. Which one is right for us?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+Each of the three big cloud providers offers all four kinds of home from Chapter 5. The names are different and some details are different. Some providers suit some companies better than others. First, here is a table to translate the names. Then we look at each provider.
+
+<Sketch name="ch06-1" />
+
+| Kind of home | AWS | Microsoft Azure | Google Cloud |
+|---|---|---|---|
+| Managed agent runtime | Bedrock AgentCore Runtime | Foundry Hosted Agents | Agent Runtime (formerly Vertex AI Agent Engine) |
+| Console agents | Bedrock Agents | Foundry prompt-based agents | Agent Designer, in the Gemini Enterprise app |
+| Functions | Lambda | Azure Functions | Cloud Run functions |
+| Serverless containers | ECS on Fargate | Container Apps | Cloud Run |
+| Classic web hosting | Not covered here | App Service | Not covered here |
+| Kubernetes | EKS | AKS | GKE |
+
+<Sticky color="yellow" tilt="left" width="70%">
+
+The biggest reason for choosing a provider is usually not the agent. It is **which cloud your company already uses**. Your contracts, security setup, data and staff skills are already there.
+
+</Sticky>
+
+<ProviderBand name={"Amazon Web Services (AWS)"} color="#b85c00">A good fit if you already use AWS, or you want the widest choice of AI models and agent tools.</ProviderBand>
+
+<ProviderCard name={"Amazon Bedrock AgentCore Runtime"} tag={"Managed agent runtime"} kind={"t-runtime"} like={"AWS’s serviced apartment for agents"} plain={"AWS's home built just for AI agents. Developers bring an agent made with any tool, and AWS runs it safely for many users."} when={"You are putting agents live for many users. Tasks may take a long time. Security and control matter. Different teams use different tools to build agents."} gives={"Each conversation runs in its own sealed microVM. You can get always-on computers for long sessions. There are extra services for memory, signing in to other systems for a user, connecting tools, rules about what the agent can do, monitoring and quality checks."} careful={"It is new and changing quickly, including its developer tools. It only works on AWS, so moving away later takes work."} />
+
+<ProviderCard name={"Amazon Bedrock Agents"} tag={"Console agent"} kind={"t-console"} like={"a furnished show home"} plain={"You build an agent by filling in settings on the AWS website: its instructions, what it can do, and which documents it can read."} when={"You want a quick test or a simple helper with a clear job, and you don't have many developers."} gives={"The fastest way to start on AWS. AWS handles everything. It connects easily to your company's documents."} careful={"Less flexible. It is hard to set up complex behavior with settings only. Many teams move to AgentCore as they grow."} />
+
+<ProviderCard name={"AWS Lambda"} tag={"Function"} kind={"t-func"} like={"the motion-sensor light"} plain={"Runs a small piece of code only when something happens. You pay for each run."} when={"The agent does short jobs that start from an event. For example, summarize a document when someone uploads it."} gives={"No servers to manage. It grows on its own. Very cheap when it is not used much."} careful={"Each run stops after 15 minutes at most. It forgets everything between runs, unless you add storage."} />
+
+<ProviderCard name={"Amazon ECS on AWS Fargate"} tag={"Serverless container"} kind={"t-cont"} like={"the food truck"} plain={"Runs your packed agent as a service that is always available. You don't manage any servers."} when={"The agent is part of a bigger app, you want to be able to move clouds, or usage is steady."} gives={"No short time limits. Full control over the box. Fits with the AWS network and security you already have."} careful={"You have to build separate sessions, memory and user sign-in yourself."} />
+
+<ProviderCard name={"Amazon EKS"} tag={"Kubernetes"} kind={"t-k8s"} like={"run your own building"} plain={"Kubernetes, run by AWS, for running many apps at a large scale."} when={"You already use Kubernetes, want to run your own AI models on GPUs, or need strict control of your network."} gives={"The most control. Saves money at large scale. Easier to move between clouds."} careful={"You need a skilled team to run it. It takes the most effort."} />
+
+<ProviderBand name={"Microsoft Azure"} color="#0f6cbd">A good fit if your company runs on Microsoft 365, Microsoft Entra ID (company sign-in) and other Microsoft tools.</ProviderBand>
+
+<ProviderCard name={"Microsoft Foundry Hosted Agents"} tag={"Managed agent runtime"} kind={"t-runtime"} like={"Microsoft’s serviced apartment for agents"} plain={"Microsoft's home for AI agents that are built with code. Developers pack the agent, and Microsoft runs it."} when={"Your company mostly uses Microsoft. You are putting agents live, and your security team needs to manage each agent's identity."} gives={"Each conversation runs in its own sealed sandbox. Every agent gets its own Microsoft Entra identity and web address automatically. Works with many agent-building tools, and connects to Foundry's AI models, tools and tests."} careful={"It is new and changing quickly. It only works on Azure."} />
+
+<ProviderCard name={"Foundry prompt-based agents"} tag={"Console agent"} kind={"t-console"} like={"a furnished show home"} plain={"You build an agent on the Foundry website by writing instructions and choosing tools. No code."} when={"A quick test or a simple helper. Business teams can build it without developers."} gives={"The fastest way to start on Azure. Microsoft handles everything."} careful={"You can't change much. Move to Hosted Agents when the job gets complex."} />
+
+<ProviderCard name={"Azure Functions"} tag={"Function"} kind={"t-func"} like={"the motion-sensor light"} plain={"Small pieces of code that run when something happens, like a new email, a new message or a set time."} when={"Short jobs and automatic tasks that start from an event."} gives={"Pay for what you use. It grows on its own. Many ready-made triggers. A feature called Durable Functions can handle longer tasks with many steps."} careful={"Made for short tasks. Remembering conversations needs extra services."} />
+
+<ProviderCard name={"Azure App Service"} tag={"Web hosting"} kind={"t-web"} like={"a classic rented office"} plain={"Microsoft's long-running service for hosting websites and web apps."} when={"A simple helper that lives on a web page, or your team already hosts its web apps here."} gives={"Easy to deploy. Company sign-in with Entra ID is built in. Separate test and live versions."} careful={"No special features for agents. It grows by adding whole servers, not per conversation."} />
+
+<ProviderCard name={"Azure Container Apps"} tag={"Serverless container"} kind={"t-cont"} like={"the food truck"} plain={"Runs your packed agent as a service, without the hard parts of Kubernetes."} when={"You are building your own agent app, it needs to be able to move clouds, or the agent runs next to a website."} gives={"Scales to zero when nobody uses it. No short time limits. Full control over the box."} careful={"You build the agent features yourself."} />
+
+<ProviderCard name={"Azure Kubernetes Service (AKS)"} tag={"Kubernetes"} kind={"t-k8s"} like={"run your own building"} plain={"Kubernetes, run by Microsoft, for large-scale apps."} when={"You already use Kubernetes, want to run your own AI models, or need strict control of your network."} gives={"The most control. Saves money at large scale. Easier to move between clouds."} careful={"You need a skilled team to run it."} />
+
+<ProviderBand name={"Google Cloud"} color="#1e7e34">A good fit if you use Google's Gemini models and data tools, or build agents with Google's Agent Development Kit (ADK).</ProviderBand>
+
+<ProviderCard name={"Agent Runtime (formerly Vertex AI Agent Engine)"} tag={"Managed agent runtime"} kind={"t-runtime"} like={"Google’s serviced apartment for agents"} plain={"Google's fully managed service for running AI agents. It works best with agents built using Google's Agent Development Kit (ADK)."} when={"You use Google Cloud and Gemini, your agents are built with ADK, and you want as little server work as possible."} gives={"It grows on its own. It works with Agent Platform Sessions (conversations) and Memory Bank (long-term memory). It connects to Google's AI models, tests and monitoring."} careful={"Easiest with ADK. Agents built with other tools need more setup. In 2026 Google renamed Vertex AI to Gemini Enterprise Agent Platform, so you will see both old and new names."} />
+
+<ProviderCard name={"Cloud Run"} tag={"Serverless container"} kind={"t-cont"} like={"the food truck"} plain={"Runs your packed agent as a service that scales to zero when nobody is using it."} when={"You want the freedom of containers without much server work, you use any agent tool, or you also need a website."} gives={"Scales to zero. Pay for what you use. Any language or tool. Google's agent tools can deploy to it directly."} careful={"You build the agent features yourself. Signing in to other systems for a user needs extra work."} />
+
+<ProviderCard name={"Google Kubernetes Engine (GKE)"} tag={"Kubernetes"} kind={"t-k8s"} like={"run your own building"} plain={"Kubernetes, run by Google, for large-scale apps."} when={"You need exact control, or want to run open-source AI models on GPUs."} gives={"The most control. Saves money at large scale. Easier to move between clouds."} careful={"You need a skilled team to run it."} />
+
+<Takeaways>
+
+- Every provider offers every kind of home, with different names.
+- The cloud you already use is usually the deciding factor.
+- Each provider's agent runtime works best with that provider's own sign-in, security and AI tools.
+- Containers and Kubernetes are the easiest to move between providers.
+
+</Takeaways>

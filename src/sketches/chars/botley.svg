@@ -1,0 +1,10 @@
+<g transform='translate(46,52) scale(0.42)' stroke='#1b1b1b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>
+<line x1='0' y1='-42' x2='0' y2='-26'/><circle cx='0' cy='-46' r='5' fill='#f5c400'/>
+<rect x='-32' y='-26' width='64' height='52' rx='14' fill='#ffffff'/>
+<circle cx='-13' cy='-3' r='6' fill='#1b1b1b'/><circle cx='13' cy='-3' r='6' fill='#1b1b1b'/>
+<circle cx='-11' cy='-5' r='1.8' fill='#fff' stroke='none'/><circle cx='15' cy='-5' r='1.8' fill='#fff' stroke='none'/>
+<path d='M-12 14 q12 9 24 0' fill='none'/>
+<rect x='-26' y='30' width='52' height='42' rx='10' fill='#ffffff'/>
+<rect x='-12' y='40' width='24' height='14' rx='3' fill='#d9ecff'/>
+<path d='M-26 42 l-16 14 M26 42 l16 14' fill='none'/>
+<path d='M-12 72 v14 M12 72 v14' fill='none'/></g>

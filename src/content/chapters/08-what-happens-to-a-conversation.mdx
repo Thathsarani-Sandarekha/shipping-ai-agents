@@ -1,0 +1,154 @@
+---
+number: 8
+title: "What happens to a conversation?"
+kicker: "Chapter eight · under the hood"
+subtitle: "Sessions explained: where a chat lives, how long it lives, and what happens when it ends"
+question: "Where does a chat live, how long, and what happens when it ends?"
+part: "Under the hood"
+quote: {"who": "maya", "text": "Where does Botley's conversation actually live?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+In Chapter 3 we said each request carries an “order number”, the session ID. Now let's open the hood and see what the cloud really does with it. This matters a lot, because it decides whether Botley remembers what Priya said five minutes ago.
+
+## One word, two meanings
+
+Here is the most confusing thing about sessions. People use the word “session” for two different things:
+
+<Sketch name="ch08-1" caption={"The word “session” can mean the room, the diary, or both. Always ask which one."} />
+
+<Columns>
+<div>
+
+### The room
+
+A private piece of computer that runs the agent for one conversation. On AWS it is a **microVM**. On Azure it is a **sandbox**. Nobody else's conversation can see inside it. But it is temporary.
+
+</div>
+<div>
+
+### The diary
+
+The record of the conversation: every message, every tool the agent used, and every answer. To keep a conversation going, the agent needs the diary. The diary must be stored somewhere safe, or it is lost.
+
+</div>
+</Columns>
+
+Each cloud mixes these two ideas in a different way. That is why the same word can mean different things in different documents.
+
+## A day in the life of a room (AWS)
+
+Let's follow Priya on AWS Bedrock AgentCore Runtime, using the default settings.
+
+<Sketch name="ch08-2" />
+
+1. **Message 1 arrives** with a new session ID. AgentCore creates a brand-new microVM just for this session. This takes a moment, so the first reply is a little slower.
+2. **The room goes idle.** After Botley answers, the room stays ready and waits. It keeps its memory and files.
+3. **Message 2 arrives** with the *same* session ID, 10 minutes later. AgentCore sends it to the same room. It is fast, because nothing needs to start.
+4. **Nothing happens for 15 minutes.** AgentCore deletes the room and wipes its memory clean. This is the **idle timeout**. The default is 15 minutes, and you can set it from 1 minute up to 8 hours.
+5. **Message 3 arrives** at 9:40 with the old session ID. A new, empty room is created. Anything that was only inside the old room is gone.
+
+There is also a **maximum lifetime**. Even a busy room is closed after 8 hours at most. So on AWS, the room is never a safe place to keep the diary. You keep the diary in a memory service or a database (Chapter 9).
+
+## How each cloud handles sessions
+
+|   | AWS AgentCore Runtime | Azure Foundry Hosted Agents | Google Agent Runtime |
+|---|---|---|---|
+| What “session” means | The room: one microVM per session. | The room: one sandbox per session. The diary is a separate thing called a “conversation”. | The diary: a stored list of messages and actions, called “events”, plus a small “state”. |
+| Who makes the ID? | Your app. It must be at least 33 characters long. | Foundry makes it on the first call. Your app sends it back next time. | Your app, or Google makes one if you don't give one. Each session belongs to a user ID. |
+| Idle timeout | 15 minutes by default. You can change it. | 15 minutes by default. You can change it. | Not a room, so no idle timeout for the diary. |
+| When the room closes | Deleted and wiped. Its contents are gone. | Paused. Its state is saved, and comes back when the session is used again. | Not a room. The diary stays stored until you delete it. |
+| Where the diary lives | Not kept for you. Use AgentCore Memory or your own database. | With the Responses protocol, Foundry stores the conversation. With Invocations, you store it yourself. | In Agent Platform Sessions. With ADK, this is set up for you after deploy. |
+
+<Sticky color="blue" tilt="left" width="78%">
+
+Same idea, three styles. AWS gives you a clean room and expects you to keep the diary. Azure pauses the room and can keep the diary. Google keeps the diary for you.
+
+</Sticky>
+
+## Two IDs work together
+
+A session ID alone is not enough. The agent also needs to know *who* the user is. Think of a hotel key card:
+
+<Sketch name="ch08-3" />
+
+The **user ID** says who the person is. The **session ID** says which conversation this is. One user can have many sessions, like one guest booking many stays. Memory (Chapter 9) is filed under the user ID. Conversations are filed under the session ID.
+
+<Careful>
+
+**Never let users choose or guess a session ID.** Your app should create a long, random ID on the server (a UUID is a good choice), link it to the signed-in user, and check that link on every request. If IDs are short or predictable, someone could join another person's conversation.
+
+**Take the user ID from the login, never from the chat.** If the agent believes a user who types “I am the finance director”, the wrong person may see the wrong memory.
+
+</Careful>
+
+<Geek>
+
+Calling Botley on AWS AgentCore from Python, with a session ID. Send the same `session_id` with every message in the same conversation.
+
+```python
+import boto3, json, uuid
+
+client = boto3.client("bedrock-agentcore")
+session_id = str(uuid.uuid4())        # 36 characters, random
+
+reply = client.invoke_agent_runtime(
+    agentRuntimeArn=AGENT_ARN,          # Botley's address on AWS
+    runtimeSessionId=session_id,        # the room for this chat
+    payload=json.dumps({"prompt": "Book me a trip to Lisbon"}).encode(),
+)
+```
+
+Inside the agent, AgentCore passes the same ID in a header called `X-Amzn-Bedrock-AgentCore-Runtime-Session-Id`.
+
+</Geek>
+
+<NoSillyQuestions>
+
+<QA q={"Is a session the same as being logged in?"}>
+
+No. Logging in proves who you are. A session is one conversation. You can be logged in and have several sessions open in different tabs.
+
+</QA>
+
+<QA q={"How long should the idle timeout be?"}>
+
+Shorter means rooms close sooner and leftover data is wiped sooner. Longer means a user who comes back after a break still finds a fast, ready room. Choose based on how people really use your agent.
+
+</QA>
+
+<QA q={"What if the agent is still busy after it has answered?"}>
+
+On AWS, the health check can report a status called HealthyBusy. That tells AgentCore the session is still active, so the room is not closed while background work runs.
+
+</QA>
+
+<QA q={"Why not just make one big room for everyone?"}>
+
+Because then everyone's data would be in one place. That is exactly how Priya's hotel choices ended up in Tom's booking. One room per session keeps people apart.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Priya uses Botley on AWS AgentCore with the default settings. She sends messages at **9:00**, **9:10** and **9:40**, all with the same session ID. The agent keeps the chat history only in the room's memory.
+
+1. Which messages are handled by the same room? <Blank />
+2. At 9:40, does Botley remember what Priya said at 9:00? Why? <Blank />
+3. What should Maya change so Botley always remembers? <Blank />
+
+</YourTurn>
+
+<Takeaways>
+
+- “Session” can mean the room (the computer) or the diary (the conversation record).
+- On AWS, a room closes after 15 idle minutes by default, and 8 hours at most. Then it is wiped.
+- On Azure, an idle room is paused and its state is saved. Google stores the diary for you.
+- The user ID says who. The session ID says which conversation. You need both.
+- Create session IDs on the server. Never trust IDs or identities typed into the chat.
+
+</Takeaways>

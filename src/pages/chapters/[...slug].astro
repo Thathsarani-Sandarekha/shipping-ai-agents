@@ -1,0 +1,23 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Strip from '../../components/Strip.astro';
+import { allChapters } from '../../lib/chapters';
+
+export async function getStaticPaths() {
+  const chapters = await allChapters();
+  return chapters.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const checked = d.lastChecked ? d.lastChecked.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : null;
+---
+<Base title={`Chapter ${d.number}: ${d.title}`} page={`ch-${d.number}`} description={d.question}>
+  <section class="chapter">
+    <div class="ch-head"><div class="ch-num">{d.number}</div><div><div class="ch-kicker">{d.kicker}</div><h1>{d.title}</h1><div class="ch-sub">{d.subtitle}</div></div></div>
+    {d.quote && <Strip who={d.quote.who} text={d.quote.text} />}
+    <Content />
+    {checked && <p class="checked">Facts in this chapter last checked on {checked}.</p>}
+  </section>
+</Base>

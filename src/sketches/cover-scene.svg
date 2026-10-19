@@ -1,0 +1,66 @@
+<svg viewBox='0 0 640 480'>
+<defs><marker id='ah' viewBox='0 0 10 10' refX='8' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'>
+<path d='M0 0 L10 5 L0 10' fill='none' stroke='#23406e' stroke-width='2'/></marker>
+<marker id='ak' viewBox='0 0 10 10' refX='8' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'>
+<path d='M0 0 L10 5 L0 10' fill='none' stroke='#1b1b1b' stroke-width='2'/></marker></defs>
+<g stroke='#1b1b1b' stroke-width='2' fill='none' stroke-linecap='round'>
+<path d='M196 232 q6 -6 12 0 q6 -6 12 0'/><path d='M226 220 q5 -5 10 0 q5 -5 10 0'/><path d='M420 224 q6 -6 12 0 q6 -6 12 0'/>
+</g>
+<path d='M500 200 q-26 0 -26 -24 q0 -26 30 -26 q8 -30 44 -28 q30 -22 60 4 q32 2 30 30 q18 10 6 32 q-4 12 -24 12z' fill='#fff' stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'/>
+<path d='M160 448 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 V480 H160z' fill='#d9ecff' stroke='#1b1b1b' stroke-width='2'/>
+<path d='M210 462 q10 -6 20 0 M300 466 q10 -6 20 0 M390 462 q10 -6 20 0' fill='none' stroke='#23406e' stroke-width='1.6'/>
+<g stroke='#1b1b1b' stroke-width='2.6' stroke-linejoin='round'>
+<path d='M0 300 H170 l-8 24 l12 28 l-10 30 l8 34 l-10 30 l6 34 H0z' fill='#f4f1e6'/>
+<path d='M640 300 H470 l8 22 l-12 30 l10 30 l-8 32 l12 34 l-6 32 H640z' fill='#eaf1fc'/>
+</g>
+<g stroke='#1b1b1b' stroke-width='1.6' fill='none' stroke-linecap='round'>
+<path d='M14 300 l4 -8 l3 8 M60 300 l3 -7 l3 7 M150 300 l3 -8 l3 8 M480 300 l3 -7 l3 7 M626 300 l3 -8 l3 8'/>
+<path d='M20 420 q14 -8 28 0 M110 440 q12 -6 24 0 M540 430 q14 -8 28 0 M600 450 q12 -6 24 0'/>
+</g>
+<g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'>
+<path d='M166 300 v-56 M474 300 v-56' stroke-width='5'/>
+<path d='M166 244 l18 6 l-18 6z M474 244 l18 6 l-18 6z' fill='#f5c400' stroke-width='1.8'/>
+</g>
+<path d='M166 254 Q320 300 474 254' fill='none' stroke='#1b1b1b' stroke-width='2.2'/>
+<path d='M166 300 Q320 380 474 300' fill='none' stroke='#1b1b1b' stroke-width='2.2'/>
+<rect x='177' y='311.8' width='34' height='9' rx='2' fill='#e8d9b5' stroke='#1b1b1b' stroke-width='2'/><line x1='194' y1='267.5' x2='194' y2='311.8' stroke='#1b1b1b' stroke-width='1.4'/><text class='h' x='194' y='337.8' text-anchor='middle' font-size='12.5'>memory</text><rect x='219' y='327.5' width='34' height='9' rx='2' fill='#e8d9b5' stroke='#1b1b1b' stroke-width='2'/><line x1='236' y1='285.6' x2='236' y2='327.5' stroke='#1b1b1b' stroke-width='1.4'/><text class='h' x='236' y='371.5' text-anchor='middle' font-size='12.5'>identity</text><rect x='261' y='336.9' width='34' height='9' rx='2' fill='#e8d9b5' stroke='#1b1b1b' stroke-width='2'/><line x1='278' y1='296.4' x2='278' y2='336.9' stroke='#1b1b1b' stroke-width='1.4'/><text class='h' x='278' y='362.9' text-anchor='middle' font-size='12.5'>safety</text><rect x='303' y='340.0' width='34' height='9' rx='2' fill='#e8d9b5' stroke='#1b1b1b' stroke-width='2'/><line x1='320' y1='300.0' x2='320' y2='340.0' stroke='#1b1b1b' stroke-width='1.4'/><text class='h' x='320' y='384.0' text-anchor='middle' font-size='12.5'>records</text><rect x='345' y='336.9' width='34' height='9' rx='2' fill='#e8d9b5' stroke='#1b1b1b' stroke-width='2'/><line x1='362' y1='296.4' x2='362' y2='336.9' stroke='#1b1b1b' stroke-width='1.4'/><text class='h' x='362' y='362.9' text-anchor='middle' font-size='12.5'>tests</text><rect x='387' y='327.5' width='34' height='9' rx='2' fill='#e8d9b5' stroke='#1b1b1b' stroke-width='2'/><line x1='404' y1='285.6' x2='404' y2='327.5' stroke='#1b1b1b' stroke-width='1.4'/><text class='h' x='404' y='371.5' text-anchor='middle' font-size='12.5'>updates</text><rect x='429' y='311.8' width='34' height='9' rx='2' fill='#e8d9b5' stroke='#1b1b1b' stroke-width='2'/><line x1='446' y1='267.5' x2='446' y2='311.8' stroke='#1b1b1b' stroke-width='1.4'/><text class='h' x='446' y='337.8' text-anchor='middle' font-size='12.5'>cost</text>
+<g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'><rect x='62' y='278' width='92' height='6' fill='#e8d9b5'/><path d='M70 284 v16 M146 284 v16'/></g>
+<g transform='translate(108,250) scale(0.6)' stroke='#1b1b1b' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'>
+<rect x='-50' y='-40' width='100' height='66' rx='6' fill='#fff'/><rect x='-42' y='-32' width='84' height='50' rx='3' fill='#eef4ff'/>
+<path d='M-64 30 h128 l-8 10 h-112z' fill='#e4e4e4'/>
+<circle cx='-12' cy='-12' r='3' fill='#1b1b1b'/><circle cx='12' cy='-12' r='3' fill='#1b1b1b'/><path d='M-10 6 q10 8 20 0' fill='none'/></g>
+<g transform='translate(34,254) scale(0.5)' stroke='#1b1b1b' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'>
+<path d='M-28 78 q0 -46 28 -46 q28 0 28 46z' fill='#ffd9e2'/>
+<circle cx='0' cy='0' r='20' fill='#fff'/><path d='M-19 -2 q0 -24 19 -24 q19 0 19 24 q-6 -12 -19 -13 q-13 1 -19 13z' fill='#5a3a1a'/><path d='M-19 -4 q-4 22 2 30 M19 -4 q4 22 -2 30' fill='none' stroke='#5a3a1a' stroke-width='5'/>
+<circle cx='-7' cy='-2' r='2' fill='#1b1b1b'/><circle cx='7' cy='-2' r='2' fill='#1b1b1b'/>
+<path d='M-7 6 q7 6 14 0' fill='none'/></g>
+<path d='M48 262 l10 -14' stroke='#1b1b1b' stroke-width='2.4' stroke-linecap='round'/>
+<g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'><rect x='492' y='190' width='44' height='110' rx='3' fill='#fafafa'/><rect x='494' y='194' width='40' height='16' rx='2' fill='#b85c00'/><g stroke-width='1.2'><rect x='500' y='218' width='10' height='10' fill='#fff'/><rect x='516' y='218' width='10' height='10' fill='#fff'/><rect x='500' y='236' width='10' height='10' fill='#fff'/><rect x='516' y='236' width='10' height='10' fill='#fff'/><rect x='500' y='254' width='10' height='10' fill='#fff'/><rect x='516' y='254' width='10' height='10' fill='#fff'/></g></g><text x='514' y='206' text-anchor='middle' font-family='Sans' font-weight='700' font-size='8.6' fill='#fff'>AWS</text><g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'><rect x='542' y='160' width='44' height='140' rx='3' fill='#fafafa'/><rect x='544' y='164' width='40' height='16' rx='2' fill='#0f6cbd'/><g stroke-width='1.2'><rect x='550' y='188' width='10' height='10' fill='#fff'/><rect x='566' y='188' width='10' height='10' fill='#fff'/><rect x='550' y='206' width='10' height='10' fill='#fff'/><rect x='566' y='206' width='10' height='10' fill='#fff'/><rect x='550' y='224' width='10' height='10' fill='#fff'/><rect x='566' y='224' width='10' height='10' fill='#fff'/><rect x='550' y='242' width='10' height='10' fill='#fff'/><rect x='566' y='242' width='10' height='10' fill='#fff'/><rect x='550' y='260' width='10' height='10' fill='#fff'/><rect x='566' y='260' width='10' height='10' fill='#fff'/></g></g><text x='564' y='176' text-anchor='middle' font-family='Sans' font-weight='700' font-size='8.6' fill='#fff'>AZURE</text><g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'><rect x='592' y='180' width='44' height='120' rx='3' fill='#fafafa'/><rect x='594' y='184' width='40' height='16' rx='2' fill='#1e7e34'/><g stroke-width='1.2'><rect x='600' y='208' width='10' height='10' fill='#fff'/><rect x='616' y='208' width='10' height='10' fill='#fff'/><rect x='600' y='226' width='10' height='10' fill='#fff'/><rect x='616' y='226' width='10' height='10' fill='#fff'/><rect x='600' y='244' width='10' height='10' fill='#fff'/><rect x='616' y='244' width='10' height='10' fill='#fff'/><rect x='600' y='262' width='10' height='10' fill='#fff'/><rect x='616' y='262' width='10' height='10' fill='#fff'/></g></g><text x='614' y='196' text-anchor='middle' font-family='Sans' font-weight='700' font-size='8.6' fill='#fff'>GOOGLE</text>
+<g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'><rect x='478' y='284' width='22' height='16' rx='3' fill='#fff1a6'/><path d='M485.26 284 v16 M492.52 284 v16' stroke-width='1.4'/></g><g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'><rect x='478' y='268' width='22' height='16' rx='3' fill='#d9ecff'/><path d='M485.26 268 v16 M492.52 268 v16' stroke-width='1.4'/></g>
+<g stroke='#1b1b1b' stroke-width='1.8'><circle cx='500' cy='330' r='6' fill='#fff'/><path d='M492 352 q0 -14 8 -14 q8 0 8 14z' fill='#ffd9e2'/></g><g stroke='#1b1b1b' stroke-width='1.8'><circle cx='517' cy='338' r='6' fill='#fff'/><path d='M509 360 q0 -14 8 -14 q8 0 8 14z' fill='#d9ecff'/></g><g stroke='#1b1b1b' stroke-width='1.8'><circle cx='534' cy='330' r='6' fill='#fff'/><path d='M526 352 q0 -14 8 -14 q8 0 8 14z' fill='#dcf5d6'/></g><g stroke='#1b1b1b' stroke-width='1.8'><circle cx='551' cy='338' r='6' fill='#fff'/><path d='M543 360 q0 -14 8 -14 q8 0 8 14z' fill='#fff1a6'/></g><g stroke='#1b1b1b' stroke-width='1.8'><circle cx='568' cy='330' r='6' fill='#fff'/><path d='M560 352 q0 -14 8 -14 q8 0 8 14z' fill='#e8defa'/></g><g stroke='#1b1b1b' stroke-width='1.8'><circle cx='585' cy='338' r='6' fill='#fff'/><path d='M577 360 q0 -14 8 -14 q8 0 8 14z' fill='#ffd9e2'/></g><g stroke='#1b1b1b' stroke-width='1.8'><circle cx='602' cy='330' r='6' fill='#fff'/><path d='M594 352 q0 -14 8 -14 q8 0 8 14z' fill='#d9ecff'/></g><g stroke='#1b1b1b' stroke-width='1.8'><circle cx='619' cy='338' r='6' fill='#fff'/><path d='M611 360 q0 -14 8 -14 q8 0 8 14z' fill='#dcf5d6'/></g>
+<g transform='translate(312,262) scale(0.78)' stroke='#1b1b1b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>
+<line x1='0' y1='-42' x2='0' y2='-26'/><circle cx='0' cy='-46' r='5' fill='#f5c400'/>
+<rect x='-32' y='-26' width='64' height='52' rx='14' fill='#ffffff'/>
+<circle cx='-13' cy='-3' r='6' fill='#1b1b1b'/><circle cx='13' cy='-3' r='6' fill='#1b1b1b'/>
+<circle cx='-11' cy='-5' r='1.8' fill='#fff' stroke='none'/><circle cx='15' cy='-5' r='1.8' fill='#fff' stroke='none'/>
+<path d='M-12 14 q12 9 24 0' fill='none'/>
+<rect x='-26' y='30' width='52' height='42' rx='10' fill='#ffffff'/>
+<rect x='-12' y='40' width='24' height='14' rx='3' fill='#d9ecff'/>
+<path d='M-26 42 l-16 14 M26 42 l16 14' fill='none'/>
+<path d='M-12 72 v14 M12 72 v14' fill='none'/></g>
+<g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'><rect x='336' y='298' width='44' height='32' rx='4' fill='#f5c400'/><path d='M348 298 v-7 h20 v7' fill='none'/></g>
+<text class='hk' x='358' y='320' text-anchor='middle' font-size='11'>PROD</text>
+<g transform='rotate(-5 106.0 70.0)'><rect x='11' y='30' width='196' height='88' fill='#000' opacity='.08'/><rect x='8' y='26' width='196' height='88' fill='#fff1a6'/><text class='hk' x='20' y='52' font-size='16'>Why does it work for me</text><text class='hk' x='20' y='73' font-size='16'>but break for</text><text class='hk' x='20' y='94' font-size='16'>5,000 people?</text></g>
+<g transform='rotate(4 327.0 47.0)'><rect x='239' y='18' width='182' height='66' fill='#000' opacity='.08'/><rect x='236' y='14' width='182' height='66' fill='#d9ecff'/><text class='hk' x='248' y='40' font-size='16'>What does</text><text class='hk' x='248' y='61' font-size='16'>&#8220;serverless&#8221; mean?</text></g>
+<g transform='rotate(-3 98.0 173.0)'><rect x='17' y='144' width='168' height='66' fill='#000' opacity='.08'/><rect x='14' y='140' width='168' height='66' fill='#dcf5d6'/><text class='hk' x='26' y='166' font-size='16'>Which cloud</text><text class='hk' x='26' y='187' font-size='16'>should we pick?</text></g>
+<g transform='rotate(5 333.0 153.0)'><rect x='253' y='124' width='166' height='66' fill='#000' opacity='.08'/><rect x='250' y='120' width='166' height='66' fill='#ffd9e2'/><text class='hk' x='262' y='146' font-size='16'>Can it act for</text><text class='hk' x='262' y='167' font-size='16'>me safely?</text></g>
+<text class='m' x='72' y='350' text-anchor='middle' font-size='17'>PROTOTYPE</text>
+<text class='h' x='72' y='370' text-anchor='middle' font-size='14'>one user: Maya</text>
+<text class='m' x='560' y='410' text-anchor='middle' font-size='17'>PRODUCTION</text>
+<text class='h' x='560' y='388' text-anchor='middle' font-size='14'>5,000 real users</text>
+<text class='h' x='320' y='424' text-anchor='middle' font-size='15'>the bridge you build in this notebook</text>
+<path d='M250 412 q-26 -10 -32 -32' fill='none' stroke='#23406e' stroke-width='2' marker-end='url(#ah)'/>
+<text class='h' x='560' y='52' text-anchor='middle' font-size='15'>the cloud:</text>
+<text class='h' x='560' y='70' text-anchor='middle' font-size='15'>AWS, Azure, Google</text>
+<path d='M560 78 q4 20 0 40' fill='none' stroke='#23406e' stroke-width='2' marker-end='url(#ah)'/>
+</svg>

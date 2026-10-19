@@ -1,0 +1,125 @@
+---
+number: 3
+title: "Giving your agent an address"
+kicker: "Chapter three"
+subtitle: "How an agent goes from “a program on Maya’s laptop” to “a service anyone can use”"
+question: "How do other people start using your agent?"
+part: "The basics"
+quote: {"who": "maya", "text": "How will 5,000 people even reach Botley?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+On Maya's laptop, Botley only runs when Maya starts it and types to it. To help 5,000 people, Botley must become a **service**. A service is a program that is always running. It waits at a known address, and it answers requests that follow agreed rules. These agreed rules are called a **contract**.
+
+<Sketch name="ch03-1" caption={"Turning an agent into a service is a lot like opening a drive-thru."} />
+
+A drive-thru works because everyone knows the rules. You drive up to the window, you read the menu, you order, and you get a number. An agent service works the same way. The contract has four parts:
+
+<Columns>
+<div>
+
+### The window (address and port)
+
+This is where requests arrive. One computer can have many windows. Each one has a number, called a **port**. The cloud expects to find your agent at one exact port.
+
+### The menu (endpoint)
+
+This is the place you send your request to, for example `/invocations`. You send what you want. The agent sends back its answer.
+
+</div>
+<div>
+
+### The “open” sign (health check)
+
+A very small endpoint, such as `/ping`, that just says “I'm working and ready”. The cloud checks it all the time. If there is no answer, the cloud restarts the agent.
+
+### The order number (session ID)
+
+A label on each request that says which conversation it belongs to. This is how Priya's trip never ends up in Tom's chat.
+
+</div>
+</Columns>
+
+## Each cloud has its own drive-thru rules
+
+| Agent service | Window | Where requests go | Other rules |
+|---|---|---|---|
+| AWS Bedrock AgentCore Runtime | Port 8080 | `/invocations`, with the health check at `/ping` | The agent must be built for ARM64 chips. Tool servers that use MCP use port 8000. |
+| Azure Foundry Hosted Agents | Port 8088 | `/responses` for chat, or `/invocations` for anything else | Microsoft gives you free code libraries that set up the window for you. |
+| Google Agent Runtime (formerly Vertex AI Agent Engine) | Google sets it up | Through Google's Agent Development Kit (ADK) or SDK | Works best when the agent is built with ADK. |
+
+<Careful>
+
+**Wrong window, endless restarts.** If the agent waits at the wrong port, or its health check is too slow when it starts, the cloud thinks the agent is broken. So it keeps restarting it. Imagine a restaurant that is open, but its window is on the wrong side of the building.
+
+</Careful>
+
+## Keep the brain apart from the window
+
+Good teams split their agent into two parts. The **brain** does the planning and uses the tools. A small **adapter** handles the rules of one cloud. If you move to another cloud, you only write a new small adapter. You don't rewrite the whole agent.
+
+<Sketch name="ch03-2" />
+
+<Geek>
+
+Here is a complete, very small “drive-thru” for AWS AgentCore. It uses a popular Python library called FastAPI. The helper libraries from AWS and Azure create almost exactly this for you.
+
+```python
+from fastapi import FastAPI
+from my_agent import agent              # the brain: your agent
+
+app = FastAPI()
+
+@app.get("/ping")                         # the "OPEN" sign
+def ping():
+    return {"status": "Healthy"}
+
+@app.post("/invocations")                 # the order window
+def invoke(order: dict):
+    answer = agent.run(order["prompt"])
+    return {"result": answer}
+
+# open the window that AWS expects:
+#   uvicorn app:app --host 0.0.0.0 --port 8080
+```
+
+</Geek>
+
+<NoSillyQuestions>
+
+<QA q={"What is a port, really?"}>
+
+Think of a computer as an apartment building. Its network address is the street address. A port is the apartment number. The cloud knocks on one exact door.
+
+</QA>
+
+<QA q={"What is an API?"}>
+
+API stands for Application Programming Interface. It is a list of things one program can ask another program to do, and the exact way to ask. The contract in this chapter is a small API.
+
+</QA>
+
+<QA q={"Why does the health check matter so much?"}>
+
+The cloud uses it to decide two things: whether to send users to your agent, and when to restart it. A missing or slow health check is one of the most common problems on the first day.
+
+</QA>
+
+<QA q={"Do non-technical people need to know port numbers?"}>
+
+No. Just remember that every cloud has a contract, and the agent must follow it exactly. That is why moving to another cloud always takes some work.
+
+</QA>
+
+</NoSillyQuestions>
+
+<Takeaways>
+
+- To serve many people, an agent must become a service that is always on, at a known address.
+- The contract has four parts: window (port), menu (endpoint), open sign (health check) and order number (session ID).
+- Each cloud's agent service has slightly different contract rules.
+- Keep the agent's brain apart from a small adapter for each cloud. Then moving clouds is cheap.
+
+</Takeaways>

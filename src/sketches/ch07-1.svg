@@ -1,0 +1,28 @@
+<svg viewbox="0 0 680 250">
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<circle cx="110" cy="150" fill="#eef4ff" r="58"></circle><path d="M60 128 q50 -10 100 0" fill="none"></path>
+<ellipse cx="108" cy="160" fill="#f5a623" rx="22" ry="13"></ellipse><path d="M86 160 l-16 -12 v24z" fill="#f5a623"></path>
+<ellipse cx="350" cy="160" fill="#e4e4e4" rx="64" ry="40"></ellipse>
+<circle cx="292" cy="128" fill="#e4e4e4" r="30"></circle><ellipse cx="310" cy="126" fill="#d4d4d4" rx="16" ry="24"></ellipse>
+<path d="M268 140 q-10 20 -4 44" fill="none" stroke="#1b1b1b" stroke-width="9"></path><path d="M268 140 q-10 20 -4 44" fill="none" stroke="#e4e4e4" stroke-width="5"></path>
+<path d="M312 196 v20 M336 198 v20 M370 198 v20 M396 194 v20"></path>
+<rect fill="#fff" height="126" rx="4" width="96" x="560" y="90"></rect>
+<rect fill="#fff1a6" height="32" rx="3" width="76" x="570" y="100"></rect><rect fill="#d9ecff" height="32" rx="3" width="76" x="570" y="140"></rect><rect fill="#dcf5d6" height="30" rx="3" width="76" x="570" y="180"></rect>
+</g>
+<circle cx="118" cy="157" fill="#1b1b1b" r="2.4"></circle><circle cx="284" cy="124" fill="#1b1b1b" r="3"></circle>
+<g class="hk" font-size="13" text-anchor="middle"><text x="608" y="121">Priya</text><text x="608" y="161">Tom</text><text x="608" y="200">Ana</text></g>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(510,160) scale(0.55)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g>
+<g><path d="M92 61 L96 80 L110 61" fill="#fff" stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4"></path><rect fill="#fff" height="50" rx="14" stroke="#1b1b1b" stroke-width="2.4" width="150" x="40" y="14"></rect><rect fill="#fff" height="6" width="14" x="94" y="59"></rect><text class="hk" font-size="14" text-anchor="middle" x="115.0" y="35.4">Sorry, who</text><text class="hk" font-size="14" text-anchor="middle" x="115.0" y="52.4">are you?</text></g>
+<g><path d="M292 61 L296 80 L310 61" fill="#fff" stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4"></path><rect fill="#fff" height="50" rx="14" stroke="#1b1b1b" stroke-width="2.4" width="196" x="250" y="14"></rect><rect fill="#fff" height="6" width="14" x="294" y="59"></rect><text class="hk" font-size="13.5" text-anchor="middle" x="348.0" y="35.475">I remember EVERYONE’s</text><text class="hk" font-size="13.5" text-anchor="middle" x="348.0" y="51.975">trips. Want to hear?</text></g>
+<g><path d="M502 61 L506 80 L520 61" fill="#fff" stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4"></path><rect fill="#fff" height="50" rx="14" stroke="#1b1b1b" stroke-width="2.4" width="196" x="470" y="14"></rect><rect fill="#fff" height="6" width="14" x="504" y="59"></rect><text class="hk" font-size="14" text-anchor="middle" x="568.0" y="35.4">One drawer for each</text><text class="hk" font-size="14" text-anchor="middle" x="568.0" y="52.4">person. Locked.</text></g>
+<g class="hb" font-size="14" text-anchor="middle"><text x="110" y="236">Goldfish: forgets you</text><text x="340" y="236">Elephant: tells everyone</text><text x="580" y="236">What you want</text></g>
+</svg>

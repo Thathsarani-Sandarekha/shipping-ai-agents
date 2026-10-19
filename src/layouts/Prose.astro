@@ -1,0 +1,11 @@
+---
+// Layout for plain pages written in MDX (like the word list).
+import Base from './Base.astro';
+const { frontmatter } = Astro.props as any;
+---
+<Base title={frontmatter.title} page={frontmatter.slug}>
+  <section class="chapter">
+    <div class="ch-head"><div><div class="ch-kicker">{frontmatter.kicker}</div><h1>{frontmatter.title}</h1><div class="ch-sub">{frontmatter.subtitle}</div></div></div>
+    <slot />
+  </section>
+</Base>

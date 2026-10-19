@@ -1,0 +1,63 @@
+<svg viewbox="0 0 680 330">
+<defs><marker id="ah" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#23406e" stroke-width="2"></path></marker>
+<marker id="ak" markerheight="7" markerwidth="7" orient="auto-start-reverse" refx="8" refy="5" viewbox="0 0 10 10">
+<path d="M0 0 L10 5 L0 10" fill="none" stroke="#1b1b1b" stroke-width="2"></path></marker></defs>
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<rect fill="#f3eefc" height="280" rx="6" width="240" x="220" y="30"></rect>
+<g fill="#fff"><rect height="70" width="96" x="236" y="50"></rect><rect height="70" width="96" x="348" y="50"></rect><rect height="70" width="96" x="236" y="136"></rect><rect height="70" width="96" x="348" y="136"></rect></g>
+<rect fill="#fff1a6" height="68" width="208" x="236" y="226"></rect>
+<rect fill="#fff" height="38" width="80" x="300" y="256"></rect>
+</g>
+<g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(284,92) scale(0.38)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g><g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(396,92) scale(0.38)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g><g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(284,178) scale(0.38)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-12 14 q12 9 24 0" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g><g stroke="#1b1b1b" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" transform="translate(396,178) scale(0.38)">
+<line x1="0" x2="0" y1="-42" y2="-26"></line><circle cx="0" cy="-46" fill="#f5c400" r="5"></circle>
+<rect fill="#ffffff" height="52" rx="14" width="64" x="-32" y="-26"></rect>
+<circle cx="-13" cy="-3" fill="#1b1b1b" r="6"></circle><circle cx="13" cy="-3" fill="#1b1b1b" r="6"></circle>
+<circle cx="-11" cy="-5" fill="#fff" r="1.8" stroke="none"></circle><circle cx="15" cy="-5" fill="#fff" r="1.8" stroke="none"></circle>
+<path d="M-10 15 h20" fill="none"></path>
+<rect fill="#ffffff" height="42" rx="10" width="52" x="-26" y="30"></rect>
+<rect fill="#d9ecff" height="14" rx="3" width="24" x="-12" y="40"></rect>
+<path d="M-26 42 l-16 14 M26 42 l16 14" fill="none"></path>
+<path d="M-12 72 v14 M12 72 v14" fill="none"></path></g>
+<text class="hk" font-size="13" text-anchor="middle" x="340" y="248">Reception</text>
+<g fill="none" stroke="#23406e" stroke-width="2">
+<path d="M206 66 H240" marker-end="url(#ah)"></path><path d="M206 150 H240" marker-end="url(#ah)"></path><path d="M206 260 H240" marker-end="url(#ah)"></path>
+<path d="M474 66 H440" marker-end="url(#ah)"></path><path d="M474 150 H440" marker-end="url(#ah)"></path><path d="M474 238 H446" marker-end="url(#ah)"></path><path d="M474 290 H384" marker-end="url(#ah)"></path>
+</g>
+<g class="h" font-size="13.5">
+<text x="10" y="56">Own sealed room per guest</text><text font-size="12" x="10" y="74">= each session isolated</text>
+<text x="10" y="140">Key card for every guest</text><text font-size="12" x="10" y="158">= agent identity</text>
+<text x="10" y="250">Stay as long as you like</text><text font-size="12" x="10" y="268">= long-running sessions</text>
+<text x="482" y="56">Housekeeping remembers</text><text font-size="12" x="482" y="74">you take green tea = memory</text>
+<text x="482" y="140">Concierge books for you</text><text font-size="12" x="482" y="158">= acting on your behalf</text>
+<text x="482" y="228">House rules</text><text font-size="12" x="482" y="246">= policies and guardrails</text>
+<text x="482" y="284">Front-desk logbook</text><text font-size="12" x="482" y="302">= monitoring</text>
+</g>
+</svg>

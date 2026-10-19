@@ -1,0 +1,31 @@
+<svg viewbox="0 0 680 300">
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<path d="M4 40 h262 l-10 30 l14 26 l-12 34 l10 30 l-8 40 l12 40 l-8 52 H4z" fill="#f7f7f2"></path>
+<path d="M676 40 h-262 l10 28 l-14 30 l12 34 l-10 30 l8 40 l-12 40 l8 50 H676z" fill="#eef4ff"></path>
+</g>
+<text class="m" font-size="17" x="20" y="30">ON MAYA’S LAPTOP</text>
+<text class="m" font-size="17" text-anchor="end" x="660" y="30">LIVE, FOR REAL USERS</text>
+<g class="hk" font-size="14.5">
+<text x="20" y="70">• one user: Maya</text>
+<text x="20" y="98">• uses Maya’s own passwords</text>
+<text x="20" y="126">• forgets everything on restart</text>
+<text x="20" y="154">• Maya watches every step</text>
+<text x="20" y="182">• stops when she closes the lid</text>
+<text x="20" y="210">• nobody tries to trick it</text>
+<text x="20" y="238">• costs a few dollars</text>
+<text x="20" y="266">• “it seems to work”</text>
+</g>
+<g class="hk" font-size="14.5">
+<text x="432" y="70">• thousands of users at once</text>
+<text x="432" y="98">• each user has own access</text>
+<text x="432" y="126">• memory kept safe, per user</text>
+<text x="432" y="154">• nobody watching at 3 a.m.</text>
+<text x="432" y="182">• runs all day, every day</text>
+<text x="432" y="210">• people WILL try to trick it</text>
+<text x="432" y="238">• needs a budget</text>
+<text x="432" y="266">• “we tested that it works”</text>
+</g>
+<text class="m" font-size="20" text-anchor="middle" x="340" y="150">THE</text>
+<text class="m" font-size="20" style="fill:#c62828" text-anchor="middle" x="340" y="176">GAP</text>
+<path d="M300 200 q40 30 80 0" fill="none" stroke="#c62828" stroke-dasharray="4 5" stroke-width="2"></path>
+</svg>

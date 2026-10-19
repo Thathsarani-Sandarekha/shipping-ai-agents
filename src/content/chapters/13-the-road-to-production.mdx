@@ -1,0 +1,65 @@
+---
+number: 13
+title: "The road to production"
+kicker: "Chapter thirteen"
+subtitle: "The whole journey on one map, and a checklist for launch day"
+question: "The whole journey on one map, plus a checklist."
+part: "Choose, deploy, launch"
+quote: {"who": "botley", "text": "Let's walk the whole road one more time."}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+Here is everything in this notebook as one journey. At the end of each stage, you should have proof you can show to others.
+
+<Sketch name="ch13-1" caption={"The road from Maya’s laptop to 5,000 happy users."} />
+
+| Stage | What happens | You are done when... |
+|---|---|---|
+| 1. Package the prototype | Keep the brain apart from the window. Follow a contract. Pack it in a container. Try it on serverless. | It runs in the cloud, and you have a list of what breaks there. |
+| 2. Run it managed | Move into a managed agent runtime. Compare the providers. Set up conversations and memory. | You can prove that users' conversations stay apart and survive restarts. |
+| 3. Make it safe to trust | Tools as separate services, identity and least privilege, protection against tricks, traces and evals. | You can replay any request, and your evals catch a mistake you added on purpose. |
+| 4. Ship and run it | An automatic release line with an eval gate, a canary and rollback. Cost limits. Practice for problems. | A bad change is stopped or undone, and nobody panics. |
+
+## Launch-day checklist
+
+<Columns>
+<div>
+
+### Home and contract
+
+- [ ] The agent follows its cloud's contract (port, endpoints, health check).
+- [ ] Built for the right kind of chip. No passwords inside the box.
+- [ ] A restart does not lose conversations.
+- [ ] Long tasks are not stopped by time limits.
+
+### People and access
+
+- [ ] Each user's conversations and memory are kept apart.
+- [ ] The agent has its own identity.
+- [ ] It acts for users with their own access, not a shared account.
+- [ ] Risky actions need a person to approve them.
+- [ ] Users can ask for their data to be deleted.
+
+</div>
+<div>
+
+### Safety and quality
+
+- [ ] Every tool has least privilege.
+- [ ] Someone has tried hard to trick it, and the protections held.
+- [ ] An eval set exists and runs before every change.
+- [ ] Every request leaves a trace.
+
+### Releases and running costs
+
+- [ ] Changes go through an automatic line with an eval gate.
+- [ ] Canary release and one-click rollback both work.
+- [ ] Budgets, alerts and step limits are set.
+- [ ] Someone is on call, with written steps for common problems.
+
+</div>
+</Columns>
+
+<Sketch name="ch13-2" />

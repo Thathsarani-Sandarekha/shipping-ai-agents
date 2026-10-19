@@ -1,0 +1,11 @@
+<svg viewbox="0 0 680 150">
+<g stroke="#1b1b1b" stroke-linejoin="round" stroke-width="2.4">
+<rect fill="#fff" height="120" rx="14" width="380" x="150" y="14"></rect>
+<rect fill="#1b1b1b" height="34" rx="14" width="380" x="150" y="14"></rect><rect fill="#1b1b1b" height="14" width="380" x="150" y="34"></rect>
+<rect fill="#f5c400" height="40" rx="4" width="40" x="470" y="70"></rect>
+</g>
+<text fill="#fff" font-family="Sans" font-size="13" font-weight="700" text-anchor="middle" x="340" y="37">HOTEL BOTLEY KEY CARD</text>
+<g class="hk" font-size="15"><text x="172" y="78">Guest: Priya</text><text x="172" y="108">Room: 7f3a91c2-...-trip</text></g>
+<g class="h" font-size="13.5"><text x="20" y="76">user ID</text><text x="20" y="92">(who)</text><text x="20" y="112">session ID</text><text x="20" y="128">(which chat)</text></g>
+<path d="M90 74 h76 M100 110 h68" fill="none" stroke="#23406e" stroke-width="2"></path>
+</svg>

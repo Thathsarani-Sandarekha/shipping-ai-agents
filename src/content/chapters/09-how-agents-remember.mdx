@@ -1,0 +1,145 @@
+---
+number: 9
+title: "How agents remember"
+kicker: "Chapter nine · under the hood"
+subtitle: "Short-term and long-term memory, and how each cloud does it"
+question: "How do short-term and long-term memory really work on each cloud?"
+part: "Under the hood"
+quote: {"who": "botley", "text": "How will I remember that Priya likes aisle seats?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, ProviderCard, Steps, Blank, Note, Hand } from '../../components/index.ts';
+
+In Chapter 7 we met the goldfish and the elephant. Now let's see how real memory systems work, step by step. The big idea is simple: **the AI model itself never learns or changes.** Memory is a set of notes that the agent looks up and reads before it answers.
+
+## Two kinds of memory
+
+<Columns>
+<div>
+
+<Sticky color="yellow" tilt="left">
+
+**Short-term memory** is like a whiteboard during a meeting. It holds this conversation, word for word: every message and every tool result. It is filed under the user ID *and* the session ID. You usually keep it for a limited time, then it is deleted.
+
+</Sticky>
+
+</div>
+<div>
+
+<Sticky color="green" tilt="right">
+
+**Long-term memory** is like the notes you keep after the meeting. Not a recording, just the useful parts: “Priya likes aisle seats.” It is filed under the user ID, so it is still there in next week's conversation.
+
+</Sticky>
+
+</div>
+</Columns>
+
+## How long-term notes get made
+
+<Sketch name="ch09-1" />
+
+1. **Save the conversation.** Each message is saved to short-term memory as an “event”.
+2. **Pick out what matters.** In the background, an AI reads the new events and pulls out useful things. This step is called **extraction**. It then compares them with the notes it already has. It adds new notes, and updates or replaces old ones. This step is called **consolidation**.
+3. **File the notes.** Notes are stored under the user, in labelled sections. On AWS these labels are called **namespaces**, for example `/users/priya/preferences`.
+4. **Look them up next time.** When Priya starts a new chat, the agent searches her notes for anything useful and adds the best matches to the AI's instructions.
+
+Because step 2 happens in the background, a new note is not ready straight away. It can take from a few seconds to about a minute to appear.
+
+## Searching by meaning
+
+Memory search does not look for the same words. It looks for the same *meaning*. Each note is turned into a long list of numbers, called an **embedding**, that describes what it means. Notes with similar meanings get similar numbers. So a question about where Priya should sit can find a note about aisle seats.
+
+<Sketch name="ch09-2" caption={"“Sit” and “seats near the aisle” share no exact words, but they mean similar things."} />
+
+## How each cloud does memory
+
+|   | AWS AgentCore Memory | Google Memory Bank | Azure Foundry Memory |
+|---|---|---|---|
+| Short-term | Events, filed by user (called `actorId`) and session. You choose how many days to keep them. | Agent Platform Sessions keeps the events of each conversation. | Conversations (Responses protocol) keep the chat history. |
+| Long-term | Built-in “strategies” decide what to keep: facts (semantic), summaries, user preferences, episodes, or your own custom rules. | Gemini reads sessions and writes memories about the user. It updates old memories as things change. | An AI extracts and merges long-term memories, such as user profile details and chat summaries. |
+| Kept apart by | User ID, through namespaces. | A “scope”, for example the user ID. With ADK, the app name is added too. | A “scope”, usually set to the user ID. |
+| Looked up by | Search by meaning inside a namespace. | Search by meaning (similarity search). In ADK, a tool can load memories at the start of each turn. | A memory search tool attached to the agent. |
+| Status | Generally available. | Generally available. | Public preview: details may change. |
+
+<Careful>
+
+**Memory is personal data.** Decide what you keep, for how long, and how a user can see or delete it. Never let memory keep passwords, card numbers or other secrets.
+
+**Memory can be wrong.** The extraction step is done by an AI. It can sometimes write down something the user never actually said. Check important facts before acting on them, and let users correct their notes.
+
+</Careful>
+
+<Geek>
+
+Looking up Priya's notes in AWS AgentCore Memory with Python. The search is by meaning, inside her namespace.
+
+```python
+import boto3
+client = boto3.client("bedrock-agentcore")
+
+notes = client.retrieve_memory_records(
+    memoryId=MEMORY_ID,
+    namespace="/users/priya/",            # only Priya's notes
+    searchCriteria={
+        "searchQuery": "Where does Priya like to sit?",
+        "topK": 3,                        # the 3 best matches
+    },
+)
+```
+
+The results come back with a relevance score. Your agent adds the best ones to the instructions it sends to the AI model.
+
+</Geek>
+
+<NoSillyQuestions>
+
+<QA q={"Does memory train the AI model?"}>
+
+No. The model stays exactly the same. Memory is just extra text that the agent adds to its instructions before asking the model. Delete the notes and the “memory” is gone.
+
+</QA>
+
+<QA q={"Why not just paste the whole old conversation in every time?"}>
+
+It gets long and expensive, because you pay for every token. It also gets slower, and the important bits get lost in the noise. Notes are short and focused.
+
+</QA>
+
+<QA q={"Why does a new note take a while to appear?"}>
+
+Making notes is extra AI work that runs in the background after the conversation is saved. Searching only sees a note once that work is done and the note is indexed.
+
+</QA>
+
+<QA q={"Can one memory store serve many users safely?"}>
+
+Yes, as long as every read and write uses the right user ID. That is why the user ID must come from the login, not from the chat.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Botley hears these five things. Where should each one go: **short-term only**, **long-term**, or **nowhere**?
+
+1. “I always prefer aisle seats.” <Blank />
+2. “Let's fly next Tuesday.” <Blank />
+3. “My card number is 4111 ...” <Blank />
+4. “I'm vegetarian.” <Blank />
+5. “Hmm, let me think about it.” <Blank />
+
+</YourTurn>
+
+<Takeaways>
+
+- The AI model never changes. Memory is notes that the agent looks up.
+- Short-term memory is this conversation. Long-term memory is useful notes, filed by user.
+- Long-term notes are made in the background by extraction and consolidation.
+- Memory search works by meaning, using embeddings.
+- AWS and Google offer memory services. Azure's memory is in preview.
+- Treat memory as personal data. It can also be wrong.
+
+</Takeaways>
