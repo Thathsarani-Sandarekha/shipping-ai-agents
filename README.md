@@ -1,61 +1,64 @@
 # Shipping AI Agents: a visual notebook
 
-A Head First style notebook about taking AI agents from prototype to production on AWS, Microsoft Azure and Google Cloud.
-Written by Nimesha Jinarajadasa. Built with [Astro](https://astro.build) and hosted on GitHub Pages.
+**[Read it online →](https://nimeshmora.github.io/shipping-ai-agents/)** &nbsp;·&nbsp; [Download the PDF](https://nimeshmora.github.io/shipping-ai-agents/shipping-ai-agents.pdf)
 
-## Put it online (one time)
+A free, Head First style notebook about taking AI agents from a prototype on your laptop to production
+on **AWS**, **Microsoft Azure** and **Google Cloud**. It uses sketches, puzzles and plain language,
+and you don't need any cloud experience to start.
 
-1. Create a new repository on GitHub, for example `shipping-ai-agents`.
-2. Open `astro.config.mjs` and change two lines:
-   - `site: 'https://YOUR-USERNAME.github.io'`
-   - `base: '/shipping-ai-agents'` (your repository name)
-3. Upload this folder to the repository:
-   ```bash
-   git init
-   git add .
-   git commit -m "First edition"
-   git branch -M main
-   git remote add origin https://github.com/YOUR-USERNAME/shipping-ai-agents.git
-   git push -u origin main
-   ```
-4. On GitHub, open **Settings > Pages**. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-5. Open the **Actions** tab and wait for the green tick (about a minute).
-   Your site is now at `https://YOUR-USERNAME.github.io/shipping-ai-agents/`.
+Written by Nimesha Jinarajadasa, with help from [contributors](https://github.com/nimeshmora/shipping-ai-agents/graphs/contributors).
 
-From now on, every push to `main` updates the live site automatically.
+## What's inside
 
-### Using your own domain
+**The basics**
+1. Meet your agent
+2. It worked on my laptop!
+3. Giving your agent an address
+4. Pack it up
+5. Where will it live?
+6. Meet the landlords
+7. Making it safe to trust
 
-Add a file called `public/CNAME` that contains only your domain (for example `agents.example.com`),
-set `site` to `https://agents.example.com` and `base` to `'/'` in `astro.config.mjs`,
-then add the domain under **Settings > Pages > Custom domain** and follow GitHub's DNS steps.
+**Under the hood**
 
-## Visitor counts
+8. What happens to a conversation?
+9. How agents remember
+10. Who is allowed in?
 
-The site uses [GoatCounter](https://www.goatcounter.com): free, no cookies, and no cookie banner needed.
-The code is set in `src/lib/site.ts` (`GOATCOUNTER`). Counting only runs on the live site.
+**Choose, deploy, launch**
 
-Besides page views, a **"Finished: …"** event is counted the first time a reader scrolls to the end of a page,
-so you can compare how many people open a chapter with how many read it to the end.
+11. Choosing where to deploy
+12. Deploying Botley for real
+13. The road to production
 
-## Contributors
+## Help make it better
 
-Every chapter ends with **Edit this page**, **Suggest an example** and **Report a mistake** links.
-The guide for helpers is in [CONTRIBUTING.md](CONTRIBUTING.md). Issue forms live in `.github/ISSUE_TEMPLATE/`,
-and every pull request is checked by `.github/workflows/check.yml` to make sure the site still builds.
-Text and drawings are licensed under CC BY-NC-SA 4.0 ([LICENSE-CONTENT.md](LICENSE-CONTENT.md)); code under MIT ([LICENSE](LICENSE)).
+This notebook is open to contributions, and you don't have to write code to help.
 
-## Work on it on your computer
+- **Spotted a mistake or something out of date?** Cloud services change fast. [Report it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=fix.yml).
+- **Have a good example?** Code, a production story or a diagram: [suggest it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=example.yml).
+- **Small fix?** Click **Edit this page** at the bottom of any chapter.
+- **Idea for a new chapter?** [Propose it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=chapter-idea.yml) before you start writing.
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for the writing style and how to send a pull request.
+
+## Run it on your computer
 
 You need Node.js 22 or newer.
 
 ```bash
+git clone https://github.com/nimeshmora/shipping-ai-agents.git
+cd shipping-ai-agents
 npm install
-npm run dev        # opens a live preview at http://localhost:4321/shipping-ai-agents/
-npm run build      # makes the final site in the dist folder
+npm run dev        # live preview at http://localhost:4321/shipping-ai-agents/
+npm run build      # checks that the whole site builds
 ```
 
-## Where things live
+The site is built with [Astro](https://astro.build). Each chapter is one MDX file (Markdown plus a few components).
+
+## Writing guide
+
+### Where things live
 
 | What | Where |
 |---|---|
@@ -66,12 +69,12 @@ npm run build      # makes the final site in the dist folder
 | Colors, fonts, light and dark mode | `src/styles/notebook.css` and `src/styles/site.css` |
 | The PDF | `public/shipping-ai-agents.pdf` |
 
-## Edit a chapter
+### Edit a chapter
 
 Open its file in `src/content/chapters/`. Normal text is Markdown: `**bold**`, `*italic*`, `## Heading`, lists and tables.
 The front matter at the top sets the number, title, subtitle, the character's speech bubble and the date the facts were last checked.
 
-## Add a new chapter
+### Add a new chapter
 
 1. Copy an existing file, for example `08-what-happens-to-a-conversation.mdx`, and give it a new name such as `14-agents-talking-to-agents.mdx`.
 2. Change `number`, `title`, `kicker`, `subtitle`, `question`, `part` and `quote` at the top.
@@ -80,7 +83,7 @@ The front matter at the top sets the number, title, subtitle, the character's sp
 `part` decides which group the chapter appears in on the sidebar (for example "The basics" or "Under the hood").
 Use a new `part` name to start a new group.
 
-## Use the Head First boxes
+### Use the Head First boxes
 
 ```mdx
 <Careful>
@@ -126,13 +129,18 @@ Right column
 
 Leave an empty line after an opening tag and before a closing tag when the inside has Markdown (lists, bold text and so on).
 
-## Add a drawing
+### Add a drawing
 
 Draw it as an SVG (by hand in a tool such as Excalidraw, Figma or Inkscape, or in code), save it in `src/sketches/`,
 and show it with `<Sketch name="file-name-without-.svg" />`.
 To match the notebook look, use these text classes inside the SVG: `h` (blue handwriting), `hb` (bold handwriting), `hk` (black handwriting).
 
-## Keep it accurate
+### Keep it accurate
 
 Cloud services change often. Each chapter has a `lastChecked` date in its front matter, shown at the bottom of the page.
 Re-check the facts and the commands in chapter 12 every few months, then update the date.
+
+## License
+
+- Chapters, drawings and the PDF: [CC BY-NC-SA 4.0](LICENSE-CONTENT.md). You may share and adapt them with credit, but not commercially.
+- Website code: [MIT](LICENSE).
