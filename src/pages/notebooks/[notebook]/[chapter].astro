@@ -1,0 +1,32 @@
+---
+import { render, getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Strip from '../../../components/Strip.astro';
+import { notebookOf, slugOf } from '../../../lib/chapters';
+import { REPO } from '../../../lib/site';
+
+// One page per chapter of every notebook: /notebooks/<notebook>/<chapter>/
+export async function getStaticPaths() {
+  const chapters = await getCollection('chapters');
+  return chapters.map((entry) => ({ params: { notebook: notebookOf(entry.id), chapter: slugOf(entry.id) }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const nb = notebookOf(entry.id);
+const checked = d.lastChecked ? d.lastChecked.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : null;
+const label = encodeURIComponent(`Chapter ${d.number}: ${d.title}`);
+---
+<Base title={`Chapter ${d.number}: ${d.title}`} page={`ch-${d.number}`} notebook={nb} description={d.question}>
+  <section class="chapter">
+    <div class="ch-head"><div class="ch-num">{d.number}</div><div><div class="ch-kicker">{d.kicker}</div><h1>{d.title}</h1><div class="ch-sub">{d.subtitle}</div></div></div>
+    {d.quote && <Strip who={d.quote.who} text={d.quote.text} />}
+    <Content />
+    {checked && <p class="checked">Facts in this chapter last checked on {checked}.</p>}
+    <p class="contribute">
+      <a href={`${REPO}/edit/main/src/content/notebooks/${entry.id}.mdx`}>Edit this page</a>
+      <a href={`${REPO}/issues/new?template=example.yml&chapter=${label}`}>Suggest an example</a>
+      <a href={`${REPO}/issues/new?template=fix.yml&chapter=${label}`}>Report a mistake or outdated fact</a>
+    </p>
+  </section>
+</Base>

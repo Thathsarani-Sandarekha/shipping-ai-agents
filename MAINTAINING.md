@@ -22,7 +22,14 @@ The site front page is **Ship It with Nimesha** (`src/pages/index.astro`). It li
 the dashed "Notebook #2, in the works" card always appears after the last one. The picture next to the speech bubble is `src/sketches/chars/nimesha.svg`, a copy of the logo.
 If you change `public/favicon.svg`, update it too (it is the same drawing wrapped in `translate(14,10)`).
 
-The notebook's cover moved to `/notebooks/shipping-ai-agents/`. Chapter addresses did not change.
+Every notebook lives at `/notebooks/<notebook>/`, with chapters at `/notebooks/<notebook>/<chapter>/`.
+Notebook #1's older addresses (`/chapters/…`, `/how/`, `/back/`) redirect to the new ones; the list is in `astro.config.mjs`.
+
+## Adding a notebook
+
+1. Add an entry to `src/lib/notebooks.ts` (slug, number, title, blurb, cover sketch, edition, and `pdf` if there is one).
+2. Put its chapters in `src/content/notebooks/<slug>/`.
+3. Add `index.astro` (cover), `how.astro` and `back.mdx` in `src/pages/notebooks/<slug>/`. Copy Notebook #1's and change the `notebook` prop.
 
 ## The logo
 

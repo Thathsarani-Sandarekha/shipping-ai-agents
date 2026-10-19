@@ -10,7 +10,7 @@ import { url } from '../lib/url';
 import { REPO } from '../lib/site';
 import { notebooks } from '../lib/notebooks';
 import { allChapters } from '../lib/chapters';
-const chapterCount = (await allChapters()).length;
+const counts = Object.fromEntries(await Promise.all(notebooks.map(async (n) => [n.slug, (await allChapters(n.slug)).length])));
 ---
 <Base title="Ship It with Nimesha" page="hub">
   <div class="hero-top">
@@ -27,7 +27,7 @@ const chapterCount = (await allChapters()).length;
   <p class="hero-blurb">These notebooks explain how to move an AI agent from a prototype to a service that real people use. They cover where an agent can run, how to secure it, how it stores conversations and memory, and what it costs on each cloud. Each chapter has drawings, examples and short exercises.</p>
 
   <div class="actions">
-    <a class="btn primary" href={url(notebooks[0].start)}>Read Notebook #1</a>
+    <a class="btn primary" href={url(`notebooks/${notebooks[0].slug}/how/`)}>Read Notebook #1</a>
     <a class="btn" id="resume" href={url()} hidden>Continue reading</a>
     <a class="btn" href="#join-in">Contribute</a>
   </div>
@@ -45,16 +45,16 @@ const chapterCount = (await allChapters()).length;
       <h2 id="shelf"><span>The notebooks</span></h2>
       {notebooks.map((n) => (
         <article class="nb">
-          <a class="nb-cover" href={url(n.href)} aria-hidden="true" tabindex="-1"><Sketch name={n.cover} /></a>
+          <a class="nb-cover" href={url(`notebooks/${n.slug}/`)} aria-hidden="true" tabindex="-1"><Sketch name={n.cover} /></a>
           <div class="nb-body">
             <p class="nb-no">Notebook #{n.number}</p>
-            <h3><a href={url(n.href)}>{n.title}</a></h3>
+            <h3><a href={url(`notebooks/${n.slug}/`)}>{n.title}</a></h3>
             <p>{n.blurb}</p>
-            <p class="nb-meta">{chapterCount} chapters &middot; PDF &middot; {n.edition}</p>
+            <p class="nb-meta">{counts[n.slug]} chapters{n.pdf && <> &middot; PDF</>} &middot; {n.edition}</p>
             <div class="actions">
-              <a class="btn primary" href={url(n.start)}>Start reading</a>
-              <a class="btn" href={url(n.href)}>See the chapters</a>
-              <a class="btn" href={url(n.pdf)}>PDF</a>
+              <a class="btn primary" href={url(`notebooks/${n.slug}/how/`)}>Start reading</a>
+              <a class="btn" href={url(`notebooks/${n.slug}/`)}>See the chapters</a>
+              {n.pdf && <a class="btn" href={url(n.pdf)}>PDF</a>}
             </div>
           </div>
         </article>

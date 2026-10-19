@@ -1,11 +1,11 @@
 ---
-import Base from '../layouts/Base.astro';
-import Sketch from '../components/Sketch.astro';
-import { url } from '../lib/url';
-import { allChapters } from '../lib/chapters';
-const chapters = await allChapters();
+import Base from '../../../layouts/Base.astro';
+import Sketch from '../../../components/Sketch.astro';
+import { url } from '../../../lib/url';
+import { allChapters, chapterHref } from '../../../lib/chapters';
+const chapters = await allChapters('shipping-ai-agents');
 ---
-<Base title="How to use this notebook" page="how">
+<Base title="How to use this notebook" page="how" notebook="shipping-ai-agents">
   <section class="chapter">
     <div class="ch-head"><div><div class="ch-kicker">Before we start</div><h1>How to use this notebook</h1>
       <div class="ch-sub">Our brains remember pictures and stories much better than walls of text. So that is how this notebook works.</div></div></div>
@@ -27,8 +27,8 @@ const chapters = await allChapters();
     <h2>What's inside</h2>
     <div class="tw"><table class="t">
       <tr><th style="width:7%">#</th><th style="width:34%">Chapter</th><th>The question it answers</th></tr>
-      {chapters.map((c) => <tr><td>{c.data.number}</td><td><a href={url(`chapters/${c.id}/`)}>{c.data.title}</a></td><td>{c.data.question}</td></tr>)}
-      <tr><td></td><td><a href={url('back/')}>Back of the book</a></td><td>Word list and exercise answers.</td></tr>
+      {chapters.map((c) => <tr><td>{c.data.number}</td><td><a href={url(chapterHref(c.id))}>{c.data.title}</a></td><td>{c.data.question}</td></tr>)}
+      <tr><td></td><td><a href={url('notebooks/shipping-ai-agents/back/')}>Back of the book</a></td><td>Word list and exercise answers.</td></tr>
     </table></div>
   </section>
 </Base>

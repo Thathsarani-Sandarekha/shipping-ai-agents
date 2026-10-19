@@ -1,11 +1,11 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Sketch from '../../components/Sketch.astro';
-import { url } from '../../lib/url';
-import { allChapters } from '../../lib/chapters';
-const chapters = await allChapters();
+import Base from '../../../layouts/Base.astro';
+import Sketch from '../../../components/Sketch.astro';
+import { url } from '../../../lib/url';
+import { allChapters, chapterHref } from '../../../lib/chapters';
+const chapters = await allChapters('shipping-ai-agents');
 ---
-<Base title="Shipping AI Agents" page="cover" description="A Head First style notebook about taking AI agents from prototype to production on AWS, Microsoft Azure and Google Cloud.">
+<Base title="Shipping AI Agents" page="cover" notebook="shipping-ai-agents" description="A Head First style notebook about taking AI agents from prototype to production on AWS, Microsoft Azure and Google Cloud.">
   <div class="hero-top">
     <div>
       <p class="kick">Ship It with Nimesha &middot; Notebook #1</p>
@@ -17,9 +17,9 @@ const chapters = await allChapters();
   <div class="scene"><Sketch name="cover-scene" /></div>
   <p class="hero-blurb">Learn what really changes when an AI agent goes live, where it can run on each cloud, and how to make it safe, reliable and affordable. Told with sketches, stories and simple English.</p>
   <div class="actions">
-    <a class="btn primary" href={url('how/')}>Start reading</a>
+    <a class="btn primary" href={url('notebooks/shipping-ai-agents/how/')}>Start reading</a>
     <a class="btn" id="resume" href={url()} hidden>Continue reading</a>
-    <a class="btn" href={url(`chapters/${chapters.find((c) => c.data.number === 12)?.id}/`)}>Go to the deploy guide</a>
+    <a class="btn" href={url(chapterHref(chapters.find((c) => c.data.number === 12)!.id))}>Go to the deploy guide</a>
     <a class="btn" href={url('shipping-ai-agents.pdf')}>Download the PDF</a>
   </div>
   <div class="two" style="margin-top:14px">
@@ -32,7 +32,7 @@ const chapters = await allChapters();
     <h2><span>What's inside</span></h2>
     <ol>
       {chapters.map((c) => (
-        <li><a href={url(`chapters/${c.id}/`)}><span class="n">{c.data.number}</span><span class="t">{c.data.title}<span class="q">{c.data.question}</span></span></a></li>
+        <li><a href={url(chapterHref(c.id))}><span class="n">{c.data.number}</span><span class="t">{c.data.title}<span class="q">{c.data.question}</span></span></a></li>
       ))}
     </ol>
   </div>

@@ -2,22 +2,27 @@
 import '../styles/notebook.css';
 import '../styles/site.css';
 import { url } from '../lib/url';
-import { allChapters, readingOrder } from '../lib/chapters';
+import { allChapters, readingOrder, chapterHref } from '../lib/chapters';
+import { notebook as findNotebook } from '../lib/notebooks';
 import { GOATCOUNTER, REPO } from '../lib/site';
 // The logo (Botley shipping out on a boat) is the favicon too, so there is one file to change.
 import logo from '../../public/favicon.svg?raw';
 
 // page="hub" is the site front page: no notebook sidebar and no Previous / Next.
-const { title, page, description } = Astro.props as { title: string; page: string; description?: string };
+// Every other page belongs to a notebook (its slug, for example "shipping-ai-agents").
+const { title, page, description, notebook: nbSlug } = Astro.props as { title: string; page: string; description?: string; notebook?: string };
 const hub = page === 'hub';
-const chapters = await allChapters();
-const order = await readingOrder();
+const nb = hub ? null : findNotebook(nbSlug ?? '');
+const chapters = nb ? await allChapters(nb.slug) : [];
+const order = nb ? await readingOrder(nb.slug) : [];
+// Pages are remembered as read per notebook, for example "shipping-ai-agents/ch-3".
+const key = (id: string) => `${nb?.slug}/${id}`;
 const i = order.findIndex((o) => o.id === page);
 const prev = i > 0 ? order[i - 1] : null;
 const next = i >= 0 && i < order.length - 1 ? order[i + 1] : null;
 const parts: string[] = [];
 chapters.forEach((c) => { if (!parts.includes(c.data.part)) parts.push(c.data.part); });
-const fullTitle = hub ? 'Ship It with Nimesha' : page === 'cover' ? 'Shipping AI Agents | Ship It with Nimesha' : `${title} | Shipping AI Agents`;
+const fullTitle = hub ? 'Ship It with Nimesha' : page === 'cover' ? `${nb!.title} | Ship It with Nimesha` : `${title} | ${nb!.title}`;
 ---
 <!doctype html>
 <html lang="en">
@@ -38,11 +43,11 @@ const fullTitle = hub ? 'Ship It with Nimesha' : page === 'cover' ? 'Shipping AI
     <script is:inline async data-goatcounter={`https://${GOATCOUNTER}.goatcounter.com/count`} src="https://gc.zgo.at/count.js"></script>
   )}
 </head>
-<body data-page={page}>
+<body data-page={hub ? 'hub' : key(page)}>
   <header class="bar">
     {!hub && <button id="menu" aria-controls="toc" aria-expanded="false">Contents</button>}
     <a class="brand" href={url()}><span class="logo" aria-hidden="true" set:html={logo} /><span>Ship It <i>with Nimesha</i></span></a>
-    <span class="where">{hub ? 'Notebooks on deploying AI agents' : page === 'cover' ? 'Notebook #1: Shipping AI Agents' : <>Shipping AI Agents <span class="dot">&middot;</span> {title}</>}</span>
+    <span class="where">{hub ? 'Notebooks on deploying AI agents' : page === 'cover' ? `Notebook #${nb!.number}: ${nb!.title}` : <>{nb!.title} <span class="dot">&middot;</span> {title}</>}</span>
     <button id="theme" aria-label="Switch to dark mode">
       <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
       <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
@@ -52,20 +57,20 @@ const fullTitle = hub ? 'Ship It with Nimesha' : page === 'cover' ? 'Shipping AI
   <div class={hub ? 'layout hub' : 'layout'}>
     {!hub && <nav class="toc" id="toc" aria-label="Contents">
       <a class="tohub" href={url()}>&larr; Ship It with Nimesha</a>
-      <h2>Shipping AI Agents</h2>
+      <h2>{nb!.title}</h2>
       <ol>
-        <li><a href={url('notebooks/shipping-ai-agents/')} data-v="cover" aria-current={page === 'cover' ? 'page' : undefined}><span class="n">&#9733;</span><span>Notebook cover</span><span class="ok"></span></a></li>
-        <li><a href={url('how/')} data-v="how" aria-current={page === 'how' ? 'page' : undefined}><span class="n">?</span><span>How to use this notebook</span><span class="ok">&#10003;</span></a></li>
+        <li><a href={url(`notebooks/${nb!.slug}/`)} data-v={key('cover')} aria-current={page === 'cover' ? 'page' : undefined}><span class="n">&#9733;</span><span>Notebook cover</span><span class="ok"></span></a></li>
+        <li><a href={url(`notebooks/${nb!.slug}/how/`)} data-v={key('how')} aria-current={page === 'how' ? 'page' : undefined}><span class="n">?</span><span>How to use this notebook</span><span class="ok">&#10003;</span></a></li>
         {parts.map((part, pi) => (
           <>
             {pi > 0 && <li class="sep">{part}</li>}
             {chapters.filter((c) => c.data.part === part).map((c) => (
-              <li><a href={url(`chapters/${c.id}/`)} data-v={`ch-${c.data.number}`} aria-current={page === `ch-${c.data.number}` ? 'page' : undefined}>
+              <li><a href={url(chapterHref(c.id))} data-v={key(`ch-${c.data.number}`)} aria-current={page === `ch-${c.data.number}` ? 'page' : undefined}>
                 <span class="n">{c.data.number}</span><span>{c.data.title}</span><span class="ok">&#10003;</span></a></li>
             ))}
           </>
         ))}
-        <li><a href={url('back/')} data-v="back" aria-current={page === 'back' ? 'page' : undefined}><span class="n">A</span><span>Word list and answers</span><span class="ok">&#10003;</span></a></li>
+        <li><a href={url(`notebooks/${nb!.slug}/back/`)} data-v={key('back')} aria-current={page === 'back' ? 'page' : undefined}><span class="n">A</span><span>Word list and answers</span><span class="ok">&#10003;</span></a></li>
       </ol>
     </nav>}
     <main>
@@ -90,7 +95,7 @@ const fullTitle = hub ? 'Ship It with Nimesha' : page === 'cover' ? 'Shipping AI
     try { var o = JSON.parse(localStorage.getItem(KEY) || '{}'); st.read = o.read || []; st.last = o.last || null; st.theme = o.theme || null; } catch (e) {}
     function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
     function paint() { document.querySelectorAll('.toc a[data-v]').forEach(function (a) { a.classList.toggle('read', st.read.indexOf(a.getAttribute('data-v')) > -1); }); }
-    if (page !== 'hub' && page !== 'cover') { st.last = location.pathname; save(); }
+    if (page !== 'hub' && !/\/cover$/.test(page)) { st.last = location.pathname; save(); }
     paint();
     // Tells GoatCounter that someone scrolled to the end of this page (once per reader, per page).
     function finished() { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'finished/' + page, title: 'Finished: ' + document.title, event: true }); }

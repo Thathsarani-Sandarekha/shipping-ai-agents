@@ -1,9 +1,10 @@
 ---
 // Layout for plain pages written in MDX (like the word list).
+// The front matter must include `notebook` (the notebook's slug) and `slug` (the page id, for example "back").
 import Base from './Base.astro';
 const { frontmatter } = Astro.props as any;
 ---
-<Base title={frontmatter.title} page={frontmatter.slug}>
+<Base title={frontmatter.title} page={frontmatter.slug} notebook={frontmatter.notebook}>
   <section class="chapter">
     <div class="ch-head"><div><div class="ch-kicker">{frontmatter.kicker}</div><h1>{frontmatter.title}</h1><div class="ch-sub">{frontmatter.subtitle}</div></div></div>
     <slot />

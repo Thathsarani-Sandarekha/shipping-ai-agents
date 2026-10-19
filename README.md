@@ -64,8 +64,8 @@ The site is built with [Astro](https://astro.build). Each chapter is one MDX fil
 |---|---|
 | Site front page (Ship It with Nimesha) | `src/pages/index.astro` |
 | List of notebooks shown on the front page | `src/lib/notebooks.ts` |
-| Notebook cover | `src/pages/notebooks/shipping-ai-agents.astro` |
-| Chapters | `src/content/chapters/*.mdx` (one file per chapter) |
+| Notebook cover, how-to-use page, word list | `src/pages/notebooks/<notebook>/` (`index.astro`, `how.astro`, `back.mdx`) |
+| Chapters | `src/content/notebooks/<notebook>/*.mdx` (one file per chapter) |
 | Drawings | `src/sketches/*.svg` |
 | Box components (Careful!, Your turn and so on) | `src/components/` |
 | Page layout, sidebar, Previous and Next | `src/layouts/Base.astro` |
@@ -74,12 +74,12 @@ The site is built with [Astro](https://astro.build). Each chapter is one MDX fil
 
 ### Edit a chapter
 
-Open its file in `src/content/chapters/`. Normal text is Markdown: `**bold**`, `*italic*`, `## Heading`, lists and tables.
+Open its file in `src/content/notebooks/<notebook>/`. Normal text is Markdown: `**bold**`, `*italic*`, `## Heading`, lists and tables.
 The front matter at the top sets the number, title, subtitle, the character's speech bubble and the date the facts were last checked.
 
 ### Add a new chapter
 
-1. Copy an existing file, for example `08-what-happens-to-a-conversation.mdx`, and give it a new name such as `14-agents-talking-to-agents.mdx`.
+1. In the notebook's folder, copy an existing file, for example `src/content/notebooks/shipping-ai-agents/08-what-happens-to-a-conversation.mdx`, and give it a new name such as `14-agents-talking-to-agents.mdx`.
 2. Change `number`, `title`, `kicker`, `subtitle`, `question`, `part` and `quote` at the top.
 3. Write the content. The sidebar, chapter list, page numbers in the URL, and Previous and Next links update by themselves.
 
