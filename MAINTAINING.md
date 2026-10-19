@@ -24,6 +24,11 @@ is `src/sketches/chars/nimesha.svg`: replace it with your own sketch if you like
 
 The notebook's cover moved to `/notebooks/shipping-ai-agents/`. Chapter addresses did not change.
 
+## The logo
+
+The logo is Botley sailing out on a paper-style boat. It lives in `public/favicon.svg` and is used both as the browser tab icon
+and in the top bar, so editing that one file changes both.
+
 ## Visitor counts
 
 The site uses [GoatCounter](https://www.goatcounter.com): free, no cookies, and no cookie banner needed.

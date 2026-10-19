@@ -28,8 +28,10 @@ main>.paper.index{margin-top:28px}
 
 /* Ship It with Nimesha: brand in the top bar */
 .brand{display:flex;align-items:center;gap:9px}
-.brand .mono{flex:none;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--hl);border:2px solid var(--ink);font-size:.95rem;line-height:1;transform:rotate(-8deg)}
-.brand span:last-child{overflow:hidden;text-overflow:ellipsis}
+.brand .logo{flex:none;display:block;width:36px;height:36px;transform:rotate(-6deg);transition:transform .2s ease}
+.brand .logo svg{display:block;width:100%;height:100%}
+.brand:hover .logo{transform:rotate(-6deg) translateX(3px)}
+.brand>span:last-child{overflow:hidden;text-overflow:ellipsis}
 .brand i{font-style:normal;font-family:var(--f-hand);font-weight:700;color:var(--hand);font-size:.95rem}
 .where .dot{color:var(--muted);margin:0 2px}
 .toc .tohub{display:block;padding:0;border-radius:0;font-family:var(--f-hand);font-weight:700;font-size:.85rem;color:var(--hand);text-decoration:none;margin:0 0 12px 8px}
