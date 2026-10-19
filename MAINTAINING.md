@@ -19,8 +19,8 @@ then add the domain under **Settings > Pages > Custom domain** and follow GitHub
 ## The front page
 
 The site front page is **Ship It with Nimesha** (`src/pages/index.astro`). It lists every notebook in `src/lib/notebooks.ts`;
-the dashed "Notebook #2, in the works" card always appears after the last one. The `N` badge next to the speech bubble
-is `src/sketches/chars/nimesha.svg`: replace it with your own sketch if you like (keep it about 60 × 60 and centered on 46, 42).
+the dashed "Notebook #2, in the works" card always appears after the last one. The picture next to the speech bubble is `src/sketches/chars/nimesha.svg`, a copy of the logo.
+If you change `public/favicon.svg`, update it too (it is the same drawing wrapped in `translate(14,10)`).
 
 The notebook's cover moved to `/notebooks/shipping-ai-agents/`. Chapter addresses did not change.
 
