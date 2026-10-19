@@ -1,0 +1,35 @@
+<svg viewBox='0 0 680 280'>
+<defs><marker id='r81' viewBox='0 0 10 10' refX='8' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10' fill='none' stroke='#23406e' stroke-width='2'/></marker></defs>
+<g transform='translate(60,120) scale(0.6)' stroke='#1b1b1b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>
+<line x1='0' y1='-42' x2='0' y2='-26'/><circle cx='0' cy='-46' r='5' fill='#f5c400'/>
+<rect x='-32' y='-26' width='64' height='52' rx='14' fill='#ffffff'/>
+<circle cx='-13' cy='-3' r='6' fill='#1b1b1b'/><circle cx='13' cy='-3' r='6' fill='#1b1b1b'/>
+<path d='M-12 14 q12 9 24 0' fill='none'/>
+<rect x='-26' y='30' width='52' height='42' rx='10' fill='#ffffff'/>
+<rect x='-12' y='40' width='24' height='14' rx='3' fill='#d9ecff'/>
+<path d='M-26 42 l-16 14 M26 42 l16 14' fill='none'/><path d='M-12 72 v14 M12 72 v14' fill='none'/></g>
+<text class='hb' x='60' y='196' text-anchor='middle' font-size='13'>Botley</text>
+<path d='M100 120 h80' fill='none' stroke='#23406e' stroke-width='2' marker-end='url(#r81)'/>
+<text class='h' x='140' y='108' text-anchor='middle' font-size='11.5'>/v1/chat/</text>
+<text class='h' x='140' y='140' text-anchor='middle' font-size='11.5'>completions</text>
+<g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'>
+<rect x='200' y='26' width='460' height='206' rx='12' fill='#fff' stroke-dasharray='8 6'/>
+<rect x='220' y='96' width='110' height='48' rx='8' fill='#fff1a6'/>
+<rect x='380' y='54' width='120' height='64' rx='8' fill='#dcf5d6'/>
+<rect x='380' y='132' width='120' height='64' rx='8' fill='#dcf5d6'/>
+<rect x='530' y='54' width='110' height='142' rx='8' fill='#d9ecff'/>
+</g>
+<text class='hb' x='275' y='118' text-anchor='middle' font-size='13'>Service</text>
+<text class='hk' x='275' y='134' text-anchor='middle' font-size='11'>one address</text>
+<text class='hb' x='440' y='80' text-anchor='middle' font-size='13'>vLLM pod 1</text>
+<text class='hk' x='440' y='98' text-anchor='middle' font-size='11'>1 GPU</text>
+<text class='hb' x='440' y='158' text-anchor='middle' font-size='13'>vLLM pod 2</text>
+<text class='hk' x='440' y='176' text-anchor='middle' font-size='11'>1 GPU</text>
+<text class='hb' x='585' y='112' text-anchor='middle' font-size='13'>weights</text>
+<text class='hk' x='585' y='130' text-anchor='middle' font-size='11'>Hugging Face,</text>
+<text class='hk' x='585' y='146' text-anchor='middle' font-size='11'>or a copy in</text>
+<text class='hk' x='585' y='162' text-anchor='middle' font-size='11'>your own storage</text>
+<path d='M332 112 L376 88 M332 128 L376 156' fill='none' stroke='#23406e' stroke-width='2' marker-end='url(#r81)'/>
+<path d='M528 96 L506 96 M528 164 L506 164' fill='none' stroke='#23406e' stroke-width='2' marker-end='url(#r81)'/>
+<text class='h' x='430' y='256' text-anchor='middle' font-size='13'>Kubernetes cluster with a GPU node pool</text>
+</svg>

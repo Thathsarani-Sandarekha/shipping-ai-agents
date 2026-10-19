@@ -1,0 +1,158 @@
+---
+number: 9
+title: "Does it pay off?"
+kicker: "Chapter nine"
+subtitle: "Two kinds of bill, one worked example with real prices, and the costs people forget."
+question: "When is running your own model cheaper than paying per token?"
+part: "Choose"
+quote: {"who": "sam", "text": "Just tell me: is our own GPU cheaper or not?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, Blank, Note, Hand } from '../../../components/index.ts';
+
+Sam's first question was about money. The short answer: it depends on how busy you are. This chapter shows how to work it out, with real prices, so you can do the math for your own agent.
+
+## Two kinds of bill
+
+- **Pay per token:** the bill grows with use. No use, no bill.
+- **Your own GPU:** the bill is the same every hour the GPU is on, whether it is busy or idle.
+
+So the question is: **how busy does the GPU need to be before it is cheaper?** That point is called the **break-even**.
+
+## A worked example
+
+Let's compare an 8B model on one GPU with the same model on Amazon Bedrock.
+
+**Step 1: the GPU bill.** One AWS g6e.xlarge machine (1 × L40S GPU) costs $1.861 per hour on demand in us-east-1. A month has about 730 hours:
+
+```
+$1.861 × 730 hours = $1,358.53 per month
+```
+
+**Step 2: how much the GPU can do.** We need a measured number. NVIDIA published one: Llama 3.1 8B in FP8 on one L40S, with 100 users at once and 1,000 tokens in and 1,000 tokens out per request, wrote about 2,869 output tokens per second. If the GPU worked like that all month:
+
+```
+2,869 tokens/second × 3,600 seconds × 730 hours ≈ 7.54 billion output tokens
+```
+
+Each request also had 1,000 input tokens, so that is about 7.54 billion input tokens too.
+
+**Step 3: the same tokens on Bedrock.** Llama 3.1 8B Instruct on Bedrock costs $0.22 per million input tokens and $0.22 per million output tokens:
+
+```
+15.08 billion tokens × $0.22 per million ≈ $3,318 per month
+```
+
+**Step 4: the break-even.**
+
+```
+$1,358.53 ÷ $3,318 ≈ 41%
+```
+
+<Sketch name="rm-ch09-1" />
+
+If the GPU is busy like this **more than about 41% of the time, all month, day and night**, the GPU is cheaper. Below that, paying per token is cheaper.
+
+<Note>
+
+Sources: AWS EC2 on-demand pricing (g6e.xlarge, us-east-1), the AWS Price List for Amazon Bedrock (us-east-1), and NVIDIA NIM LLM benchmarks (NIM 1.8.0). All checked 19 October 2026. The throughput number comes from NVIDIA's own serving software, not vLLM. Your numbers will be different. Measure your own model, with your own request lengths, before you decide.
+
+</Note>
+
+## What changes the answer
+
+Small changes move the break-even a lot. Each line changes one thing in the example above:
+
+| Change | Break-even |
+|---|---|
+| The example as it is | about 41% busy |
+| BF16 instead of FP8 (NVIDIA measured about 1,613 tokens per second) | about 73% busy |
+| Two GPUs for safety (Chapter 7) | traffic of about 82% of one GPU's full speed (each GPU about 41% busy) |
+| Compare with a cheaper managed model, Ministral 8B at $0.15 per million | about 60% busy |
+| Compare with Amazon Nova Micro ($0.035 in, $0.14 out per million) | over 100%: the GPU never wins |
+
+<Think>
+
+Most agents are busy in office hours and quiet at night. Botley's traffic is high from 9 to 6 and almost nothing after that. Could its GPU really be 41% busy on average over a whole month?
+
+</Think>
+
+<Careful>
+
+**“41% busy” means 41% of full speed, on average, every hour of the month.** Full speed here is 100 users at once, all the time. A GPU that is packed at lunchtime and empty at night may average well under that. Look at your real traffic over a whole week, not your busiest hour.
+
+</Careful>
+
+## The costs people forget
+
+The GPU price is only part of the bill. AWS's own guidance for generative AI says that “more often than not, it is beneficial to opt for a managed or serverless hosting paradigm”, because the total cost of hosting models yourself is so hard to pin down. Here is what that total includes:
+
+| Hidden cost | Why it matters |
+|---|---|
+| **People** | Someone sets up, upgrades and fixes the GPU cluster, and is on call when it breaks at night. |
+| **The second copy** | You need at least two copies for safety (Chapter 7). That doubles the GPU bill. |
+| **Idle hours** | Nights, weekends and holidays cost the same as busy hours, unless you scale down. |
+| **Getting GPUs** | Quota requests, and popular GPUs that are sold out in your region. |
+| **Upgrades** | vLLM releases about every two weeks. New models come out often. Each change needs testing. |
+| **Storage and network** | Weights, images, logs and data moving between services. |
+| **Testing models** | Checking that the open model is good enough for your tasks, and checking again after each change. |
+
+## Ways to bring the GPU bill down
+
+- **Commit for longer.** AWS Savings Plans (up to 72% off), Google committed use discounts (about 55% off for three years on g2 machines) and Azure reservations (up to 72% off) lower the hourly price, if you are sure you will use the GPU for that long.
+- **Use Spot for extra capacity.** Up to about 90% off, but the cloud can take the machine back at short notice. Use it for extra copies or batch jobs, not your only copy.
+- **Use a smaller or quantized model.** Less memory, more conversations per GPU (Chapter 4).
+- **Scale down when it is quiet,** if your users can accept a slow first answer after a quiet period.
+
+<FaceOff title={"Is our own GPU cheaper?"} left={"Sam"} right={"Maya"} lines={[["L", "The GPU is $1,359 a month. Our token bill was higher than that last month. Easy decision!"], ["R", "That's one GPU. We need two for safety, so $2,717. Plus the time I spend running them."], ["L", "But we'd be paying the same every month. No more surprises."], ["R", "True, and that's worth something. But our traffic is mostly office hours. Let's measure a full week before we decide."], ["L", "Fine. Show me the numbers on Friday."]]} />
+
+<NoSillyQuestions>
+
+<QA q={"Why didn't you use an L4 for the example? It's cheaper."}>
+
+We could not find a reliable published throughput number for an 8B model on one L4. Without a measured number, any break-even would be a guess. Run a load test on your own model and GPU, then use the same four steps.
+
+</QA>
+
+<QA q={"Does the break-even get better with bigger GPUs?"}>
+
+Not by itself. A bigger GPU costs more per hour and can do more work per hour. What matters is how busy you keep it. Bigger models also have higher per-token prices on managed services, so do the math for each case.
+
+</QA>
+
+<QA q={"Isn't reserved capacity on a managed service the same trade-off?"}>
+
+Yes. Reserved capacity is also paid by the hour, busy or not. The difference is that the provider runs the GPUs, so the “people” line in the hidden costs is much smaller.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Use the four steps. (The throughput number in question 2 is made up for practice. Measure your own for real decisions.)
+
+1. One AWS g6.xlarge (1 × L4) costs $0.8048 per hour. What does it cost for a 730-hour month? <Blank />
+2. Suppose you measure that this L4 writes 600 output tokens per second at full use, with the same number of input tokens. How many tokens in total could it handle in a month? <Blank />
+3. What would those tokens cost on Bedrock at $0.22 per million in and out? <Blank />
+4. What is the break-even? Would you switch if your GPU would be about 30% busy? <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- Pay-per-token bills grow with use. GPU bills are the same every hour the GPU is on.
+- Break-even = GPU cost per month ÷ what a month of the GPU's full output would cost on the managed service.
+- In our example with real prices, one L40S beats Bedrock above about 41% average use. With two GPUs for safety, you need about twice the traffic: about 82% of one GPU's full speed.
+- Very cheap managed models (like Nova Micro) can beat your own GPU at any level of use.
+- Count the hidden costs: people, the second copy, idle hours, upgrades and testing.
+- Use your own measured throughput and a full week of real traffic before deciding.
+
+</Takeaways>

@@ -1,0 +1,107 @@
+---
+number: 10
+title: "Reasons that aren't money"
+kicker: "Chapter ten"
+subtitle: "Privacy, control, custom models and more. Each one is real, and each one has a “but”."
+question: "When does running your own model make sense even if it costs more?"
+part: "Choose"
+quote: {"who": "sam", "text": "Forget the bill for a second. Are there other reasons to run our own?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, Blank, Note, Hand } from '../../../components/index.ts';
+
+Money is not the only reason teams run their own models. Here are the other common reasons. For each one, there is also a fair counter-point, because the managed services have caught up on many of them.
+
+## Reason 1: data must stay on machines you control
+
+Sam's second question: the customer wants their data to stay inside the company's own cloud account. With your own GPUs, prompts and answers never leave machines that you run.
+
+**But:** check what the rule actually requires. Many rules say “don't let the provider train on our data” or “keep data in the EU”. The managed services can meet those: they promise not to train on your data without permission, and you can choose the region, or a data zone on Microsoft Foundry (Chapter 5). If the rule really says “only on machines we control”, then self-hosting, or the provider's dedicated options, may be the answer.
+
+## Reason 2: you want to keep a model version for as long as you like
+
+On a managed service, the provider retires models on its schedule. On Bedrock, requests to a model fail after its End-of-Life date. On Microsoft Foundry, generally available models usually retire 18 months after launch, and the dates can't be extended (Chapter 5). If you have carefully tested Botley with one exact model, a forced change means testing again.
+
+With your own copy of the weights, you can run the same model for as long as you like.
+
+**But:** “never changing” is not free. You still need to update vLLM, drivers and machine images for security fixes, and test after each update. And you miss out on newer, better models unless you choose to move.
+
+## Reason 3: you have your own fine-tuned model
+
+**Fine-tuning** means training an existing model a little more on your own examples, so it gets better at your task. If you have a fine-tuned open model, you need somewhere to run it.
+
+**But:** you don't always need your own GPUs for this. Bedrock Custom Model Import can run imported weights for several model families, Google's Agent Platform can deploy open models from Model Garden on dedicated machines, and Microsoft Foundry has managed compute (Chapter 5). Each still charges by the hour or minute while the model runs.
+
+## Reason 4: it must work without the internet
+
+Some places can't send anything outside: a factory floor, a ship, some government and defense systems. They need the model on their own machines, with no connection to a model service. For these, self-hosting is almost always the answer. (One exception: Google offers Gemini on its Google Distributed Cloud hardware, installed at your own site.)
+
+## Reason 5: control over speed
+
+With your own GPUs, you decide how many users share a GPU (Chapter 3). You can trade throughput for faster answers, put the model next to Botley in the same network, and avoid sharing with other customers.
+
+**But:** managed services also offer faster tiers (such as Bedrock's Priority tier) and reserved capacity that is yours alone. And keeping fast answers on your own GPUs means paying for spare capacity at busy times.
+
+## Reason 6: no limits set by someone else
+
+Managed services have rate limits and quotas per account. Your own GPU has no outside limit.
+
+**But:** it has its own limit: how much the GPU can do. When it is full, requests wait in vLLM's queue until you add more GPUs, and adding GPUs takes minutes (Chapter 7).
+
+## The reasons side by side
+
+| Reason | Does self-hosting help? | Can a managed option help too? |
+|---|---|---|
+| Data stays in a region | Yes | Yes: pick the region or data zone |
+| Data only on machines you control | Yes | Partly: dedicated options run on machines only you use, but the provider runs them |
+| Keep one model version for a long time | Yes | No: the provider decides when a version retires |
+| Run your own fine-tuned model | Yes | Yes, for supported model families |
+| Work with no internet at all | Yes | No |
+| Control over speed | Yes | Partly: faster tiers and reserved capacity |
+| No outside rate limits | Yes, but your GPU has its own limit | Partly: reserved capacity |
+
+<FaceOff title={"Privacy: own GPUs or managed?"} left={"Customer's security team"} right={"Maya"} lines={[["L", "We don't want our data used to train anyone's model."], ["R", "All three managed services promise that in writing. Here is the page for the one we use."], ["L", "We also need it processed in the EU."], ["R", "We can choose an EU region, or an EU data zone. We just change a setting."], ["L", "And nothing may leave infrastructure your company controls."], ["R", "That one the managed service can't meet. For that, we'd run the model ourselves."]]} />
+
+<NoSillyQuestions>
+
+<QA q={"Is self-hosting automatically more secure?"}>
+
+No. It moves the job to your team. You must patch the machines, protect the vLLM endpoint (it has almost no security of its own, Chapter 6) and watch the logs. A well-run managed service can be safer than a badly run cluster.
+
+</QA>
+
+<QA q={"Can we self-host just for the one customer who needs it?"}>
+
+Yes. The agent can call different models for different customers. Botley could use a managed model for most users and your own model for the customer with strict rules.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Does each customer need self-hosting? Answer **yes**, **no** or **maybe**, and say why.
+
+1. “Our data must not be used to train AI models.” <Blank />
+2. “All processing must stay in the EU.” <Blank />
+3. “The system runs on an oil platform with no internet connection.” <Blank />
+4. “We need the exact same model version for at least three years, for audit reasons.” <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- Good non-money reasons: data only on machines you control, keeping one model version, fine-tuned models, no internet, control over speed.
+- Many privacy rules can be met by managed services: no training on your data, and a choice of region or data zone.
+- Only self-hosting lets you keep a model version for as long as you like, or run with no internet at all.
+- Fine-tuned models can also run on managed dedicated options.
+- Self-hosting is not automatically more secure. It moves the work to your team.
+
+</Takeaways>

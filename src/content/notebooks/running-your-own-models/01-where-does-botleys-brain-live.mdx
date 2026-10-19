@@ -1,0 +1,149 @@
+---
+number: 1
+title: "Where does Botley's brain live?"
+kicker: "Chapter one"
+subtitle: "The agent and the model are two different things. There are three ways to get a model."
+question: "What does it mean to run your own model, and what are the other options?"
+part: "The basics"
+quote: {"who": "sam", "text": "The model bill went up again. Can't we just run our own?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, Blank, Note, Hand } from '../../../components/index.ts';
+
+Botley is live. People use it every day to plan trips. Maya is happy. Then Sam comes in with two questions.
+
+<Columns>
+<div>
+
+<Sticky color="pink">
+
+**Question 1:** “The bill for the AI model grows every month. Would our own model be cheaper?”
+
+</Sticky>
+
+</div>
+<div>
+
+<Sticky color="blue" tilt="right">
+
+**Question 2:** “A big customer asks if their data can stay inside our own cloud account. Can it?”
+
+</Sticky>
+
+</div>
+</Columns>
+
+Before Maya can answer, she needs to be clear about one thing: what exactly would “our own model” mean?
+
+## The agent is not the model
+
+Botley is an **agent**. It is a program. It gets a goal, plans the steps, and uses tools such as flight search and the calendar. But Botley does not do the thinking itself. For every step, it sends text to a **large language model (LLM)** and gets text back. The model is the part that reads and writes.
+
+Today, Botley sends that text over the internet to a model service. Botley's code runs in one place. The model runs somewhere else, on very powerful computers that someone else looks after.
+
+<Note>
+
+In Notebook #1 we chose a home for the **agent**. This notebook is about a home for the **model**. They are separate choices. You can move the model without moving the agent.
+
+</Note>
+
+## Three ways to get a meal
+
+Think of the model as a meal that Botley needs many times a day. There are three ways to get it.
+
+<Sketch name="rm-ch01-1" />
+
+|   | Eat at a restaurant | Book a private room | Cook in your own kitchen |
+|---|---|---|---|
+| In cloud words | A shared model service. You **pay per token**. | **Reserved capacity** on a model service. | **Your own GPUs**, running a model you chose. |
+| How you pay | For each token that goes in and comes out. | By the hour, whether you use it or not. | For the GPU machines by the hour, plus your team's time. |
+| Who runs the computers? | The provider. | The provider. | You. |
+| Which models? | The ones on the provider's list. | The ones on the provider's list. | Any open-weight model whose license fits your use. |
+| Examples | Amazon Bedrock on-demand, Google's Agent Platform Standard PayGo, Microsoft Foundry Global Standard. | Bedrock Provisioned Throughput, Agent Platform Provisioned Throughput, Foundry Provisioned (PTU). | vLLM on Amazon EKS, Google GKE or Azure AKS. |
+
+A **token** is a small piece of text, often a short word or part of a word. Model services count everything in tokens, and they charge for the tokens you send and the tokens you get back. Chapter 3 explains tokens in more detail.
+
+There is also a path between the restaurant and your own kitchen: the provider runs an open-weight model for you on GPUs that only you use. We look at it in Chapter 5.
+
+## Secret recipes and published recipes
+
+Here is the most important fact in this chapter. **You can't cook every recipe at home.**
+
+<Sketch name="rm-ch01-2" />
+
+A **closed model** is like a secret recipe. The company that made it never gives out the model itself. You can only use it by sending requests to an API. Claude, GPT and Gemini are closed models. You can use them through their makers and through cloud services such as Bedrock, Agent Platform and Foundry. But you can't download them and run them on your own GPUs. (One exception: Google offers Gemini on its Google Distributed Cloud hardware, installed at a customer's own site.)
+
+An **open-weight model** is like a published recipe. The model files (the “weights”) are published, so anyone can download them and run them. Llama, Qwen, Gemma, Mistral, gpt-oss and DeepSeek are open-weight model families.
+
+<Careful>
+
+**Running your own model usually means changing models.** If Botley uses Claude or GPT today, “our own model” means moving to an open-weight model. Its answers will be different. Some will be better, some worse. Before you switch, test the new model on real tasks. Chapter 11 shows how.
+
+</Careful>
+
+<Think>
+
+Botley books flights, so it must call tools correctly every time. Would you be happy to switch Botley to a smaller open-weight model without testing it first? What could go wrong?
+
+</Think>
+
+## Open-weight is not the same as open source
+
+People often say “open source model”, but most of these models are only **open-weight**. You get the finished weights, but usually not the training data or the full training code. What you may do with the weights is set by the model's **license**. Some licenses, such as Apache 2.0, allow almost any use. Others have their own conditions. Chapter 2 shows how to check.
+
+<NoSillyQuestions>
+
+<QA q={"Does “self-hosted” mean running the model on my laptop?"}>
+
+No. In this notebook it means running the model on GPU machines that you rent from a cloud, inside your own cloud account. You can run small models on a laptop to try them, but not for a live service with many users.
+
+</QA>
+
+<QA q={"Can I run Claude or GPT on my own GPUs if I pay extra?"}>
+
+No. Their makers don't give out the weights. You can only call them through an API. (OpenAI does publish a separate family of open-weight models, called gpt-oss. Those you can run yourself.)
+
+</QA>
+
+<QA q={"If an open-weight model is free to download, is it free to use?"}>
+
+The download is free. Running it is not. GPUs cost money every hour they are switched on, and someone has to look after them. Chapter 9 does the math.
+
+</QA>
+
+<QA q={"Can we use more than one way at the same time?"}>
+
+Yes, and many teams do. For example, a small model on your own GPUs for easy questions, and a large managed model for hard ones. Chapter 11 covers this.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Which way is each of these: **pay per token**, **reserved capacity** or **your own GPUs**? One of them is not possible. Which one?
+
+1. Botley calls Claude on Amazon Bedrock and the bill shows a price per million tokens. <Blank />
+2. Maya's team runs Qwen with vLLM on a GPU node pool in their GKE cluster. <Blank />
+3. The company pays Microsoft by the hour for Provisioned Throughput Units (PTUs), busy or not. <Blank />
+4. Sam asks Maya to download Gemini and run it on their EKS cluster. <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- The agent and the model are separate. You can move the model without moving the agent.
+- There are three ways to get a model: pay per token, reserved capacity, or your own GPUs.
+- Closed models (Claude, GPT, Gemini) are only available through an API. You can't run them yourself.
+- Open-weight models (Llama, Qwen, Gemma, Mistral, gpt-oss, DeepSeek) can be downloaded and run on your own GPUs.
+- Running your own model usually means changing models, so test before you switch.
+- Open-weight is not the same as open source. The license decides what you may do.
+
+</Takeaways>

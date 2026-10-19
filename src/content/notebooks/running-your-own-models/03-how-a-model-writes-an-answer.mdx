@@ -1,0 +1,135 @@
+---
+number: 3
+title: "How a model writes an answer"
+kicker: "Chapter three"
+subtitle: "Tokens, the two stages of every answer, and the notes the model keeps on the side."
+question: "What happens inside the GPU when Botley asks the model something?"
+part: "The basics"
+quote: {"who": "botley", "text": "Why does my answer start slowly and then flow word by word?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, Blank, Note, Hand } from '../../../components/index.ts';
+
+To size a GPU, or to understand a bill, you need to know what the model does when a request arrives.
+
+## Everything is tokens
+
+A model does not read letters or whole sentences. It reads **tokens**. A token is a small piece of text: often a short word, part of a longer word, or a punctuation mark. A tool called the **tokenizer** cuts text into tokens on the way in, and joins tokens back into text on the way out.
+
+Everything is counted in tokens: the length of a conversation, the speed of the model, and the price on a model service.
+
+## Two stages in every answer
+
+<Sketch name="rm-ch03-1" />
+
+**Stage 1: read the question.** The model takes in all the tokens of the request at once: the system instructions, the conversation so far, the tool results, and the new question. This stage is called **prefill**. The GPU does a lot of work, but it does it all in one go.
+
+**Stage 2: write the answer.** The model writes the answer one token at a time. Each new token depends on all the tokens before it, so the model can't write token 10 before it has written token 9. This stage is called **decode**. It is the reason answers appear word by word.
+
+<Think>
+
+Botley's requests are long: instructions, tool results and the chat history, often thousands of tokens. Its answers are often short. Which stage do you think takes most of Botley's GPU time?
+
+</Think>
+
+## The notes on the counter: the KV cache
+
+While it writes, the model needs to look back at every token in the conversation. Working everything out again for each new token would be very slow. So the model keeps notes about every token it has already seen. These notes are called the **KV cache** (“key-value cache”).
+
+<Sketch name="rm-ch03-2" />
+
+The KV cache lives in **GPU memory**, next to the weights. It has two important properties:
+
+- **It grows with the length of the conversation.** A long chat with many tool results makes a tall pile of notes.
+- **Every conversation the GPU works on has its own pile.** Twenty conversations at once means twenty piles.
+
+So the free GPU memory after the weights decides how many conversations the model can handle at the same time, and how long they can be.
+
+<Geek>
+
+**How big is one pile of notes?** For each token, the model stores 2 × (number of layers) × (number of KV heads) × (head size) numbers. The model from Chapter 8, Qwen3-4B-Instruct-2507, has 36 layers, 8 KV heads and a head size of 128, all in BF16 (2 bytes):
+
+```
+2 × 36 × 8 × 128 × 2 bytes = 147,456 bytes ≈ 147 KB per token
+```
+
+One conversation of 8,192 tokens needs about 1.2 GB of notes. Ten of them at once need about 12 GB, more than the model's own 8 GB of weights. You can find these numbers in the model's `config.json`.
+
+</Geek>
+
+## Cooking many orders at once
+
+A GPU is very good at doing the same calculation on lots of data at the same time. Writing tokens for only one conversation leaves most of it idle. So serving software puts many conversations together and writes the next token for all of them in one step. This is called **batching**.
+
+Here is a real example. NVIDIA tested an 8B model (Llama 3.1 8B in FP8) on one L40S GPU, with 1,000 tokens in and 1,000 tokens out per request:
+
+| Users at the same time | Tokens written per second, all users together | What each user sees |
+|---|---|---|
+| 1 | about 71 | about 71 tokens per second |
+| 100 | about 2,869 | about 29 tokens per second, and about 0.8 seconds before the first token |
+
+<Note>
+
+Source: NVIDIA NIM LLM benchmarks (NIM 1.8.0). These numbers come from NVIDIA's own serving software, not vLLM, and they depend heavily on the request length and settings. Use them to understand the shape, not as a promise. Checked 19 October 2026.
+
+</Note>
+
+With 100 users, the GPU writes about 40 times more tokens per second in total. Each user's answer flows more slowly, but still faster than people read. This is why one GPU can serve many users, and why a GPU that serves only one user at a time is a very expensive way to run a model.
+
+## Three speed numbers that matter
+
+| Number | What it means | Who cares |
+|---|---|---|
+| **Time to first token** | How long the user waits before the answer starts. Mostly stage 1. | Users of a chat agent. |
+| **Time between tokens** | How fast the answer flows once it starts. Stage 2. | Users reading a long answer. |
+| **Throughput** | Tokens per second for all users together. | Whoever pays for the GPU. |
+
+These pull against each other. More users at once means better throughput, but slower answers for each user. Running your own model means you choose the balance. On a model service, the provider chooses.
+
+<NoSillyQuestions>
+
+<QA q={"Is one token the same as one word?"}>
+
+Not exactly. Common short words are often one token. Long or unusual words are split into several. Different models cut text in different ways, so the same text can be a different number of tokens on different models.
+
+</QA>
+
+<QA q={"Why are output tokens usually more expensive than input tokens?"}>
+
+Input tokens are read together in stage 1. Output tokens are written one at a time in stage 2, and each one takes a full step through the model. On many model services, output tokens cost more for this reason.
+
+</QA>
+
+<QA q={"Does a longer context window cost more?"}>
+
+Only if you use it. A model may support 262,144 tokens, but every token in a conversation needs space in the KV cache. Long conversations use more GPU memory and take longer in stage 1.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+1. Botley's answers start after a long pause, then flow quickly. Which stage is slow? <Blank />
+2. Botley's answers start quickly but then appear very slowly. Which stage is slow? <Blank />
+3. Using the Geek corner numbers, how much KV cache do 20 conversations of 4,096 tokens each need? <Blank />
+4. Why does a GPU that serves one user at a time cost so much per token? <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- Models read and write tokens, small pieces of text.
+- Every answer has two stages: reading the whole request at once (prefill), then writing one token at a time (decode).
+- The KV cache holds notes for every token in every active conversation. It lives in GPU memory and grows with conversation length.
+- Batching many conversations together makes the GPU far more efficient.
+- Watch three numbers: time to first token, time between tokens, and throughput.
+
+</Takeaways>

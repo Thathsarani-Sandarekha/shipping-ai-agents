@@ -1,0 +1,165 @@
+---
+number: 6
+title: "The do-it-yourself path"
+kicker: "Chapter six"
+subtitle: "vLLM: the head chef that turns a GPU and a model into a service Botley can call."
+question: "What software runs an open model on our own GPUs?"
+part: "The two paths"
+quote: {"who": "maya", "text": "A GPU and a weights file. How do I turn that into something Botley can call?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, Steps, Blank, Note, Hand } from '../../../components/index.ts';
+
+A GPU and a weights file are not a service yet. You need a program that loads the weights into the GPU, listens for requests, puts conversations into batches, looks after the KV cache, and sends answers back. This program is called an **inference server** or **serving engine**. One of the most widely used open-source ones is **vLLM**.
+
+## What vLLM does well
+
+<Sketch name="rm-ch06-1" />
+
+**Continuous batching.** A simple server takes a group of requests, finishes all of them, then takes the next group. Short answers wait for long ones. vLLM adds a new request to the running batch as soon as there is room, at every step. The GPU stays busy and nobody waits for a whole group to finish.
+
+**PagedAttention.** The KV cache is stored in small fixed-size blocks, like pages in a notebook, instead of one big reserved area per conversation. A conversation gets a new block only when it needs one. vLLM's authors say this cuts wasted KV cache memory to under 4%. Less waste means more conversations fit on the same GPU.
+
+**It speaks the OpenAI API.** vLLM answers requests in the same format as OpenAI's API, at addresses such as `/v1/chat/completions` and `/v1/models`. Most agent frameworks can already talk to that format.
+
+## Botley barely changes
+
+Because vLLM speaks the OpenAI format, Maya only changes two settings in Botley: the address of the model and the model's name.
+
+<Geek>
+
+```python
+from openai import OpenAI
+
+# Before: a model service. After: your own vLLM server.
+client = OpenAI(
+    base_url="http://vllm.models.svc.cluster.local/v1",  # your vLLM address
+    api_key="the-key-you-gave-vllm",
+)
+
+reply = client.chat.completions.create(
+    model="Qwen/Qwen3-4B-Instruct-2507",
+    messages=[{"role": "user", "content": "Find me a flight to Lisbon on Tuesday."}],
+)
+print(reply.choices[0].message.content)
+```
+
+The model name must match the name vLLM uses, which is the model you started it with unless you set `--served-model-name`.
+
+</Geek>
+
+<Careful>
+
+**Same format does not mean same behavior.** The request format is the same, but the model is different. Tool calls, long instructions and answer style can all change. Also, some features need extra vLLM settings. For example, tool calling needs flags that depend on the model, so check the vLLM docs for your model. Test Botley's real tasks before you switch.
+
+</Careful>
+
+## Try it on one machine
+
+The quickest way to see vLLM work is its official Docker image on a single machine with an NVIDIA GPU. This is vLLM's own example, using a tiny model:
+
+<Steps rows={[["1", "Start vLLM", "docker run --runtime nvidia --gpus all \\\n  -v ~/.cache/huggingface:/root/.cache/huggingface \\\n  --env \"HF_TOKEN=$HF_TOKEN\" \\\n  -p 8000:8000 \\\n  --ipc=host \\\n  vllm/vllm-openai:latest \\\n  --model Qwen/Qwen3-0.6B", "Downloads the image and the model, loads the model into the GPU and listens on port 8000. The <code>-v</code> line keeps downloaded models on your disk, so the next start is faster. <code>--ipc=host</code> gives vLLM the shared memory it needs."], ["2", "Is it ready?", "curl http://localhost:8000/health", "Answers with success (HTTP 200) once the model is loaded."], ["3", "Which models?", "curl http://localhost:8000/v1/models", "Lists the model name that vLLM is serving."], ["4", "Ask something", "curl http://localhost:8000/v1/chat/completions \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\": \"Qwen/Qwen3-0.6B\",\n       \"messages\": [{\"role\": \"user\",\n         \"content\": \"Say hello\"}]}'", "Sends one chat message in the OpenAI format and returns the answer."]]} />
+
+<Note>
+
+The `HF_TOKEN` line is only needed for gated models (Chapter 2). The image is large, about 9 GB compressed. Source: vLLM's Docker deployment guide, checked 19 October 2026.
+
+</Note>
+
+## The settings you will actually use
+
+| Setting | What it does | Default |
+|---|---|---|
+| `--model` (or the first word after `vllm serve`) | Which model to load, by its Hugging Face name or a local folder. | none |
+| `--max-model-len` | The longest conversation, in tokens, that vLLM will accept. Set it lower to save KV cache memory. | the model's own maximum |
+| `--gpu-memory-utilization` | How much of the GPU's memory vLLM may use, from 0 to 1. | 0.92 |
+| `--tensor-parallel-size` | How many GPUs to split the model across (Chapter 4). | 1 |
+| `--quantization` | Which quantization method to use, if the model needs one set. | worked out from the model |
+| `--dtype` | The number format for the weights, such as `bfloat16`. | `auto` |
+| `--served-model-name` | The name Botley uses in its requests. | the `--model` value |
+| `--api-key` | A key that requests to `/v1` addresses must send. | none |
+| `--port` | The port vLLM listens on. | 8000 |
+
+<Note>
+
+Source: vLLM `serve` command reference, version 0.32.0 (released 18 October 2026). vLLM releases a new version about every two weeks, so check the docs for the version you use.
+
+</Note>
+
+## Built-in health and numbers
+
+vLLM gives you two more addresses for free:
+
+- **`/health`** answers when the server is ready. Kubernetes uses it to know when to send traffic (Chapter 7).
+- **`/metrics`** gives numbers in Prometheus format. The most useful are `vllm:num_requests_running` (conversations being worked on now), `vllm:num_requests_waiting` (conversations waiting for room), `vllm:kv_cache_usage_perc` (how full the KV cache is, from 0 to 1) and `vllm:time_to_first_token_seconds`.
+
+<Careful>
+
+**Older guides use an old metric name.** The KV cache metric used to be called `vllm:gpu_cache_usage_perc`. It is now `vllm:kv_cache_usage_perc`, and the old name is gone in vLLM 0.32. Some cloud guides, including Google's, still show the old name.
+
+</Careful>
+
+<Careful>
+
+**vLLM is not a security guard.** `--api-key` only protects the `/v1` addresses. `/health` and `/metrics` stay open. vLLM has no users, roles or rate limits. Keep it inside your private network, and let only Botley reach it.
+
+</Careful>
+
+## Other serving engines
+
+| Tool | What it is | When to look at it |
+|---|---|---|
+| **SGLang** | Another open-source serving engine, built for large-scale serving and agent workloads. | You want to compare speed with vLLM on your own model. |
+| **TensorRT-LLM** | NVIDIA's open-source library for fast inference on NVIDIA GPUs. | You want maximum speed on NVIDIA hardware and can spend time tuning. |
+| **NVIDIA NIM** | NVIDIA's ready-made model containers. NIM for LLMs version 2.0 is built on vLLM. | You want NVIDIA's packaged and supported version. |
+| **Hugging Face TGI** | Hugging Face's serving engine, now in maintenance mode. Hugging Face recommends vLLM or SGLang instead. | Only if you already run it. |
+| **Ollama** and **llama.cpp** | Easy ways to run models on your own computer. Ollama only listens on your own computer and handles one request at a time by default. | Trying models on a laptop, not serving many users. |
+
+<NoSillyQuestions>
+
+<QA q={"Is vLLM free?"}>
+
+Yes, vLLM is open source. You pay for the GPUs it runs on and for your team's time.
+
+</QA>
+
+<QA q={"Should I use the “latest” image in production?"}>
+
+No. `latest` changes every couple of weeks. Use a fixed version tag, such as the version you tested, and upgrade on purpose.
+
+</QA>
+
+<QA q={"Can vLLM serve more than one model?"}>
+
+One vLLM server serves one base model. It can also serve small add-ons for that model, called LoRA adapters. To serve two different models, run two servers. Each one needs its own GPU memory.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+1. Botley gets errors because its requests are longer than vLLM allows. Which setting do you look at? <Blank />
+2. Requests are queuing up and users wait a long time. Which metric shows this? <Blank />
+3. A teammate wants to put Ollama on a cloud GPU and point all of Botley's users at it. What do you tell them? <Blank />
+4. Why can Maya switch Botley to vLLM by changing only two settings? <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- A serving engine turns a GPU and a weights file into a service. vLLM is one of the most widely used open-source ones.
+- Continuous batching and PagedAttention let vLLM serve many conversations on one GPU with little waste.
+- vLLM speaks the OpenAI API format, so Botley only changes the address and the model name.
+- Watch `/health` and `/metrics`, especially requests waiting and KV cache usage.
+- vLLM has no real security of its own. Keep it on a private network.
+- Pin a fixed vLLM version. It changes every couple of weeks.
+
+</Takeaways>

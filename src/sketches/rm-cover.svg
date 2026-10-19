@@ -1,0 +1,66 @@
+<svg viewBox='0 0 640 450'>
+<defs><marker id='rmc-a' viewBox='0 0 10 10' refX='8' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'><path d='M0 0 L10 5 L0 10' fill='none' stroke='#23406e' stroke-width='2'/></marker></defs>
+<path d='M10 392 q160 -6 310 0 t310 0' fill='none' stroke='#1b1b1b' stroke-width='2.4'/>
+<!-- the restaurant: a managed model service -->
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round'>
+<rect x='28' y='176' width='200' height='214' fill='#fff'/>
+<path d='M20 176 h216 l-10 30 h-196z' fill='#ffd9e2'/>
+<path d='M48 176 l-6 30 M80 176 l-3 30 M112 176 v30 M144 176 l3 30 M176 176 l6 30 M208 176 l9 30' fill='none' stroke-width='1.6'/>
+<rect x='44' y='120' width='168' height='44' rx='6' fill='#fff1a6'/>
+<rect x='42' y='226' width='90' height='70' rx='4' fill='#d9ecff'/>
+<rect x='140' y='300' width='54' height='90' rx='3' fill='#fff'/>
+<rect x='138' y='222' width='76' height='62' rx='3' fill='#fff'/>
+</g>
+<text class='m' x='128' y='149' text-anchor='middle' font-size='17'>MODEL SERVICE</text>
+<text class='hk' x='87' y='250' text-anchor='middle' font-size='12'>Bedrock</text>
+<text class='hk' x='87' y='268' text-anchor='middle' font-size='12'>Agent Platform</text>
+<text class='hk' x='87' y='286' text-anchor='middle' font-size='12'>Foundry</text>
+<text class='hb' x='176' y='240' text-anchor='middle' font-size='12'>MENU</text>
+<text class='hk' x='176' y='257' text-anchor='middle' font-size='11'>pay for each</text>
+<text class='hk' x='176' y='272' text-anchor='middle' font-size='11'>token</text>
+<circle cx='184' cy='346' r='3' fill='#1b1b1b'/>
+<!-- your own kitchen: your own GPUs -->
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round'>
+<path d='M412 392 v-196 l100 -56 l100 56 v196z' fill='#fff'/>
+<rect x='436' y='300' width='120' height='90' rx='4' fill='#dcf5d6'/>
+<rect x='450' y='288' width='92' height='12' rx='2' fill='#1b1b1b'/>
+<path d='M470 288 q-2 -24 6 -28 h40 q8 4 6 28z' fill='#fff'/>
+<path d='M470 266 h-8 M522 266 h8' fill='none'/>
+<rect x='566' y='300' width='34' height='90' rx='3' fill='#fff'/>
+<rect x='446' y='184' width='132' height='32' rx='6' fill='#fff1a6'/>
+</g>
+<path d='M484 252 q-6 -12 2 -22 M498 252 q-6 -12 2 -22 M512 252 q-6 -12 2 -22' fill='none' stroke='#1b1b1b' stroke-width='1.6' stroke-linecap='round'/>
+<text class='m' x='512' y='206' text-anchor='middle' font-size='14'>YOUR KITCHEN</text>
+<text class='hb' x='496' y='336' text-anchor='middle' font-size='16'>GPU</text>
+<text class='hk' x='496' y='356' text-anchor='middle' font-size='12'>vLLM on</text>
+<text class='hk' x='496' y='372' text-anchor='middle' font-size='12'>Kubernetes</text>
+<!-- signpost -->
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round'>
+<path d='M320 392 v-176' fill='none'/>
+<path d='M314 226 h-74 l-12 14 l12 14 h74z' fill='#fff'/>
+<path d='M326 262 h74 l12 14 l-12 14 h-74z' fill='#fff'/>
+</g>
+<text class='hk' x='276' y='245' text-anchor='middle' font-size='12.5'>managed</text>
+<text class='hk' x='364' y='281' text-anchor='middle' font-size='12.5'>self-hosted</text>
+<!-- Maya and Botley at the fork -->
+<g transform='translate(268,318) scale(0.82)' stroke='#1b1b1b' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'>
+<path d='M-28 78 q0 -46 28 -46 q28 0 28 46z' fill='#ffd9e2'/>
+<circle cx='0' cy='0' r='20' fill='#fff'/><path d='M-19 -2 q0 -24 19 -24 q19 0 19 24 q-6 -12 -19 -13 q-13 1 -19 13z' fill='#5a3a1a'/><path d='M-19 -4 q-4 22 2 30 M19 -4 q4 22 -2 30' fill='none' stroke='#5a3a1a' stroke-width='5'/>
+<circle cx='-7' cy='-2' r='2' fill='#1b1b1b'/><circle cx='7' cy='-2' r='2' fill='#1b1b1b'/><path d='M-6 8 q6 -3 12 0' fill='none'/></g>
+<g transform='translate(368,338) scale(0.5)' stroke='#1b1b1b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'>
+<line x1='0' y1='-42' x2='0' y2='-26'/><circle cx='0' cy='-46' r='5' fill='#f5c400'/>
+<rect x='-32' y='-26' width='64' height='52' rx='14' fill='#ffffff'/>
+<circle cx='-13' cy='-3' r='6' fill='#1b1b1b'/><circle cx='13' cy='-3' r='6' fill='#1b1b1b'/>
+<path d='M-12 14 q12 9 24 0' fill='none'/>
+<rect x='-26' y='30' width='52' height='42' rx='10' fill='#ffffff'/>
+<rect x='-12' y='40' width='24' height='14' rx='3' fill='#d9ecff'/>
+<path d='M-26 42 l-16 14 M26 42 l16 14' fill='none'/><path d='M-12 72 v14 M12 72 v14' fill='none'/></g>
+<!-- the question -->
+<path d='M196 30 h248 q14 0 14 14 v34 q0 14 -14 14 h-104 l-18 18 l-2 -18 h-124 q-14 0 -14 -14 v-34 q0 -14 14 -14z' fill='#fff' stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round'/>
+<text class='hk' x='320' y='57' text-anchor='middle' font-size='15'>Where should Botley's</text>
+<text class='hk' x='320' y='78' text-anchor='middle' font-size='15'>brain live?</text>
+<path d='M286 124 q-60 0 -120 -4' fill='none' stroke='#23406e' stroke-width='2' marker-end='url(#rmc-a)'/>
+<path d='M354 124 q60 0 120 4' fill='none' stroke='#23406e' stroke-width='2' marker-end='url(#rmc-a)'/>
+<text class='h' x='128' y='424' text-anchor='middle' font-size='14'>someone else cooks</text>
+<text class='h' x='512' y='424' text-anchor='middle' font-size='14'>you cook</text>
+</svg>

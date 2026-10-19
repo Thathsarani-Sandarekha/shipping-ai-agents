@@ -1,0 +1,24 @@
+<svg viewBox='0 0 680 300'>
+<g stroke='#1b1b1b' stroke-width='2.2' fill='none'>
+<path d='M80 30 v200 h420'/>
+<path d='M80 152.4 h400' stroke='#1e7e34' stroke-width='3'/>
+<path d='M80 230 L480 40.5' stroke='#b85c00' stroke-width='3'/>
+<path d='M244 152.4 v77.6' stroke-dasharray='5 5' stroke-width='1.6'/>
+</g>
+<circle cx='244' cy='152.4' r='6' fill='#fff1a6' stroke='#1b1b1b' stroke-width='2'/>
+<text class='hk' x='70' y='234' text-anchor='end' font-size='12'>$0</text>
+<text class='hk' x='70' y='156' text-anchor='end' font-size='12'>$1,359</text>
+<text class='hk' x='70' y='44' text-anchor='end' font-size='12'>$3,318</text>
+<text class='hk' x='80' y='250' text-anchor='middle' font-size='12'>0%</text>
+<text class='hk' x='244' y='250' text-anchor='middle' font-size='12'>41%</text>
+<text class='hk' x='480' y='250' text-anchor='middle' font-size='12'>100%</text>
+<text class='hb' x='280' y='274' text-anchor='middle' font-size='13.5'>how busy the GPU is, on average, all month</text>
+<text class='hb' x='30' y='24' font-size='13.5'>cost per month</text>
+<text class='h' x='490' y='148' font-size='13'>one L40S GPU, 24/7:</text>
+<text class='h' x='490' y='166' font-size='13'>the same bill busy or idle</text>
+<text class='h' x='490' y='44' font-size='13'>pay per token: the bill</text>
+<text class='h' x='490' y='62' font-size='13'>grows with use</text>
+<text class='hk' x='224' y='140' font-size='12.5'>break-even</text>
+<text class='h' x='162' y='206' text-anchor='middle' font-size='12'>tokens are cheaper</text>
+<text class='h' x='362' y='206' text-anchor='middle' font-size='12'>your GPU is cheaper</text>
+</svg>

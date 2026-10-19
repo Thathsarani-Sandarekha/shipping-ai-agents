@@ -1,0 +1,163 @@
+---
+number: 4
+title: "Meet the GPU"
+kicker: "Chapter four"
+subtitle: "GPU memory is the counter space in your kitchen. Everything has to fit on it."
+question: "Which GPU do I need, and will my model fit on it?"
+part: "The basics"
+quote: {"who": "maya", "text": "There are so many GPUs. How do I know which one is big enough?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, Blank, Note, Hand } from '../../../components/index.ts';
+
+A normal computer chip (a CPU) is like a few very skilled chefs. A **GPU** is like thousands of kitchen helpers who each do one simple job, all at the same time. Running a model takes billions of simple multiplications for every token, so a GPU does it far faster than a CPU.
+
+## Memory is the first question
+
+When you pick a GPU for a model, the first question is not speed. It is **memory**. The weights must be in the GPU's own memory, and the KV cache from Chapter 3 needs room next to them.
+
+<Sketch name="rm-ch04-1" />
+
+Think of GPU memory as counter space. The recipe (the weights) takes a fixed part. The notes for every order (the KV cache) take the rest. If the recipe fills the whole counter, you can't cook anything.
+
+Serving software such as vLLM takes a share of GPU memory when it starts. By default, vLLM uses 92% of it. It loads the weights, keeps some room for its own work, and gives everything else to the KV cache.
+
+## The GPU line-up
+
+These are NVIDIA GPUs you can rent on the three big clouds in October 2026, smallest first:
+
+| GPU | Memory per GPU | AWS | Google Cloud | Azure |
+|---|---|---|---|---|
+| L4 | 24 GB | g6 | G2 | — |
+| A10G (A10 on Azure) | 24 GB | g5 | — | NVads A10 v5 (made for graphics, shares the GPU) |
+| L40S | 48 GB | g6e | — | — |
+| A100 | 40 GB or 80 GB | p4d (40 GB), p4de (80 GB) | A2 (40 GB), A2 Ultra (80 GB) | NC A100 v4 (80 GB), ND A100 v4 |
+| RTX PRO 6000 | 96 GB | g7e | G4 | NC RTX PRO 6000 BSE v6 |
+| H100 | 80 GB (94 GB in the NVL version) | p5 | A3 | ND H100 v5, NC H100 v5 (NVL) |
+| H200 | 141 GB | p5e, p5en | A3 Ultra | ND H200 v5 |
+| B200 | about 180 GB | p6-b200 | A4 | — |
+
+<Note>
+
+Sources: NVIDIA product pages, AWS EC2 accelerated computing instance types, Google Cloud GPU machine types, and Azure GPU VM sizes. A dash means we found no matching size on that cloud. Clouds add new GPUs often, so check before you plan. Checked 19 October 2026.
+
+</Note>
+
+Many machine types come in sizes with 1, 2, 4 or 8 GPUs. The big ones (H100 and up) are mostly sold in machines with 8 GPUs. AWS also has a single-H100 size, p5.4xlarge. On Google Cloud, the 1, 2 and 4 GPU sizes of A3 High are only available as Spot or Flex-start machines, not normal on-demand ones.
+
+## What they cost
+
+Here are some on-demand Linux prices, per hour, for the whole machine:
+
+| Machine | GPUs | Price per hour |
+|---|---|---|
+| AWS g6.xlarge (us-east-1) | 1 × L4 | $0.80 |
+| Google g2-standard-8 (us-central1) | 1 × L4 | $0.85 |
+| AWS g6e.xlarge (us-east-1) | 1 × L40S | $1.86 |
+| Azure NC24ads A100 v4 (East US) | 1 × A100 80 GB | $3.67 |
+| AWS p5.4xlarge (us-east-1) | 1 × H100 | $6.88 |
+| Azure NC40ads H100 v5 (East US) | 1 × H100 NVL | $6.98 |
+| AWS p5.48xlarge (us-east-1) | 8 × H100 | $55.04 |
+
+<Note>
+
+Sources: AWS EC2 on-demand pricing, Google Cloud accelerator-optimized VM pricing and Azure Linux VM pricing, checked 19 October 2026. Prices change and differ by region. Spot machines can cost much less (all three clouds advertise up to about 90% off), but the cloud can take them back at short notice. Committing for one or three years also lowers the price.
+
+</Note>
+
+A month has about 730 hours. So one L4 machine running all month costs about $590 on AWS, and one 8 × H100 machine about $40,000.
+
+## Will it fit?
+
+A simple way to check:
+
+1. Work out the weights: parameters × bytes per parameter (Chapter 2).
+2. Take about 90% of the GPU memory. That is roughly what the serving software can use.
+3. Subtract the weights. What is left is for the KV cache. If it is nothing, or very little, the model does not fit in practice.
+
+For example: an 8B model in BF16 on an L4. The weights are about 16 GB. 90% of 24 GB is about 21.6 GB. That leaves about 5.6 GB for the KV cache. It fits, but with room for only a modest number of conversations at once.
+
+## Making the model smaller: quantization
+
+**Quantization** means storing the weights with fewer bits: 8 or 4 instead of 16. The model takes less memory and often runs faster.
+
+- **FP8** halves the memory compared with BF16. Newer GPUs such as the L4, L40S and H100 have built-in support for FP8 math. Older ones such as the A100 and A10G do not, so FP8 helps them less.
+- **INT4** takes about a quarter of the memory of BF16. More of the model's quality can be lost.
+
+Many model makers publish ready-made FP8 or 4-bit versions of their models. Use those when you can, and test the answers on your own tasks.
+
+<Careful>
+
+**Quantization can quietly change answers.** A 4-bit model may be fine for chat but worse at following strict tool-call formats. Botley books real flights. Test the quantized model on Botley's real tasks before it goes live.
+
+</Careful>
+
+## When one GPU is not enough
+
+A 70B model in BF16 needs about 140 GB for its weights alone. Only the B200 can hold that on one GPU, and it is rare and costly. The usual answer is to split the model across several GPUs in the same machine. This is called **tensor parallelism**: each GPU holds part of every layer, and they work on each token together. In vLLM, you set it with `--tensor-parallel-size`.
+
+For example, NVIDIA's own tests run Llama 3.3 70B in FP8 (about 70 GB of weights) on 2 or 4 H100 GPUs.
+
+## Not only NVIDIA
+
+- **Google TPUs** are Google's own chips: TPU v5e (16 GB per chip), v6e “Trillium” (32 GB) and TPU7x “Ironwood” (192 GiB), which became generally available on 31 March 2026.
+- **AWS Inferentia2** (32 GB per chip) and **Trainium** are Amazon's own chips.
+
+They can be cheaper for some models, but they need software built for them. Check that your model and serving tool support them before you choose them.
+
+<Careful>
+
+**New cloud accounts usually can't start GPU machines at all.** On AWS, the default quota for G and P instances (the GPU families) is 0. On Google Cloud, free trial accounts can't use GPUs, and you need GPU quota for your region. On Azure, quota is set per machine family. Request more quota early. It can take days, and popular GPUs can be hard to get in some regions.
+
+</Careful>
+
+<NoSillyQuestions>
+
+<QA q={"Should I just get the biggest GPU?"}>
+
+No. A big GPU running a small model is mostly idle, and you pay for every hour. Pick the smallest GPU that fits your model with enough room for the KV cache, then measure.
+
+</QA>
+
+<QA q={"Can I use Spot machines for a live agent?"}>
+
+Only with care. The cloud can take a Spot machine back with very little warning, and getting a new GPU can take minutes. Spot works better for batch jobs, or as extra capacity next to normal machines.
+
+</QA>
+
+<QA q={"Why is GPU memory such a big deal? My laptop has 32 GB of RAM."}>
+
+The model must be in the GPU's own memory, which is separate from the computer's normal RAM. GPU memory is much faster, and much more expensive.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Will it fit? Use “weights must be well under 90% of GPU memory”.
+
+1. An 8B model in BF16 on one L4 (24 GB). <Blank />
+2. A 70B model in BF16 on one H100 (80 GB). <Blank />
+3. A 70B model in FP8 on one H200 (141 GB). <Blank />
+4. A 4B model in BF16 on one L4 (24 GB). How much is left for the KV cache? <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- GPU memory is the first thing to check. Weights and KV cache must both fit.
+- vLLM uses 92% of GPU memory by default and gives what is left after the weights to the KV cache.
+- GPUs range from 24 GB (L4, A10G) to about 180 GB (B200). Prices range from under $1 to over $100 per hour per machine.
+- Quantization (FP8, INT4) shrinks models. Test the quality before you rely on it.
+- Big models are split across several GPUs with tensor parallelism.
+- Ask for GPU quota early. New accounts often start with none.
+
+</Takeaways>

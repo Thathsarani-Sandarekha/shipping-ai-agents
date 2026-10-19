@@ -1,0 +1,139 @@
+---
+number: 7
+title: "Models on Kubernetes"
+kicker: "Chapter seven"
+subtitle: "GPU nodes, slow starts, the right way to scale, and why you always run two."
+question: "What changes when you run a model on Kubernetes instead of a normal app?"
+part: "The two paths"
+quote: {"who": "botley", "text": "It took my model six minutes to wake up. My old app took six seconds!"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, Blank, Note, Hand } from '../../../components/index.ts';
+
+One vLLM container on one machine is fine for a test. For a live service, you want something that restarts it when it crashes, runs more than one copy, and adds copies when it gets busy. For most teams that is **Kubernetes**: Amazon EKS, Google GKE or Azure AKS (Notebook #1, Chapter 5).
+
+Running a model on Kubernetes works like running any other container, with four big differences.
+
+## Difference 1: the machines need GPUs, and Kubernetes must see them
+
+You add a **GPU node pool**: a group of machines that have GPUs. Then a pod asks for a GPU in its settings:
+
+```yaml
+resources:
+  limits:
+    nvidia.com/gpu: 1
+```
+
+Kubernetes then places the pod only on a machine with a free GPU. For this to work, each GPU machine needs two things: the **NVIDIA driver**, and the **NVIDIA device plugin**, which tells Kubernetes how many GPUs the machine has. Each cloud handles this a little differently:
+
+| Cloud | Driver | Device plugin |
+|---|---|---|
+| Google GKE | Installed for you by default (GKE 1.30.1-gke.1156000 and later). Autopilot clusters handle it completely. | Handled by GKE. |
+| Amazon EKS | Included in the EKS-optimized NVIDIA machine images. | **Not** included in the Amazon Linux 2023 NVIDIA images, so you install it. It is included in the Bottlerocket NVIDIA images. EKS Auto Mode handles both. |
+| Azure AKS | Installed by default. | You install it. A “managed GPU node pool” option that also installs it is in preview. The KAITO add-on (Chapter 8) sets everything up for you. |
+
+<Note>
+
+Sources: GKE “About GPUs”, Amazon EKS optimized accelerated AMIs and EKS Auto Mode docs, Azure AKS “Use GPUs” and AKS-managed GPU node pools docs. Checked 19 October 2026. NVIDIA's **GPU Operator** can install all of these parts for you on any cluster.
+
+</Note>
+
+## Difference 2: starting takes minutes, not seconds
+
+<Sketch name="rm-ch07-1" />
+
+A normal app container starts in seconds. A model server has much more to do: the cluster may need to start a new GPU machine, the vLLM image is about 9 GB, the weights can be many GB more, and then they must be loaded into the GPU. Together this can take several minutes.
+
+This changes how you run it:
+
+- **Keep copies running.** Don't scale a live model down to zero and expect the first user to wait.
+- **Keep the weights close.** Downloading from Hugging Face on every start is slow and depends on their service. Store a copy in your own cloud storage or on a disk in the cluster. vLLM can also stream weights straight from Amazon S3 or Google Cloud Storage with a tool called the Run:ai Model Streamer.
+- **Make the image arrive faster.** GKE can preload images onto machines with secondary boot disks. AWS can use SOCI (Seekable OCI), which lets a container start before the whole image has downloaded.
+- **Tell Kubernetes to wait.** Add a startup probe on vLLM's `/health` that allows several minutes, so Kubernetes doesn't restart the pod while the model loads. Add a readiness probe on `/health` too, so Kubernetes only sends traffic when the model is ready.
+
+<Careful>
+
+**vLLM needs shared memory.** Containers get very little shared memory (`/dev/shm`) by default, and vLLM can fail without more. On Kubernetes, mount an in-memory volume at `/dev/shm`. vLLM's own Kubernetes guide shows how, and Chapter 8 includes it.
+
+</Careful>
+
+## Difference 3: don't scale on CPU
+
+Normal apps scale when CPU use goes up. For a model server, CPU tells you almost nothing, because the work happens on the GPU. Even GPU use is a poor guide. Google's GKE guide says GPU utilization “does not measure how much work is being done”.
+
+Scale on what vLLM itself reports instead. Google's best-practice guide for GKE suggests:
+
+| Goal | Scale on |
+|---|---|
+| Serve as many requests as possible | `vllm:num_requests_waiting`, the queue of conversations waiting for room |
+| Keep answers fast | KV cache usage (`vllm:kv_cache_usage_perc`), or `vllm:num_requests_running` |
+
+To use these numbers, you need two layers:
+
+1. **More pods:** Kubernetes' built-in autoscaler (the HorizontalPodAutoscaler), set up to read vLLM's numbers, or **KEDA**, which can scale on a Prometheus query.
+2. **More GPU machines** for those pods: the cluster autoscaler, **Karpenter** on EKS, node auto-provisioning on AKS, or GKE's own autoscaling and Autopilot.
+
+<Think>
+
+Adding a copy of the model takes minutes (Difference 2). What does that mean for when your autoscaler should act? Should it wait until users are already waiting a long time?
+
+</Think>
+
+## Difference 4: always run at least two
+
+One copy of the model means one point of failure. If its machine is replaced, updated or simply fails, Botley loses its brain until a new GPU machine starts and loads the model, which can take minutes. Run at least two copies, on two different machines. That also lets you update one at a time.
+
+Yes, that doubles the GPU bill. Chapter 9 includes this in the math.
+
+## Smarter routing (you don't need this on day one)
+
+A normal load balancer sends requests to pods in turn. For model servers, it helps to send each request to the pod with the most free KV cache, or to the pod that has recently seen the same long instructions. The Kubernetes project has an official add-on for this, the **Gateway API Inference Extension**, and GKE offers it as **GKE Inference Gateway**. Projects such as **KServe** and **llm-d** go further. Start simple, and look at these when you run many copies or many models.
+
+<NoSillyQuestions>
+
+<QA q={"Can two pods share one GPU?"}>
+
+By default, no. A pod that asks for `nvidia.com/gpu: 1` gets a whole GPU. There are ways to share GPUs, but for a model server you usually want the whole GPU and all its memory.
+
+</QA>
+
+<QA q={"Do I need Kubernetes to self-host?"}>
+
+No. You can run vLLM on plain virtual machines or with a managed container service that offers GPUs. Kubernetes makes sense when you already use it, or run several models.
+
+</QA>
+
+<QA q={"Why not scale to zero at night to save money?"}>
+
+You can, if nobody uses Botley at night and the first user in the morning can wait several minutes. For most live agents, keep at least one copy running, ideally two.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+1. A vLLM pod is stuck in “Pending”. The cluster has GPU machines. What is the first thing to check? <Blank />
+2. Kubernetes keeps restarting the vLLM pod while the model is still loading. What do you change? <Blank />
+3. Your autoscaler watches CPU use, and Botley is slow at lunchtime but nothing scales. Why? <Blank />
+4. Sam asks why there are two GPU machines when one is enough for the traffic. What do you say? <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- Pods ask for `nvidia.com/gpu`. GPU machines need the NVIDIA driver and device plugin, and each cloud handles these differently.
+- Model servers start in minutes. Keep copies running, keep weights close, and use a readiness probe on `/health`.
+- Give vLLM shared memory by mounting a memory volume at `/dev/shm`.
+- Scale on vLLM's own metrics (requests waiting, KV cache usage), not CPU or GPU use.
+- Always run at least two copies on different machines.
+- Smarter inference routing exists. You don't need it on day one.
+
+</Takeaways>

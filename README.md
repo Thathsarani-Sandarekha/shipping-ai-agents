@@ -1,14 +1,16 @@
-# Shipping AI Agents: a visual notebook
+# Ship It with Nimesha: visual notebooks
 
-**[Read it online →](https://nimeshmora.github.io/shipping-ai-agents/)** &nbsp;·&nbsp; [Download the PDF](https://nimeshmora.github.io/shipping-ai-agents/shipping-ai-agents.pdf)
+**[Read them online →](https://nimeshmora.github.io/shipping-ai-agents/)**
 
-Notebook #1 of **[Ship It with Nimesha](https://nimeshmora.github.io/shipping-ai-agents/)**: a free, Head First style notebook about taking AI agents from a prototype on your laptop to production
-on **AWS**, **Microsoft Azure** and **Google Cloud**. It uses sketches, puzzles and plain language,
+Free, Head First style notebooks about taking AI agents and their models from a prototype to production
+on **AWS**, **Microsoft Azure** and **Google Cloud**. They use sketches, puzzles and plain language,
 and you don't need any cloud experience to start.
 
 Written by Nimesha Jinarajadasa, with help from [contributors](https://github.com/nimeshmora/shipping-ai-agents/graphs/contributors).
 
-## What's inside
+## The notebooks
+
+### Notebook #1: [Shipping AI Agents](https://nimeshmora.github.io/shipping-ai-agents/notebooks/shipping-ai-agents/) &nbsp;·&nbsp; [PDF](https://nimeshmora.github.io/shipping-ai-agents/shipping-ai-agents.pdf)
 
 **The basics**
 1. Meet your agent
@@ -31,9 +33,30 @@ Written by Nimesha Jinarajadasa, with help from [contributors](https://github.co
 12. Deploying Botley for real
 13. The road to production
 
+### Notebook #2: [Running Your Own Models](https://nimeshmora.github.io/shipping-ai-agents/notebooks/running-your-own-models/)
+
+**The basics**
+1. Where does Botley's brain live?
+2. What is a model, really?
+3. How a model writes an answer
+4. Meet the GPU
+
+**The two paths**
+
+5. The managed path
+6. The do-it-yourself path
+7. Models on Kubernetes
+8. Deploying a model for real
+
+**Choose**
+
+9. Does it pay off?
+10. Reasons that aren't money
+11. Choosing your path
+
 ## Help make it better
 
-This notebook is open to contributions, and you don't have to write code to help.
+These notebooks are open to contributions, and you don't have to write code to help.
 
 - **Spotted a mistake or something out of date?** Cloud services change fast. [Report it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=fix.yml).
 - **Have a good example?** Code, a production story or a diagram: [suggest it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=example.yml).

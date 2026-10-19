@@ -1,0 +1,23 @@
+<svg viewBox='0 0 680 250'>
+<defs><marker id='r31' viewBox='0 0 10 10' refX='8' refY='5' markerWidth='7' markerHeight='7' orient='auto-start-reverse'><path d='M0 0 L10 5 L0 10' fill='none' stroke='#23406e' stroke-width='2'/></marker></defs>
+<text class='hb' x='20' y='30' font-size='15'>Stage 1: read the whole question at once</text>
+<g stroke='#1b1b1b' stroke-width='2' stroke-linejoin='round'>
+<rect x='20' y='44' width='62' height='30' rx='5' fill='#d9ecff'/><rect x='88' y='44' width='62' height='30' rx='5' fill='#d9ecff'/><rect x='156' y='44' width='62' height='30' rx='5' fill='#d9ecff'/><rect x='224' y='44' width='62' height='30' rx='5' fill='#d9ecff'/><rect x='292' y='44' width='62' height='30' rx='5' fill='#d9ecff'/>
+</g>
+<text class='hk' x='51' y='64' text-anchor='middle' font-size='13'>Book</text><text class='hk' x='119' y='64' text-anchor='middle' font-size='13'>a</text><text class='hk' x='187' y='64' text-anchor='middle' font-size='13'>flight</text><text class='hk' x='255' y='64' text-anchor='middle' font-size='13'>to</text><text class='hk' x='323' y='64' text-anchor='middle' font-size='13'>Lisbon</text>
+<path d='M20 84 h334' fill='none' stroke='#23406e' stroke-width='2' marker-start='url(#r31)' marker-end='url(#r31)'/>
+<text class='h' x='187' y='104' text-anchor='middle' font-size='13'>all tokens in one go: quick, but heavy work for the GPU</text>
+<text class='hb' x='20' y='150' font-size='15'>Stage 2: write the answer, one token at a time</text>
+<g stroke='#1b1b1b' stroke-width='2' stroke-linejoin='round'>
+<rect x='20' y='164' width='70' height='30' rx='5' fill='#dcf5d6'/><rect x='130' y='164' width='70' height='30' rx='5' fill='#dcf5d6'/><rect x='240' y='164' width='70' height='30' rx='5' fill='#dcf5d6'/><rect x='350' y='164' width='70' height='30' rx='5' fill='#fff' stroke-dasharray='4 4'/>
+</g>
+<text class='hk' x='55' y='184' text-anchor='middle' font-size='13'>Sure</text><text class='hk' x='165' y='184' text-anchor='middle' font-size='13'>,</text><text class='hk' x='275' y='184' text-anchor='middle' font-size='13'>which</text><text class='hk' x='385' y='184' text-anchor='middle' font-size='13'>next...</text>
+<path d='M94 179 h32 M204 179 h32 M314 179 h32' fill='none' stroke='#23406e' stroke-width='2' marker-end='url(#r31)'/>
+<text class='h' x='220' y='222' text-anchor='middle' font-size='13'>each new token waits for the one before it</text>
+<g stroke='#1b1b1b' stroke-width='2.2'><rect x='470' y='120' width='196' height='106' rx='8' fill='#fff1a6'/></g>
+<text class='hb' x='568' y='144' text-anchor='middle' font-size='13.5'>What users notice</text>
+<text class='hk' x='484' y='168' font-size='12.5'>Stage 1 time = the wait</text>
+<text class='hk' x='484' y='184' font-size='12.5'>before the first word</text>
+<text class='hk' x='484' y='204' font-size='12.5'>Stage 2 speed = how fast</text>
+<text class='hk' x='484' y='220' font-size='12.5'>the words appear</text>
+</svg>

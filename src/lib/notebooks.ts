@@ -21,6 +21,14 @@ export const notebooks: Notebook[] = [
     cover: 'cover-scene',
     edition: 'First edition, October 2026',
   },
+  {
+    slug: 'running-your-own-models',
+    number: 2,
+    title: 'Running Your Own Models',
+    blurb: 'Managed model services or your own GPUs? How models use GPU memory, what Bedrock, Agent Platform and Foundry offer, how to serve an open model with vLLM on Kubernetes, and when running your own actually pays off.',
+    cover: 'rm-cover',
+    edition: 'First edition, October 2026',
+  },
 ];
 
 export function notebook(slug: string): Notebook {

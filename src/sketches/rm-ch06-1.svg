@@ -1,0 +1,20 @@
+<svg viewBox='0 0 680 250'>
+<text class='hb' x='160' y='26' text-anchor='middle' font-size='15'>A simple server</text>
+<text class='hb' x='510' y='26' text-anchor='middle' font-size='15'>vLLM (continuous batching)</text>
+<g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'>
+<rect x='60' y='120' width='200' height='60' rx='6' fill='#dcf5d6'/>
+<ellipse cx='160' cy='112' rx='34' ry='9' fill='#fff'/>
+<rect x='40' y='50' width='34' height='26' rx='3' fill='#fff1a6'/><rect x='80' y='50' width='34' height='26' rx='3' fill='#fff1a6'/><rect x='120' y='50' width='34' height='26' rx='3' fill='#fff1a6'/><rect x='160' y='50' width='34' height='26' rx='3' fill='#fff1a6'/><rect x='200' y='50' width='34' height='26' rx='3' fill='#fff1a6'/>
+<path d='M340 20 v220' fill='none' stroke-dasharray='6 6' stroke-width='1.6'/>
+<rect x='400' y='120' width='220' height='60' rx='6' fill='#dcf5d6'/>
+<ellipse cx='424' cy='112' rx='18' ry='6' fill='#fff'/><ellipse cx='466' cy='112' rx='18' ry='6' fill='#fff'/><ellipse cx='508' cy='112' rx='18' ry='6' fill='#fff'/><ellipse cx='550' cy='112' rx='18' ry='6' fill='#fff'/><ellipse cx='592' cy='112' rx='18' ry='6' fill='#fff'/>
+<rect x='620' y='50' width='34' height='26' rx='3' fill='#fff1a6'/>
+</g>
+<text class='hb' x='160' y='156' text-anchor='middle' font-size='14'>GPU</text>
+<text class='hb' x='510' y='156' text-anchor='middle' font-size='14'>GPU</text>
+<text class='h' x='160' y='206' text-anchor='middle' font-size='13'>one order at a time.</text>
+<text class='h' x='160' y='224' text-anchor='middle' font-size='13'>Everyone else waits in line.</text>
+<text class='h' x='510' y='206' text-anchor='middle' font-size='13'>many orders cook together. When one</text>
+<text class='h' x='510' y='224' text-anchor='middle' font-size='13'>is done, a new one takes its pan at once.</text>
+<path d='M612 80 q-10 14 -20 24' fill='none' stroke='#23406e' stroke-width='2'/><path d='M590 96 l2 9 l8 -4' fill='none' stroke='#23406e' stroke-width='2'/>
+</svg>

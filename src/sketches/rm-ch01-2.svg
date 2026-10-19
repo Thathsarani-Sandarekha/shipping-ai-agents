@@ -1,0 +1,26 @@
+<svg viewBox='0 0 680 240'>
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'>
+<rect x='60' y='40' width='200' height='120' rx='8' fill='#ffd9e2'/>
+<path d='M60 72 h200' fill='none'/>
+<rect x='140' y='88' width='40' height='34' rx='5' fill='#fff'/><path d='M148 88 v-10 q12 -16 24 0 v10' fill='none'/>
+<circle cx='160' cy='104' r='4' fill='#1b1b1b'/><path d='M160 106 v8' fill='none'/>
+</g>
+<text class='m' x='160' y='64' text-anchor='middle' font-size='15'>SECRET RECIPE</text>
+<text class='hk' x='160' y='146' text-anchor='middle' font-size='12.5'>Claude, GPT, Gemini</text>
+<text class='hb' x='160' y='194' text-anchor='middle' font-size='15'>Closed model</text>
+<text class='h' x='160' y='214' text-anchor='middle' font-size='13'>only served by its own restaurant</text>
+<text class='h' x='160' y='232' text-anchor='middle' font-size='13'>(an API). You can't cook it at home.</text>
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'>
+<path d='M420 52 q50 -14 100 0 v112 q-50 -14 -100 0z' fill='#fff'/>
+<path d='M520 52 q50 -14 100 0 v112 q-50 -14 -100 0z' fill='#fff'/>
+<path d='M436 72 h68 M436 88 h60 M436 104 h66 M536 72 h68 M536 88 h58' fill='none' stroke-width='1.4'/>
+</g>
+<text class='m' x='520' y='34' text-anchor='middle' font-size='15'>PUBLISHED RECIPE</text>
+<text class='hk' x='470' y='132' text-anchor='middle' font-size='12'>Llama, Qwen,</text>
+<text class='hk' x='470' y='148' text-anchor='middle' font-size='12'>Gemma, Mistral</text>
+<text class='hk' x='570' y='132' text-anchor='middle' font-size='12'>gpt-oss,</text>
+<text class='hk' x='570' y='148' text-anchor='middle' font-size='12'>DeepSeek</text>
+<text class='hb' x='520' y='194' text-anchor='middle' font-size='15'>Open-weight model</text>
+<text class='h' x='520' y='214' text-anchor='middle' font-size='13'>anyone can download it and cook it,</text>
+<text class='h' x='520' y='232' text-anchor='middle' font-size='13'>if the license allows what you plan</text>
+</svg>

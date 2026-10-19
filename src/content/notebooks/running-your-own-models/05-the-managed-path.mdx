@@ -1,0 +1,154 @@
+---
+number: 5
+title: "The managed path"
+kicker: "Chapter five"
+subtitle: "Amazon Bedrock, Google's Agent Platform and Microsoft Foundry: what they offer, how they charge, and what they promise about your data."
+question: "What can the cloud's own model services do for us?"
+part: "The two paths"
+quote: {"who": "sam", "text": "Before we buy any GPUs, what can the cloud do for us?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, Blank, Note, Hand } from '../../../components/index.ts';
+
+Each big cloud has a model service. You send requests, the cloud runs the model on its GPUs, and you never see a GPU. Each one offers the same four options. Only the names are different.
+
+| What you want | AWS: Amazon Bedrock | Google: Agent Platform | Microsoft Foundry |
+|---|---|---|---|
+| Shared, pay per token | On-demand (Standard, Flex and Priority tiers) | Standard, Priority and Flex PayGo | Serverless: Global Standard, Data Zone Standard, Standard |
+| Cheaper, not right away | Batch inference | Batch inference | Global Batch, Data Zone Batch |
+| Reserved capacity | Provisioned Throughput, Reserved tier | Provisioned Throughput | Provisioned (PTU) |
+| An open model on GPUs only you use | Custom Model Import, Bedrock Marketplace | Self-deployed open models (Model Garden) | Managed compute |
+
+<Careful>
+
+**Two services changed their names in 2026.** Google renamed Vertex AI to **Gemini Enterprise Agent Platform** (“Agent Platform” for short) on 22 April 2026. Microsoft renamed Azure AI Foundry to **Microsoft Foundry**. Many web pages, and even some API addresses, still use the old names.
+
+</Careful>
+
+## Shared, pay per token: the restaurant
+
+This is how Botley works today. You pay a price per million tokens in, and another per million tokens out. You pay nothing when nobody uses it, and you don't wait for any machine to start.
+
+Here are prices for two popular open-weight models on all three clouds, so you can compare like with like:
+
+| Model | Amazon Bedrock | Google Agent Platform | Microsoft Foundry (Global) |
+|---|---|---|---|
+| Llama 3.3 70B | $0.72 in / $0.72 out | $0.72 in / $0.72 out | $0.71 in / $0.71 out |
+| gpt-oss-120b | $0.15 in / $0.60 out | $0.09 in / $0.36 out | $0.15 in / $0.60 out |
+
+<Note>
+
+Prices in US dollars per million tokens, on-demand, US regions (Bedrock us-east-1, Foundry East US). Sources: AWS Price List for Bedrock, Google Cloud generative AI pricing, Azure retail prices. Checked 19 October 2026.
+
+</Note>
+
+The tiers trade price for speed. On Bedrock, **Flex** is 50% cheaper but slower, and **Priority** costs 75% more and is served first. Google's Agent Platform has Flex and Priority PayGo with the same idea, and Microsoft Foundry offers Flex and Priority processing on Global Standard.
+
+Microsoft's names tell you **where your requests are processed**. **Global Standard** can use Microsoft's data centers anywhere. **Data Zone Standard** stays inside a zone: the US, the EU or Asia Pacific. **Standard** keeps it in the Azure geography where you created the resource. AWS does something similar with **cross-region inference**: a “geographic” profile keeps requests in the US, the EU or Asia Pacific, and a “global” one can use any region and is about 10% cheaper.
+
+## Batch: cheaper, but not right away
+
+You send a big file of requests and collect the answers later. All three clouds charge 50% less for batch on the models that support it. Microsoft's target is to finish within 24 hours. Batch is no good for a live chat with Botley, but very good for jobs like “summarize yesterday's 40,000 support tickets”.
+
+## Reserved capacity: the private room
+
+You pay by the hour for a fixed amount of model capacity, whether you use it or not. In return, your requests don't compete with other customers for that capacity.
+
+- **Bedrock Provisioned Throughput:** billed per hour for each “model unit”. You can buy it with no commitment, or commit for 1 or 6 months. Some models you fine-tune on Bedrock can only be run this way. Bedrock also has a **Reserved tier**: you reserve tokens per minute for 1 or 3 months, and traffic above that is served at Standard prices.
+- **Agent Platform Provisioned Throughput:** billed in units called GSUs, for a fixed term of 1 week (Google's own models only), 1 month, 3 months or 1 year. Traffic above what you bought is charged at normal pay-per-token prices.
+- **Foundry Provisioned (PTU):** billed per hour for each Provisioned Throughput Unit, or at a lower price if you reserve PTUs for 1 month or 1 year.
+
+<Note>
+
+A “model unit”, a GSU and a PTU are measures of model capacity. They are not GPUs. Each provider has a calculator to work out how many you need for your traffic.
+
+</Note>
+
+## An open model on GPUs only you use
+
+This is the middle path from Chapter 1. You pick an open-weight model, the provider runs it on GPUs that only you use, and you don't manage the servers.
+
+- **Bedrock Custom Model Import:** you upload the weights of a supported model family (including Llama, Mistral, Mixtral, Qwen and gpt-oss) and call it like any Bedrock model. Importing is free. You pay per minute for each copy of the model that is running, counted in 5-minute blocks, plus a monthly storage fee.
+- **Bedrock Marketplace:** over 100 more models, deployed to SageMaker AI endpoints and called through Bedrock.
+- **Agent Platform self-deployed open models:** you choose a model from Model Garden and the machine and GPU to run it on. Google says these “aren't serverless”. You pay per node per hour, including when it is idle.
+- **Foundry managed compute:** the model runs on virtual machines that only you use, billed per hour for the machines.
+
+This gives you the model you choose and steady speed, without running Kubernetes. But like your own GPUs, you pay by the hour, even when nobody is using it.
+
+## What they promise about your data
+
+Sam's second question was about data. Here is what each provider says, in its own words:
+
+| Provider | What it says |
+|---|---|
+| Amazon Bedrock | Your content “is not used to improve the base models and is not shared with any model providers.” |
+| Google Agent Platform | Google “won't use your data to train or fine-tune any AI/ML models without your prior permission or instruction.” |
+| Microsoft Foundry | Prompts and answers “are NOT available to OpenAI or other providers” and “are NOT used to train any generative AI foundation models without your permission.” |
+
+<Careful>
+
+**“Not used for training” is not the same as “never stored”.** Each provider can keep some data for a while, for example for abuse monitoring or caching. Google's Gemini caches data by default for up to 24 hours, and you can turn this off. Microsoft may keep flagged requests for human review unless you are approved to switch that off. Bedrock has a data-retention setting for each region. Read the data pages for the exact service and model you use, and set them before you go live.
+
+</Careful>
+
+## Models don't last forever
+
+On a model service, the provider decides when a model version is switched off.
+
+- **Bedrock:** a model goes from Active to Legacy to End-of-Life. Most get at least 6 months' notice, some only 45 days. After End-of-Life, requests fail.
+- **Microsoft Foundry:** generally available models usually retire 18 months after launch (12 months for models from some partners such as Anthropic, DeepSeek and Mistral). You get at least 60 days' notice, and the dates can't be extended.
+
+So on the managed path, plan to test and move to new model versions a few times a year.
+
+<FaceOff title={"Pay per token vs reserved capacity"} left={"Pay per token"} right={"Reserved capacity"} lines={[["L", "You pay nothing when nobody uses Botley. Nights and weekends are free."], ["R", "But at busy times I share the kitchen with every other customer. I want my own room."], ["L", "You pay for your room every hour, even at 3 a.m. when it's empty."], ["R", "If Botley is busy all day and night, that hourly price can work out cheaper per token."], ["L", "Only if you really are that busy. Most new agents aren't."]]} />
+
+<NoSillyQuestions>
+
+<QA q={"Can I use Claude through the cloud services?"}>
+
+Yes. Claude is available on Bedrock, on Google's Agent Platform and on Microsoft Foundry, as a managed model. You still can't download it.
+
+</QA>
+
+<QA q={"Does a managed service keep my data in my country?"}>
+
+It can, if you choose the right options. To stay in one country, pick a region in that country, use a Standard deployment on Foundry (it stays in that Azure geography), and call Bedrock in that region without a cross-region profile. Data zones and geographic profiles cover groups of countries, such as the EU. Check the documents for the exact model, because not every model is offered in every region.
+
+</QA>
+
+<QA q={"Which managed option is cheapest?"}>
+
+It depends on how busy you are. Pay per token is cheapest for low or uneven traffic. Reserved capacity and dedicated GPUs only win when you keep them busy most of the time. Chapter 9 shows how to work it out.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Which option would you choose: **pay per token**, **batch**, **reserved capacity**, or **an open model on GPUs only you use**?
+
+1. Every night, Botley's team wants to summarize 50,000 old booking emails. Nobody needs the results before morning. <Blank />
+2. Botley gets a few hundred chats a day, mostly during office hours. <Blank />
+3. A partner wants to use a fine-tuned open model, but the team doesn't want to run Kubernetes. <Blank />
+4. A busy airline helper gets steady traffic 24 hours a day and needs the same speed even when other customers are busy. <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- Bedrock, Agent Platform and Foundry each offer pay per token, batch, reserved capacity, and dedicated GPUs for open models.
+- Vertex AI is now Gemini Enterprise Agent Platform. Azure AI Foundry is now Microsoft Foundry.
+- Batch costs 50% less but is not for live chat.
+- Reserved capacity and dedicated GPUs are billed by the hour, busy or not.
+- All three promise not to train on your data without permission, but some data can still be stored for a while. Check the settings.
+- Managed models are retired on the provider's schedule. Plan for regular upgrades.
+
+</Takeaways>

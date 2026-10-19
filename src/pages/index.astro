@@ -24,7 +24,7 @@ const counts = Object.fromEntries(await Promise.all(notebooks.map(async (n) => [
 
   <Strip who="nimesha" text="Hi, I'm Nimesha. I write about running AI agents in production." />
 
-  <p class="hero-blurb">These notebooks explain how to move an AI agent from a prototype to a service that real people use. They cover where an agent can run, how to secure it, how it stores conversations and memory, and what it costs on each cloud. Each chapter has drawings, examples and short exercises.</p>
+  <p class="hero-blurb">These notebooks explain how to move an AI agent from a prototype to a service that real people use. They cover where an agent and its model can run, how to secure them, how conversations and memory work, and what it all costs on each cloud. Each chapter has drawings, examples and short exercises.</p>
 
   <div class="actions">
     <a class="btn primary" href={url(`notebooks/${notebooks[0].slug}/how/`)}>Read Notebook #1</a>
@@ -36,8 +36,8 @@ const counts = Object.fromEntries(await Promise.all(notebooks.map(async (n) => [
   <div class="topics">
     <div class="sticky">Where should my agent live?</div>
     <div class="sticky r blue">AWS, Azure or Google Cloud?</div>
-    <div class="sticky pink">How do I keep it safe?</div>
-    <div class="sticky r green">What happens when it remembers?</div>
+    <div class="sticky pink">How do I keep it safe, and what will it cost?</div>
+    <div class="sticky r green">Should we run our own model?</div>
   </div>
 
   <div slot="after">

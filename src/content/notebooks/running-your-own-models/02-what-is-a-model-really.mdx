@@ -1,0 +1,141 @@
+---
+number: 2
+title: "What is a model, really?"
+kicker: "Chapter two"
+subtitle: "A very large file of numbers. Its size decides almost everything that follows."
+question: "What is inside a model, how big is it, and what may I do with it?"
+part: "The basics"
+quote: {"who": "maya", "text": "So when we “download a model”, what are we actually downloading?"}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, Blank, Note, Hand } from '../../../components/index.ts';
+
+On disk, a model is just a set of very large files full of numbers. Those numbers are called **weights**, and each single number is called a **parameter**.
+
+## Learning sets the numbers, answering reads them
+
+When a company **trains** a model, it shows the model huge amounts of text and slowly adjusts the numbers until the model gets good at predicting the next piece of text. This takes thousands of GPUs and weeks of time. You don't need to do it.
+
+When you **run** a model to answer questions, the numbers don't change. The model only reads them. Running a model is called **inference**. Everything in this notebook is about inference.
+
+<Sketch name="rm-ch02-1" />
+
+## How big is a model?
+
+The size of a model is mostly the number of parameters, multiplied by how many bytes each number takes. “8B” in a model name means about 8 billion parameters.
+
+How many bytes each number takes depends on its **precision**: how many digits it keeps.
+
+| Precision | Bytes per parameter | 8B model | 70B model |
+|---|---|---|---|
+| FP32 (32-bit) | 4 | about 32 GB | about 280 GB |
+| BF16 or FP16 (16-bit) | 2 | about 16 GB | about 140 GB |
+| FP8 or INT8 (8-bit) | 1 | about 8 GB | about 70 GB |
+| INT4 (4-bit) | about 0.5, plus a little extra | a bit over 4 GB | a bit over 35 GB |
+
+Most models are published in **BF16**, so “parameters × 2” is a good first guess. For example, the model we deploy in Chapter 8, Qwen3-4B-Instruct-2507, has about 4 billion parameters stored in BF16. Its weights are about 8 GB.
+
+<Note>
+
+Sources: Hugging Face's guide to model memory (“roughly 2 × X GB” for X billion parameters in bfloat16), and vLLM's FP8 guide (“a 2x reduction in model memory requirements”). Checked 19 October 2026.
+
+</Note>
+
+<Careful>
+
+**The weights are only part of the memory you need.** When the model answers questions, it also needs memory for each conversation it is working on. If the weights fill the whole GPU, there is no room left to answer anyone. Chapters 3 and 4 explain this.
+
+</Careful>
+
+## What you actually download
+
+Most open-weight models are shared on **Hugging Face**, a website that hosts models. A model's page usually has:
+
+- **The weight files**, often ending in `.safetensors`. A big model is split into many files.
+- **`config.json`**, which describes the model's shape: how many layers it has, how long a conversation it can handle, and so on.
+- **The tokenizer files**, which turn text into tokens and back.
+- **The model card**, the page you read first. It tells you what the model is for, how long a conversation it supports, how to run it, and its license.
+
+Some models are **gated**. You must accept the license on the website first, then use an access token when you download. Chapter 8 shows where that token goes.
+
+## Bigger is not always better
+
+Bigger models usually give better answers, but they need more GPU memory, cost more to run and answer more slowly. A smaller model that is good at your task can be the better choice. The only way to know is to test both on your own tasks.
+
+<Geek>
+
+**Mixture of experts (MoE).** Some models, such as Qwen3-235B-A22B or gpt-oss-120b, are split into many “experts”. For each token, only a few experts do the work. In Qwen3-235B-A22B, about 22 billion of the 235 billion parameters are used for each token, which makes it faster than a normal model of that size. **But all 235 billion parameters still have to be in GPU memory**, because the next token may need different experts. Plan memory for the full size.
+
+</Geek>
+
+## Read the license before you build
+
+Open-weight models come with different licenses. Here are the main families as of October 2026:
+
+| Model family | License |
+|---|---|
+| Qwen3 (Alibaba) | Apache 2.0 |
+| gpt-oss (OpenAI) | Apache 2.0 |
+| Gemma 4 (Google) | Apache 2.0. Gemma 3 and older use Google's Gemma Terms of Use. |
+| Mistral Large 3 and Ministral 3 (Mistral AI) | Apache 2.0 |
+| DeepSeek V3.2 | MIT |
+| Llama 4 (Meta) | Llama 4 Community License, Meta's own license with its own conditions |
+
+**Apache 2.0** and **MIT** are well-known licenses that allow commercial use. A model maker's own license can add conditions, for example about how many users you have, how you name things you build, or what you may use the model for. Read the actual license text on the model card, and ask your legal team if it is unclear.
+
+<Careful>
+
+**Licenses change between versions of the same family.** Gemma 4 moved to Apache 2.0, but Gemma 3 did not. Always check the license of the exact model and version you use, not the family name.
+
+</Careful>
+
+<NoSillyQuestions>
+
+<QA q={"Does the model learn from our users while it runs?"}>
+
+No. During inference the weights don't change. The model only “remembers” what is in the current conversation. Learning from your data would need a separate training step called fine-tuning.
+
+</QA>
+
+<QA q={"What does BF16 mean?"}>
+
+It is a way to store each number in 16 bits (2 bytes) instead of 32. It keeps enough detail for models to work well and halves the memory. “B” stands for “brain”, because Google Brain designed it.
+
+</QA>
+
+<QA q={"Is a 4-bit model just a worse model?"}>
+
+It is the same model with less detailed numbers. Often the answers are nearly as good, sometimes noticeably worse. Chapter 4 covers this trade-off, called quantization.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Work out the size of the weights. Use 2 bytes for BF16, 1 byte for FP8 and about 0.5 bytes for INT4.
+
+1. A 14B model in BF16. <Blank />
+2. A 70B model in FP8. <Blank />
+3. An 8B model in INT4. <Blank />
+4. A mixture-of-experts model with 30 billion parameters in total, of which 3 billion are used for each token, stored in BF16. <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- A model is a set of files full of numbers called weights. Each number is a parameter.
+- Running a model to answer questions is called inference. The weights don't change.
+- Size in GB is roughly parameters × bytes per parameter. BF16 is 2 bytes, FP8 is 1, INT4 is about 0.5.
+- The weights are not the only thing in GPU memory. Each conversation needs room too.
+- Mixture-of-experts models use part of their weights per token, but all of them must be loaded.
+- Check the license of the exact model version before you build on it.
+
+</Takeaways>

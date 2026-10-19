@@ -1,0 +1,17 @@
+<svg viewBox='0 0 680 200'>
+<text class='hb' x='20' y='30' font-size='15'>One GPU with 24 GB of memory, running an 8B model in BF16</text>
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round'>
+<rect x='20' y='50' width='640' height='64' rx='6' fill='#fff'/>
+<rect x='20' y='50' width='427' height='64' rx='6' fill='#ffd9e2'/>
+<rect x='447' y='50' width='160' height='64' fill='#d9ecff'/>
+</g>
+<text class='hb' x='233' y='80' text-anchor='middle' font-size='15'>weights: about 16 GB</text>
+<text class='hk' x='233' y='100' text-anchor='middle' font-size='12'>the recipe, loaded once</text>
+<text class='hb' x='527' y='80' text-anchor='middle' font-size='13'>KV cache</text>
+<text class='hk' x='527' y='100' text-anchor='middle' font-size='12'>all the notes</text>
+<text class='hk' x='634' y='86' text-anchor='middle' font-size='11'>spare</text>
+<path d='M20 128 h640' fill='none' stroke='#23406e' stroke-width='2'/>
+<path d='M20 122 v12 M660 122 v12' fill='none' stroke='#23406e' stroke-width='2'/>
+<text class='h' x='340' y='150' text-anchor='middle' font-size='13'>24 GB counter</text>
+<text class='h' x='340' y='184' text-anchor='middle' font-size='13.5'>Whatever is left after the weights decides how many conversations fit at once, and how long they can be.</text>
+</svg>

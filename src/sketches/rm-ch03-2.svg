@@ -1,0 +1,24 @@
+<svg viewBox='0 0 680 230'>
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round'>
+<path d='M20 150 h640 v18 h-640z' fill='#fff1a6'/><path d='M40 168 v44 M640 168 v44' fill='none'/>
+<rect x='60' y='104' width='70' height='46' rx='3' fill='#fff'/>
+<rect x='180' y='76' width='70' height='74' rx='3' fill='#fff'/>
+<rect x='300' y='40' width='70' height='110' rx='3' fill='#fff'/>
+<rect x='420' y='116' width='70' height='34' rx='3' fill='#fff'/>
+</g>
+<g stroke='#1b1b1b' stroke-width='1.3'>
+<path d='M70 118 h50 M70 130 h44 M70 142 h48'/>
+<path d='M190 90 h50 M190 102 h44 M190 114 h48 M190 126 h40 M190 138 h46'/>
+<path d='M310 54 h50 M310 66 h44 M310 78 h48 M310 90 h40 M310 102 h46 M310 114 h50 M310 126 h42 M310 138 h48'/>
+<path d='M430 130 h48 M430 142 h40'/>
+</g>
+<text class='hk' x='95' y='96' text-anchor='middle' font-size='12'>Priya</text>
+<text class='hk' x='215' y='68' text-anchor='middle' font-size='12'>Tom</text>
+<text class='hk' x='335' y='32' text-anchor='middle' font-size='12'>Ana (long chat)</text>
+<text class='hk' x='455' y='108' text-anchor='middle' font-size='12'>Raj</text>
+<text class='hb' x='580' y='70' text-anchor='middle' font-size='14'>The KV cache</text>
+<text class='h' x='580' y='92' text-anchor='middle' font-size='13'>one pile of notes</text>
+<text class='h' x='580' y='110' text-anchor='middle' font-size='13'>for each conversation.</text>
+<text class='h' x='580' y='128' text-anchor='middle' font-size='13'>Longer chat = taller pile.</text>
+<text class='h' x='340' y='200' text-anchor='middle' font-size='13'>The piles sit on the same counter (GPU memory) as the recipe.</text>
+</svg>

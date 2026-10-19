@@ -1,0 +1,49 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Sketch from '../../../components/Sketch.astro';
+import { url } from '../../../lib/url';
+import { allChapters, chapterHref } from '../../../lib/chapters';
+const NB = 'running-your-own-models';
+const chapters = await allChapters(NB);
+---
+<Base title="How to use this notebook" page="how" notebook={NB}>
+  <section class="chapter">
+    <div class="ch-head"><div><div class="ch-kicker">Before we start</div><h1>How to use this notebook</h1>
+      <div class="ch-sub">Pictures, stories and real numbers. No experience with GPUs needed.</div></div></div>
+    <p>This notebook is for people who need to decide where an AI model should run. Maybe you are a developer whose agent works well and now costs more every month. Maybe you are a manager who has heard “we should just run our own model” and wants to know what that really means. Or maybe you keep hearing words like <i>GPU</i>, <i>vLLM</i> and <i>tokens per second</i> and want them explained simply.</p>
+    <p>You don't need to have read Notebook #1, but it helps to know what an AI agent is. The same three characters are back:</p>
+    <Sketch name="cast" />
+    <p class="small"><b>Maya</b> builds agents. <b>Botley</b> is the agent she built, and it is now live. <b>Sam</b> is her boss, who has two questions: is the model bill too high, and can a customer's data stay inside the company's own cloud account?</p>
+    <h2>One picture for the whole notebook</h2>
+    <p>Think of the AI model as food that Botley needs many times a day.</p>
+    <div class="tw"><table class="t">
+      <tr><th style="width:36%">In the kitchen</th><th>In the cloud</th></tr>
+      <tr><td>Eating at a restaurant</td><td>A shared model service. You pay for each token.</td></tr>
+      <tr><td>Booking a private room</td><td>Reserved capacity on a model service, paid by the hour.</td></tr>
+      <tr><td>Cooking in your own kitchen</td><td>Your own GPUs, running a model you chose.</td></tr>
+      <tr><td>A secret recipe</td><td>A closed model, such as Claude, GPT or Gemini. Only available through an API.</td></tr>
+      <tr><td>A published recipe</td><td>An open-weight model, such as Llama, Qwen, Gemma, Mistral, gpt-oss or DeepSeek.</td></tr>
+      <tr><td>Counter space</td><td>GPU memory. The model and every conversation must fit on it.</td></tr>
+      <tr><td>The head chef</td><td>vLLM, the software that serves the model.</td></tr>
+    </table></div>
+    <h2>Boxes you will see</h2>
+    <div class="tw"><table class="t">
+      <tr><th style="width:36%">Box</th><th>What it is for</th></tr>
+      <tr><td>There are no silly questions</td><td>Questions people often want to ask but don't.</td></tr>
+      <tr><td>Think about it</td><td>Stop and guess the answer before you read on. It helps you remember.</td></tr>
+      <tr><td>Careful!</td><td>Mistakes that real teams make.</td></tr>
+      <tr><td>Your turn</td><td>A short exercise. The answers are at the back.</td></tr>
+      <tr><td>Face-off</td><td>Two people or ideas argue with each other.</td></tr>
+      <tr><td>Geek corner</td><td>A little bit of code or math. You can skip it.</td></tr>
+      <tr><td>Key takeaways</td><td>The main points of the chapter.</td></tr>
+    </table></div>
+    <h2>About the numbers</h2>
+    <p>Every price, GPU size and command in this notebook was checked against the providers' own documents in October 2026, and each chapter shows the date its facts were checked. Prices and products change often, so check the latest documents before you decide.</p>
+    <h2>What's inside</h2>
+    <div class="tw"><table class="t">
+      <tr><th style="width:7%">#</th><th style="width:34%">Chapter</th><th>The question it answers</th></tr>
+      {chapters.map((c) => <tr><td>{c.data.number}</td><td><a href={url(chapterHref(c.id))}>{c.data.title}</a></td><td>{c.data.question}</td></tr>)}
+      <tr><td></td><td><a href={url(`notebooks/${NB}/back/`)}>Back of the book</a></td><td>Word list and exercise answers.</td></tr>
+    </table></div>
+  </section>
+</Base>

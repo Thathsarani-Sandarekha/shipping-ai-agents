@@ -1,0 +1,41 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Sketch from '../../../components/Sketch.astro';
+import { url } from '../../../lib/url';
+import { allChapters, chapterHref } from '../../../lib/chapters';
+const NB = 'running-your-own-models';
+const chapters = await allChapters(NB);
+const ch = (n: number) => url(chapterHref(chapters.find((c) => c.data.number === n)!.id));
+---
+<Base title="Running Your Own Models" page="cover" notebook={NB} description="A Head First style notebook about running AI models: managed model services on AWS, Google Cloud and Azure, or open-weight models on your own GPUs with vLLM and Kubernetes.">
+  <div class="hero-top">
+    <div>
+      <p class="kick">Ship It with Nimesha &middot; Notebook #2</p>
+      <h1 class="hero-title">Running Your<br />Own Models</h1>
+      <p class="hero-sub">Managed model services or your own GPUs? How each works, and when each one pays off.</p>
+    </div>
+    <div class="badge">Real prices, real commands</div>
+  </div>
+  <div class="scene"><Sketch name="rm-cover" /></div>
+  <p class="hero-blurb">Learn what a model really is, how it uses GPU memory, what Amazon Bedrock, Google's Agent Platform and Microsoft Foundry offer, and how to serve an open model with vLLM on Kubernetes. Then do the math to see when running your own is worth it.</p>
+  <div class="actions">
+    <a class="btn primary" href={url(`notebooks/${NB}/how/`)}>Start reading</a>
+    <a class="btn" id="resume" href={url()} hidden>Continue reading</a>
+    <a class="btn" href={ch(8)}>Go to the deploy guide</a>
+    <a class="btn" href={ch(9)}>Go to the cost math</a>
+  </div>
+  <div class="two" style="margin-top:14px">
+    <div class="sticky">Will my model fit on this GPU?</div>
+    <div class="sticky r blue">Bedrock, Agent Platform and Foundry side by side</div>
+    <div class="sticky green">vLLM on GKE, EKS and AKS, step by step</div>
+  </div>
+  <p class="byline"><b>Nimesha Jinarajadasa</b><br />First edition, October 2026</p>
+  <div class="paper index" slot="after">
+    <h2><span>What's inside</span></h2>
+    <ol>
+      {chapters.map((c) => (
+        <li><a href={url(chapterHref(c.id))}><span class="n">{c.data.number}</span><span class="t">{c.data.title}<span class="q">{c.data.question}</span></span></a></li>
+      ))}
+    </ol>
+  </div>
+</Base>

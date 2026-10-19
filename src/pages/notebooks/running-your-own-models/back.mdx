@@ -1,0 +1,146 @@
+---
+layout: ../../../layouts/Prose.astro
+title: "Word list and answers"
+kicker: "Back of the book"
+subtitle: "Every tricky word in this notebook, in plain English, and the answers to the exercises"
+slug: back
+notebook: running-your-own-models
+---
+
+import { Sticky, Note } from '../../../components/index.ts';
+
+| Word | What it means |
+|---|---|
+| LLM | Large language model. The part of an AI agent that reads and writes text. |
+| Inference | Running a model to answer requests. The model's weights don't change. |
+| Weights, parameter | The numbers a model is made of. Each single number is a parameter. “8B” means about 8 billion parameters. |
+| Closed model | A model whose weights are never given out, such as Claude, GPT or Gemini. Only available through an API. |
+| Open-weight model | A model whose weights anyone can download and run, such as Llama, Qwen, Gemma, Mistral, gpt-oss or DeepSeek. |
+| License | The rules for what you may do with a model. Apache 2.0 and MIT allow commercial use. Some model makers use their own licenses. |
+| Hugging Face | A website where most open-weight models are shared. |
+| Model card | The page that describes a model: what it is for, how to run it, and its license. |
+| Gated model | A model you can only download after accepting its license and using an access token. |
+| Precision: BF16, FP8, INT4 | How many bits each number uses: 16, 8 or 4. Fewer bits means less memory. |
+| Quantization | Storing a model's numbers with fewer bits, to save memory. It can lower quality, so test it. |
+| Mixture of experts (MoE) | A model that uses only part of its weights for each token. All the weights must still be in memory. |
+| Token, tokenizer | A token is a small piece of text. The tokenizer cuts text into tokens and joins them back. |
+| Prefill | Stage 1 of an answer: reading the whole request at once. |
+| Decode | Stage 2 of an answer: writing it one token at a time. |
+| KV cache | Notes the model keeps about every token in each conversation, so it doesn't redo work. It lives in GPU memory. |
+| Batching, continuous batching | Working on many conversations in one step. Continuous batching adds new ones as soon as there is room. |
+| PagedAttention | vLLM's way of storing the KV cache in small blocks, so little memory is wasted. |
+| Time to first token | How long a user waits before the answer starts. |
+| Throughput | Tokens per second for all users together. |
+| GPU, GPU memory | A chip that does many simple calculations at once. Its own memory must hold the weights and the KV cache. |
+| Tensor parallelism | Splitting one model across several GPUs in the same machine. |
+| TPU, Inferentia, Trainium | Chips made by Google (TPU) and Amazon (Inferentia, Trainium). They need software built for them. |
+| Quota | The cloud's limit on how many machines of a kind you may run. GPU quota often starts at zero. |
+| On-demand, Spot | On-demand machines are yours until you stop them. Spot machines are much cheaper but can be taken back at short notice. |
+| Pay per token | Paying a model service for each token in and out. |
+| Batch inference | Sending many requests to a model service at once and collecting answers later, at a lower price. |
+| Reserved capacity | Paying a model service by the hour for capacity only you use: Provisioned Throughput on Bedrock and Agent Platform, PTUs on Foundry. |
+| Data zone | On Microsoft Foundry, a deployment that keeps processing inside a zone such as the US or the EU. |
+| Model retirement | When a model service switches off an old model version. Requests to it then fail. |
+| Serving engine, vLLM | Software that loads a model into a GPU and answers requests. vLLM is one of the most widely used open-source ones. |
+| OpenAI-compatible API | Accepting requests in the same format as OpenAI's API, such as <code>/v1/chat/completions</code>. |
+| `/health`, `/metrics` | vLLM's addresses for “am I ready?” and for its numbers in Prometheus format. |
+| GPU node pool | A group of machines with GPUs in a Kubernetes cluster. |
+| Device plugin, GPU Operator | The device plugin tells Kubernetes how many GPUs a machine has. NVIDIA's GPU Operator installs it and the other GPU parts. |
+| Startup and readiness probes | Checks that tell Kubernetes when a container has started and when it is ready for traffic. |
+| `/dev/shm` | Shared memory inside a container. vLLM needs more than the default. |
+| KEDA, Karpenter | KEDA adds pods based on numbers such as a Prometheus query. Karpenter adds machines on EKS. |
+| KAITO | Azure's AI toolchain operator. An AKS add-on that deploys preset models with vLLM. |
+| Fine-tuning | Training an existing model a little more on your own examples. |
+| LoRA adapter | A small add-on that changes how a model behaves, without changing the model's own weights. |
+| Break-even | The level of use at which your own GPU costs the same as paying per token. |
+| Model routing | Sending different jobs to different models, for example easy ones to a small model and hard ones to a large one. |
+
+## Answers
+
+### Chapter 1, Your turn: which way is it?
+
+| # | Answer | Why |
+|---|---|---|
+| 1 | Pay per token | A price per million tokens is the restaurant. |
+| 2 | Your own GPUs | Maya's team runs the model and the GPUs. |
+| 3 | Reserved capacity | Paying by the hour for PTUs, busy or not, is the private room. |
+| 4 | Not possible | Gemini is a closed model. You can't download it. |
+
+### Chapter 2, Your turn: how big are the weights?
+
+1. 14 billion × 2 bytes = about **28 GB**.
+2. 70 billion × 1 byte = about **70 GB**.
+3. 8 billion × 0.5 bytes = **a bit over 4 GB**.
+4. About **60 GB** (30 billion × 2 bytes). Only 3 billion are used for each token, but all 30 billion must be in memory.
+
+### Chapter 3, Think about it: which stage takes Botley's GPU time?
+
+Probably stage 1. Botley sends thousands of tokens and gets a short reply, so reading the request is a large share of the work. That is also why the wait before the first word matters so much for Botley.
+
+### Chapter 3, Your turn
+
+1. Stage 1, reading the request (prefill).
+2. Stage 2, writing the answer (decode).
+3. 20 × 4,096 tokens × about 147 KB = about **12 GB**.
+4. The GPU can write tokens for many conversations in one step. With one user, most of it sits idle, but you still pay for all of it. NVIDIA's example wrote about 71 tokens per second for one user, and about 2,869 for 100 users, on the same GPU.
+
+### Chapter 4, Your turn: will it fit?
+
+1. **Yes.** About 16 GB of weights, out of about 21.6 GB usable. About 5.6 GB is left for the KV cache.
+2. **No.** About 140 GB of weights won't fit in 80 GB. Use FP8 on two or more GPUs, or a bigger GPU.
+3. **Yes.** About 70 GB of weights, out of about 127 GB usable, leaves about 57 GB for the KV cache.
+4. **Yes.** About 8 GB of weights, out of about 21.6 GB usable, leaves about 13.6 GB for the KV cache. (With vLLM's default of 92%, it is about 14 GB.)
+
+### Chapter 5, Your turn: choose the option
+
+| # | Answer | Why |
+|---|---|---|
+| 1 | Batch | Nobody needs the answers right away, and batch costs 50% less. |
+| 2 | Pay per token | Low traffic, mostly in office hours. Nights and weekends cost nothing. |
+| 3 | An open model on GPUs only you use | For example Bedrock Custom Model Import, Agent Platform self-deployed models, or Foundry managed compute. No Kubernetes to run. |
+| 4 | Reserved capacity | Steady traffic all day, and speed that doesn't depend on other customers. |
+
+### Chapter 6, Your turn
+
+1. `--max-model-len`. Check it is long enough for Botley's longest conversations, and that the KV cache can hold them.
+2. `vllm:num_requests_waiting`.
+3. Ollama is made for one computer. By default it only listens on that computer and handles one request at a time. Use vLLM for many users.
+4. vLLM accepts requests in the same OpenAI format that Botley already uses. Only the address and the model name change.
+
+### Chapter 7, Your turn
+
+1. Run `kubectl describe node` and check that it lists `nvidia.com/gpu` under Allocatable. If not, the driver or the NVIDIA device plugin is missing. Also check that a GPU is free: each copy takes a whole GPU.
+2. Give it a startup probe on `/health` that allows enough time to load the model, so Kubernetes doesn't restart it too early.
+3. CPU use stays low because the work happens on the GPU. Scale on vLLM's own metrics, such as requests waiting.
+4. With one copy, any machine failure or update takes Botley's model away for several minutes while a new GPU machine starts and loads the model.
+
+### Chapter 8, Think about it: why --max-model-len=16384?
+
+262,144 tokens × about 147 KB is about **38.7 GB** of KV cache for a single conversation. That is more than the whole 24 GB L4. vLLM checks this when it starts and stops with an error if even one conversation of the maximum length can't fit. Setting 16,384 tokens (about 2.4 GB each) leaves room for about five full-length conversations, or many shorter ones.
+
+### Chapter 8, Your turn
+
+1. Run `kubectl describe pod` and look at the events: is it waiting for a GPU machine, or for quota? Then run `kubectl logs` to see if it is still downloading or loading the weights.
+2. The API key. Send `Authorization: Bearer` with the key from the `vllm-api-key` secret.
+3. No. vLLM has almost no security of its own (Chapter 6). Use `kubectl port-forward` for testing, and keep the Service private.
+
+### Chapter 9, Your turn
+
+1. $0.8048 × 730 = about **$587.50** per month.
+2. 600 × 3,600 × 730 = about 1.58 billion output tokens, plus the same number of input tokens: about **3.15 billion tokens** in total.
+3. 3,153.6 million × $0.22 per million = about **$693.79**.
+4. $587.50 ÷ $693.79 = about **85%**. At 30% busy, no: paying per token is clearly cheaper. And that is before adding a second GPU and your team's time.
+
+### Chapter 10, Your turn
+
+1. **No.** All three managed services promise not to train on your data without permission.
+2. **No.** Choose an EU region, or an EU data zone on Foundry. Check the model is offered there.
+3. **Yes.** With no internet, the model must run on machines on the platform.
+4. **Yes, or at least keep the weights yourself.** Managed services retire model versions on their own schedule. On Foundry, retirement dates can't be extended.
+
+### Chapter 11, Your turn
+
+1. **A managed service.** Claude is a closed model. Pay per token while traffic grows.
+2. **Self-host.** The servers have no internet connection, so a managed service can't be used.
+3. **Reserved capacity or a managed open-model endpoint.** The traffic is steady, but nobody can run Kubernetes.
+4. **Self-host.** A platform team, steady heavy traffic, and math that shows the GPUs would be busy enough.

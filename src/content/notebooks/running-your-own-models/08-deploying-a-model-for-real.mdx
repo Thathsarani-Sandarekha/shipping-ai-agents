@@ -1,0 +1,270 @@
+---
+number: 8
+title: "Deploying a model for real"
+kicker: "Chapter eight"
+subtitle: "One small open model, two copies, on GKE, EKS or AKS. Then point Botley at it."
+question: "What are the real steps to serve an open model on Kubernetes?"
+part: "The two paths"
+quote: {"who": "maya", "text": "Enough theory. Let's put a model on a GPU and talk to it."}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, ProviderBand, Steps, Blank, Note, Hand } from '../../../components/index.ts';
+
+Time to build it. We will serve a small open-weight model with vLLM, run two copies on two GPU machines, and point Botley at it. The goal is to understand each step, so the commands stop looking like magic.
+
+<Sketch name="rm-ch08-1" />
+
+## What we are deploying
+
+| Choice | What we use | Why |
+|---|---|---|
+| Model | `Qwen/Qwen3-4B-Instruct-2507` | Apache 2.0 license, not gated (no Hugging Face token needed), about 8 GB in BF16. |
+| GPU | NVIDIA L4, 24 GB (A100 on Azure) | Small and cheap. The model fits with plenty of room for the KV cache. |
+| Copies | 2 | So one machine can fail or be updated without Botley losing its model (Chapter 7). |
+| Serving engine | vLLM, image `vllm/vllm-openai:v0.32.0` | A fixed version, not `latest` (Chapter 6). |
+
+<Careful>
+
+**Before you start:**
+
+- **GPU quota.** New accounts often have no GPU quota (Chapter 4). Ask for enough for two GPU machines in your region, and do it first.
+- **Cost.** GPU machines cost money every hour they run, even when idle. On EKS, two g6.xlarge machines cost about $1.61 per hour on demand, plus $0.10 per hour for the cluster. On GKE Autopilot, GPU pods are billed for the whole machine Autopilot picks, plus a management fee. The Azure recipe's one A100 machine costs about $3.67 per hour. Delete everything when you finish (the last step of each recipe).
+- **Commands change.** These are correct as of October 2026. Check each tool's `--help` and the linked guides before you run them.
+
+</Careful>
+
+## Step 1: the parts that are the same everywhere
+
+Create a namespace and a key that Botley must send with every request:
+
+```bash
+kubectl create namespace models
+kubectl create secret generic vllm-api-key -n models \
+  --from-literal=key="$(openssl rand -hex 24)"
+```
+
+Save this file as `vllm.yaml`. The comments explain each part:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm
+  namespace: models
+spec:
+  replicas: 2                       # two copies (Chapter 7)
+  selector:
+    matchLabels:
+      app: vllm
+  template:
+    metadata:
+      labels:
+        app: vllm
+    spec:
+      nodeSelector: {}              # each recipe below tells you what to put here
+      containers:
+        - name: vllm
+          image: vllm/vllm-openai:v0.32.0
+          args:
+            - --model=Qwen/Qwen3-4B-Instruct-2507
+            - --max-model-len=16384          # Chapter 3: limit the KV cache per conversation
+            - --api-key=$(VLLM_API_KEY)      # Kubernetes fills this in from the secret
+          env:
+            - name: VLLM_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: vllm-api-key
+                  key: key
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: "3"
+              memory: 12Gi
+              ephemeral-storage: 30Gi        # room for the downloaded weights
+            limits:
+              nvidia.com/gpu: 1              # one whole GPU for each copy
+          volumeMounts:
+            - name: dshm
+              mountPath: /dev/shm            # shared memory for vLLM (Chapter 7)
+            - name: hf-cache
+              mountPath: /root/.cache/huggingface
+          startupProbe:                      # allow up to 15 minutes to load
+            httpGet:
+              path: /health
+              port: 8000
+            periodSeconds: 10
+            failureThreshold: 90
+          readinessProbe:                    # only send traffic when ready
+            httpGet:
+              path: /health
+              port: 8000
+            periodSeconds: 10
+          livenessProbe:                     # restart it if it stops answering
+            httpGet:
+              path: /health
+              port: 8000
+            periodSeconds: 30
+            failureThreshold: 3
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+        - name: hf-cache
+          emptyDir:
+            sizeLimit: 25Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm
+  namespace: models
+spec:
+  selector:
+    app: vllm
+  ports:
+    - port: 80
+      targetPort: 8000
+```
+
+<Note>
+
+This file is based on vLLM's own Kubernetes guide. Because each machine in our recipes has only one GPU, and each copy asks for a whole GPU, the two copies always land on different machines. The weights download from Hugging Face each time a pod starts. Chapter 7 shows faster ways for later.
+
+</Note>
+
+<Think>
+
+Why `--max-model-len=16384`? The model supports 262,144 tokens. Using Chapter 3's numbers (about 147 KB of KV cache per token), how much memory would one conversation that long need? Would it fit on a 24 GB L4?
+
+</Think>
+
+## Step 2: pick your cloud
+
+<ProviderBand name={"Recipe 1: Google Cloud (GKE Autopilot)"} color="#1e7e34">Autopilot creates the L4 machines and installs the GPU drivers for you.</ProviderBand>
+
+<Steps rows={[["1", "Create the cluster", "gcloud container clusters create-auto botley-models \\\n  --location=us-central1", "Creates an Autopilot cluster. Autopilot adds machines when pods need them."], ["2", "Connect kubectl", "gcloud container clusters get-credentials botley-models \\\n  --location=us-central1", "Lets <code>kubectl</code> talk to the new cluster."], ["3", "Ask for L4 GPUs", "nodeSelector:\n  cloud.google.com/gke-accelerator: nvidia-l4", "Put this in place of <code>nodeSelector: {}</code> in <code>vllm.yaml</code>. Autopilot reads it and creates L4 machines."], ["4", "Deploy", "(run Step 1 commands)\nkubectl apply -f vllm.yaml", "Creates the namespace, secret, two vLLM pods and the Service. The first start takes several minutes."], ["5", "Clean up", "gcloud container clusters delete botley-models \\\n  --location=us-central1", "Deletes the cluster and its GPU machines."]]} />
+
+<Note>
+
+Official guide: “Serve Gemma open models using GPUs on GKE with vLLM” (docs.cloud.google.com/kubernetes-engine/docs/tutorials/serve-gemma-gpu-vllm). It uses a different model and GPU but the same idea.
+
+</Note>
+
+<ProviderBand name={"Recipe 2: AWS (Amazon EKS)"} color="#b85c00">eksctl creates the cluster and a node group of g6.xlarge machines (1 × L4 each).</ProviderBand>
+
+<Steps rows={[["1", "Create the cluster", "eksctl create cluster \\\n  --name botley-models \\\n  --region us-east-1 \\\n  --node-type g6.xlarge \\\n  --nodes 2", "Creates an EKS cluster with two g6.xlarge machines. For GPU instance types, eksctl picks the EKS-optimized NVIDIA machine image (Amazon Linux 2023) and installs the NVIDIA device plugin for you. It also sets up kubectl."], ["2", "Check the GPUs", "kubectl describe nodes | grep nvidia.com/gpu", "Each node should list <code>nvidia.com/gpu: 1</code> under Capacity and Allocatable. If nothing appears, the NVIDIA device plugin is missing. Install it as described in the EKS docs."], ["3", "Ask for those machines", "nodeSelector:\n  node.kubernetes.io/instance-type: g6.xlarge", "Put this in place of <code>nodeSelector: {}</code> in <code>vllm.yaml</code>."], ["4", "Deploy", "(run Step 1 commands)\nkubectl apply -f vllm.yaml", "Creates everything. The first start takes several minutes."], ["5", "Clean up", "eksctl delete cluster \\\n  --name botley-models --region us-east-1", "Deletes the cluster and its machines."]]} />
+
+<Note>
+
+Official guide: “Load & Serve Models on Amazon EKS” (docs.aws.amazon.com/eks/latest/userguide/ml-realtime-inference-llm-inference-vllm.html). It stores the weights in Amazon S3 and streams them into vLLM, which is the faster setup Chapter 7 describes.
+
+</Note>
+
+<ProviderBand name={"Recipe 3: Azure (AKS with the KAITO add-on)"} color="#0f6cbd">KAITO creates the GPU machines and runs vLLM for you, from one short file.</ProviderBand>
+
+On Azure, the simplest official path is the **AI toolchain operator** add-on, also called **KAITO**. You don't write the vLLM Deployment yourself. You describe what you want in a small “Workspace” file, and KAITO creates the GPU machine, the vLLM pods and a Service. KAITO only offers its own list of ready-made models (“presets”) this way, so this recipe uses Microsoft's Phi-4-mini model on an A100 machine, as in Microsoft's guide.
+
+<Steps rows={[["1", "Create the cluster", "az group create --name botley-rg --location eastus\naz aks create --resource-group botley-rg \\\n  --name botley-models \\\n  --enable-ai-toolchain-operator \\\n  --enable-oidc-issuer \\\n  --generate-ssh-keys", "Creates a resource group and an AKS cluster with the KAITO add-on turned on."], ["2", "Connect kubectl", "az aks get-credentials \\\n  --resource-group botley-rg --name botley-models", "Lets <code>kubectl</code> talk to the cluster."], ["3", "Describe the model", "apiVersion: kaito.sh/v1beta1\nkind: Workspace\nmetadata:\n  name: workspace-phi-4-mini\nresource:\n  instanceType: Standard_NC24ads_A100_v4\n  labelSelector:\n    matchLabels:\n      apps: phi-4-mini\ninference:\n  preset:\n    name: phi-4-mini-instruct", "Save as <code>workspace.yaml</code>. It asks for one A100 machine and the Phi-4-mini preset."], ["4", "Deploy and wait", "kubectl apply -f workspace.yaml\nkubectl get workspace workspace-phi-4-mini -w", "KAITO creates the machine and starts vLLM. Wait until the workspace shows it is ready."], ["5", "Clean up", "az group delete --name botley-rg", "Deletes the resource group and everything in it, including the cluster. This can't be undone."]]} />
+
+<Note>
+
+Official guide: “Deploy an AI model on AKS with the AI toolchain operator” (learn.microsoft.com/azure/aks/ai-toolchain-operator). The KAITO project is renaming its presets to full model names, such as `microsoft/Phi-4-mini-instruct`. The add-on on AKS uses the short name `phi-4-mini-instruct` as of October 2026, so check the guide for the name your version expects. If you delete only the workspace, KAITO's GPU machines may keep running, so delete the whole resource group when you are done. To use the same `vllm.yaml` as the other recipes instead, add a GPU node pool to a normal AKS cluster and install the NVIDIA device plugin, as described in Microsoft's “Use GPUs on AKS” guide.
+
+</Note>
+
+## Step 3: check it works
+
+On GKE or EKS, open a tunnel from your laptop to the Service, then ask the model something. (For Azure, see the note after these commands.)
+
+```bash
+kubectl get pods -n models          # wait until both show READY 1/1
+kubectl port-forward -n models svc/vllm 8000:80
+
+# in a second terminal
+KEY=$(kubectl get secret vllm-api-key -n models -o jsonpath='{.data.key}' | base64 -d)
+curl http://localhost:8000/v1/chat/completions \
+  -H "Authorization: Bearer $KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "Qwen/Qwen3-4B-Instruct-2507",
+       "messages": [{"role": "user", "content": "Suggest one day trip from Lisbon."}]}'
+```
+
+You should get an answer in the OpenAI format. Then look at vLLM's numbers (with the tunnel still open):
+
+```bash
+curl -s http://localhost:8000/metrics | grep -E "num_requests_(running|waiting)|kv_cache_usage_perc"
+```
+
+<Note>
+
+**On Azure with KAITO,** the Service is named after the workspace and listens on port 80, and KAITO sets no API key. Use `kubectl port-forward svc/workspace-phi-4-mini 8000:80`, then send the same curl without the `Authorization` line and with `"model": "phi-4-mini-instruct"`. Because there is no key, keeping this Service private matters even more.
+
+</Note>
+
+## Step 4: point Botley at it
+
+Botley runs in the same cluster or the same private network. Change its two settings (Chapter 6). These are the values for the GKE and EKS recipes. On Azure, use `http://workspace-phi-4-mini.default.svc.cluster.local/v1` and the model name `phi-4-mini-instruct`, with no key.
+
+| Setting | Value |
+|---|---|
+| Model address | `http://vllm.models.svc.cluster.local/v1` (inside the cluster) |
+| Model name | `Qwen/Qwen3-4B-Instruct-2507` |
+| API key | the key from the `vllm-api-key` secret |
+
+Don't give the Service a public address. Only Botley needs to reach it.
+
+<Careful>
+
+**This is a starting point, not production yet.** Before real users depend on it, add the pieces from Chapter 7: weights stored close by, autoscaling on vLLM's metrics, monitoring and alerts. Then run Botley's real tasks against the new model and compare the results with the old one (Chapter 11).
+
+</Careful>
+
+<NoSillyQuestions>
+
+<QA q={"Why does the first start take so long?"}>
+
+The cluster may need to create a GPU machine, then pull a large image, then download about 8 GB of weights, then load them into the GPU. Later starts on a machine that already has the image are faster.
+
+</QA>
+
+<QA q={"Can I use a bigger model with the same file?"}>
+
+Yes. Change `--model`, choose GPUs with enough memory (Chapter 4), and set `--tensor-parallel-size` and `nvidia.com/gpu` to the number of GPUs per copy. For a gated model, add a Hugging Face token as a secret and pass it as `HF_TOKEN`.
+
+</QA>
+
+<QA q={"Why does the Azure recipe use a different model?"}>
+
+KAITO's simple path only works with its own list of presets. You can serve other models with KAITO too, or use `vllm.yaml` on AKS as the note says.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+1. One vLLM pod is ready and the other has been starting for 10 minutes. Name two things you would check. <Blank />
+2. Your curl returns “401 Unauthorized”. What is missing? <Blank />
+3. A teammate wants to expose the vLLM Service on the internet “so testing is easier”. What do you say? <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- The same `vllm.yaml` works on GKE and EKS. Only the node selector changes.
+- On GKE Autopilot, a node selector for `nvidia-l4` is enough to get L4 machines with drivers.
+- On EKS, check that each node shows an allocatable `nvidia.com/gpu`.
+- On AKS, the KAITO add-on deploys preset models with vLLM from one short file.
+- Use a fixed vLLM version, an API key, a long startup probe and shared memory.
+- Keep the model private, test with port-forward, then point Botley at the in-cluster address.
+
+</Takeaways>

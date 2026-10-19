@@ -1,0 +1,37 @@
+<svg viewBox='0 0 680 420'>
+<g transform='translate(-60 0)'>
+<defs><marker id='r111' viewBox='0 0 10 10' refX='8' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10' fill='none' stroke='#23406e' stroke-width='2'/></marker></defs>
+<g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'>
+<rect x='170' y='14' width='320' height='50' rx='10' fill='#fff1a6'/>
+<rect x='170' y='104' width='320' height='50' rx='10' fill='#fff1a6'/>
+<rect x='170' y='194' width='320' height='50' rx='10' fill='#fff1a6'/>
+<rect x='170' y='284' width='320' height='50' rx='10' fill='#fff1a6'/>
+<rect x='530' y='14' width='140' height='50' rx='10' fill='#d9ecff'/>
+<rect x='530' y='104' width='140' height='50' rx='10' fill='#d9ecff'/>
+<rect x='530' y='194' width='140' height='50' rx='10' fill='#d9ecff'/>
+<rect x='530' y='284' width='140' height='50' rx='10' fill='#d9ecff'/>
+<rect x='170' y='362' width='320' height='50' rx='10' fill='#dcf5d6'/>
+</g>
+<text class='hk' x='330' y='35' text-anchor='middle' font-size='13'>Is the model you need closed?</text>
+<text class='hk' x='330' y='53' text-anchor='middle' font-size='12'>(Claude, GPT, Gemini)</text>
+<text class='hk' x='330' y='125' text-anchor='middle' font-size='13'>Must data or the model stay on</text>
+<text class='hk' x='330' y='143' text-anchor='middle' font-size='13'>machines you control, or run offline?</text>
+<text class='hk' x='330' y='215' text-anchor='middle' font-size='13'>Is traffic steady and heavy,</text>
+<text class='hk' x='330' y='233' text-anchor='middle' font-size='13'>day and night?</text>
+<text class='hk' x='330' y='305' text-anchor='middle' font-size='13'>Do you have a team that can run</text>
+<text class='hk' x='330' y='323' text-anchor='middle' font-size='13'>GPUs and Kubernetes, on call?</text>
+<text class='hb' x='600' y='44' text-anchor='middle' font-size='13'>Managed service</text>
+<text class='hb' x='600' y='134' text-anchor='middle' font-size='13'>Self-host</text>
+<text class='hb' x='600' y='224' text-anchor='middle' font-size='13'>Pay per token</text>
+<text class='hb' x='600' y='305' text-anchor='middle' font-size='12.5'>Reserved capacity</text>
+<text class='hb' x='600' y='322' text-anchor='middle' font-size='12.5'>or managed endpoint</text>
+<text class='hb' x='330' y='384' text-anchor='middle' font-size='13.5'>Self-host, after you check</text>
+<text class='hb' x='330' y='402' text-anchor='middle' font-size='13.5'>the cost math (Chapter 9)</text>
+<g fill='none' stroke='#23406e' stroke-width='2'>
+<path d='M490 39 h38' marker-end='url(#r111)'/><path d='M490 129 h38' marker-end='url(#r111)'/><path d='M490 219 h38' marker-end='url(#r111)'/><path d='M490 309 h38' marker-end='url(#r111)'/>
+<path d='M330 64 v38' marker-end='url(#r111)'/><path d='M330 154 v38' marker-end='url(#r111)'/><path d='M330 244 v38' marker-end='url(#r111)'/><path d='M330 334 v26' marker-end='url(#r111)'/>
+</g>
+<text class='h' x='509' y='32' text-anchor='middle' font-size='11'>yes</text><text class='h' x='509' y='122' text-anchor='middle' font-size='11'>yes</text><text class='h' x='509' y='212' text-anchor='middle' font-size='11'>no</text><text class='h' x='509' y='302' text-anchor='middle' font-size='11'>no</text>
+<text class='h' x='342' y='88' font-size='11'>no</text><text class='h' x='342' y='178' font-size='11'>no</text><text class='h' x='342' y='268' font-size='11'>yes</text><text class='h' x='342' y='352' font-size='11'>yes</text>
+</g>
+</svg>

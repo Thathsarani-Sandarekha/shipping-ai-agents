@@ -1,0 +1,25 @@
+<svg viewBox='0 0 680 200'>
+<defs><marker id='r71' viewBox='0 0 10 10' refX='8' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0 0 L10 5 L0 10' fill='none' stroke='#23406e' stroke-width='2'/></marker></defs>
+<g stroke='#1b1b1b' stroke-width='2.2' stroke-linejoin='round'>
+<rect x='10' y='40' width='120' height='70' rx='8' fill='#fff1a6'/>
+<rect x='145' y='40' width='120' height='70' rx='8' fill='#d9ecff'/>
+<rect x='280' y='40' width='120' height='70' rx='8' fill='#ffd9e2'/>
+<rect x='415' y='40' width='120' height='70' rx='8' fill='#dcf5d6'/>
+<rect x='550' y='40' width='120' height='70' rx='8' fill='#fff'/>
+</g>
+<text class='hb' x='70' y='66' text-anchor='middle' font-size='13'>1. Get a</text><text class='hb' x='70' y='84' text-anchor='middle' font-size='13'>GPU machine</text>
+<text class='hb' x='205' y='66' text-anchor='middle' font-size='13'>2. Pull the</text><text class='hb' x='205' y='84' text-anchor='middle' font-size='13'>vLLM image</text>
+<text class='hb' x='340' y='66' text-anchor='middle' font-size='13'>3. Download</text><text class='hb' x='340' y='84' text-anchor='middle' font-size='13'>the weights</text>
+<text class='hb' x='475' y='66' text-anchor='middle' font-size='13'>4. Load them</text><text class='hb' x='475' y='84' text-anchor='middle' font-size='13'>into the GPU</text>
+<text class='hb' x='610' y='76' text-anchor='middle' font-size='14'>5. Ready!</text>
+<text class='hk' x='70' y='134' text-anchor='middle' font-size='12'>if a GPU is free</text>
+<text class='hk' x='70' y='150' text-anchor='middle' font-size='12'>in your zone</text>
+<text class='hk' x='205' y='134' text-anchor='middle' font-size='12'>about 9 GB</text>
+<text class='hk' x='205' y='150' text-anchor='middle' font-size='12'>compressed</text>
+<text class='hk' x='340' y='134' text-anchor='middle' font-size='12'>16 GB for an</text>
+<text class='hk' x='340' y='150' text-anchor='middle' font-size='12'>8B model in BF16</text>
+<text class='hk' x='475' y='134' text-anchor='middle' font-size='12'>and warm up</text>
+<text class='hk' x='610' y='134' text-anchor='middle' font-size='12'>/health says OK</text>
+<path d='M20 176 h640' fill='none' stroke='#23406e' stroke-width='2' marker-end='url(#r71)'/>
+<text class='h' x='340' y='196' text-anchor='middle' font-size='13'>this often takes minutes, not seconds</text>
+</svg>

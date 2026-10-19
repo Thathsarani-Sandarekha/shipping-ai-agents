@@ -1,0 +1,36 @@
+<svg viewBox='0 0 680 250'>
+<!-- 1: restaurant, pay per dish -->
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'>
+<rect x='14' y='14' width='206' height='170' rx='10' fill='#fff' stroke-dasharray='0'/>
+<ellipse cx='92' cy='112' rx='46' ry='16' fill='#fff'/><ellipse cx='92' cy='108' rx='28' ry='8' fill='#ffd9e2'/>
+<path d='M36 96 v34 M44 96 v34 M40 96 v34 M40 130 v10' fill='none' stroke-width='1.8'/>
+<path d='M148 96 v44 M148 96 q10 6 0 22' fill='none' stroke-width='1.8'/>
+<path d='M164 46 h44 v62 l-6 -5 l-6 5 l-6 -5 l-6 5 l-6 -5 l-6 5 l-8 -5z' fill='#fff1a6'/>
+</g>
+<text class='hk' x='186' y='64' text-anchor='middle' font-size='11'>1 dish</text>
+<text class='hk' x='186' y='80' text-anchor='middle' font-size='11'>= $</text>
+<text class='hb' x='117' y='212' text-anchor='middle' font-size='15'>Eat at a restaurant</text>
+<text class='h' x='117' y='232' text-anchor='middle' font-size='13'>pay per token, shared service</text>
+<!-- 2: booked private room -->
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'>
+<rect x='237' y='14' width='206' height='170' rx='10' fill='#fff'/>
+<path d='M268 120 h120 M282 120 v40 M374 120 v40' fill='none'/>
+<path d='M300 120 l8 -20 h40 l8 20' fill='#dcf5d6'/>
+<rect x='312' y='60' width='34' height='24' rx='3' fill='#fff1a6'/>
+<circle cx='408' cy='56' r='22' fill='#fff'/><path d='M408 42 v14 l10 6' fill='none'/>
+</g>
+<text class='hk' x='329' y='77' text-anchor='middle' font-size='9.5'>BOOKED</text>
+<text class='hb' x='340' y='212' text-anchor='middle' font-size='15'>Book a private room</text>
+<text class='h' x='340' y='232' text-anchor='middle' font-size='13'>reserved capacity, pay per hour</text>
+<!-- 3: own kitchen -->
+<g stroke='#1b1b1b' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'>
+<rect x='460' y='14' width='206' height='170' rx='10' fill='#fff'/>
+<rect x='500' y='100' width='126' height='70' rx='4' fill='#dcf5d6'/>
+<rect x='512' y='90' width='102' height='10' rx='2' fill='#1b1b1b'/>
+<path d='M528 90 q-2 -22 6 -26 h34 q8 4 6 26z' fill='#fff'/>
+<path d='M548 62 q-4 -12 2 -20 M562 62 q-4 -12 2 -20 M576 62 q-4 -12 2 -20' fill='none' stroke-width='1.6'/>
+</g>
+<text class='hb' x='563' y='142' text-anchor='middle' font-size='16'>GPU</text>
+<text class='hb' x='563' y='212' text-anchor='middle' font-size='15'>Cook in your own kitchen</text>
+<text class='h' x='563' y='232' text-anchor='middle' font-size='13'>your own GPUs, you run it all</text>
+</svg>

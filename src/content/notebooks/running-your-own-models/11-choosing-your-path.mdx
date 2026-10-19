@@ -1,0 +1,151 @@
+---
+number: 11
+title: "Choosing your path"
+kicker: "Chapter eleven"
+subtitle: "A decision map, mixing both paths, how to test a new model, and a checklist for launch day."
+question: "So which path should Botley take?"
+part: "Choose"
+quote: {"who": "botley", "text": "Restaurant, private room or my own kitchen? Let's decide."}
+lastChecked: "2026-10-19"
+---
+
+import { Sketch, Sticky, Columns, Careful, Think, YourTurn, Takeaways, Geek, NoSillyQuestions, QA, FaceOff, Blank, Note, Hand } from '../../../components/index.ts';
+
+You now know how models use GPUs, what the managed services offer, how to run your own, and how to do the math. Here is how to put it together.
+
+## The decision map
+
+<Sketch name="rm-ch11-1" caption={"Start at the top. Most new agents stop at the first or third box."} />
+
+The order matters:
+
+1. **Closed model?** If the model you need is Claude, GPT or Gemini, the decision is made: use a managed service.
+2. **A hard rule about where data or the model may run?** If it must be on machines you control, or offline, self-hosting is the answer (Chapter 10).
+3. **Steady, heavy traffic?** If not, pay per token. You won't keep a GPU busy enough (Chapter 9).
+4. **A team that can run GPUs?** If not, use reserved capacity or a managed open-model endpoint (Chapter 5). If yes, self-host, after you check the math.
+
+## You can mix both paths
+
+You don't have to pick only one. Because vLLM and most model services accept the same style of request, an agent can call different models for different jobs. This is often called **model routing**.
+
+<Columns>
+<div>
+
+<Sticky color="green">
+
+**Easy, frequent jobs → small model on your own GPU**
+
+- Sorting incoming messages
+- Pulling dates and places out of text
+- Short summaries
+
+</Sticky>
+
+</div>
+<div>
+
+<Sticky color="blue" tilt="right">
+
+**Hard, rare jobs → large managed model**
+
+- Planning a complex trip with many steps
+- Unusual questions
+- Anything the small model gets wrong
+
+</Sticky>
+
+</div>
+</Columns>
+
+This keeps your GPU busy with the high-volume work, which helps the break-even, while the hard cases still get the best model.
+
+## Test before you switch
+
+A new model will behave differently from the old one (Chapter 1). Don't switch Botley on a feeling. Test it:
+
+1. **Collect real tasks.** Take a set of real past conversations, for example 50 to 200, with what a good answer looks like. Include the hard ones and the tool calls.
+2. **Run both models** on the same tasks, with the same instructions.
+3. **Compare what matters for Botley:** Did it call the right tool with the right details? Is the answer correct? Is it fast enough? What did it cost?
+4. **Test the load.** Send many requests at once and watch time to first token and requests waiting (Chapter 3). vLLM includes a benchmark tool, `vllm bench serve`, for this.
+5. **Switch a small share first.** Send a small share of real users to the new model, watch it, then increase it.
+
+<Careful>
+
+**Test again after every change.** A new model version, a new quantization, or a new vLLM version can all change answers. Keep your test set and run it each time.
+
+</Careful>
+
+## What Maya told Sam
+
+<Sticky color="yellow" width="88%">
+
+**Question 1: Would our own model be cheaper?**
+
+Not yet. Our traffic is mostly office hours. With two GPUs for safety, we'd need traffic of about 82% of one GPU's full speed, day and night, to beat paying per token. We are nowhere near that. We'll measure again every quarter.
+
+**Question 2: Can the customer's data stay inside our cloud account?**
+
+Their real rule is “EU only, and no training on our data”. The managed service meets both with the right region setting. If a customer ever needs “only on our own machines”, we can run a small open model for that customer alone.
+
+**Next step:** build a test set of 100 real Botley tasks, so we are ready to compare models when we need to.
+
+</Sticky>
+
+## Launch-day checklist for a self-hosted model
+
+- [ ] The license of the exact model version allows your use (Chapter 2)
+- [ ] Weights and KV cache fit, with `--max-model-len` set on purpose (Chapters 3 and 4)
+- [ ] GPU quota approved, in the region you need (Chapter 4)
+- [ ] A fixed vLLM version, not `latest` (Chapter 6)
+- [ ] The vLLM endpoint is private, with an API key (Chapter 6)
+- [ ] At least two copies, on different machines (Chapter 7)
+- [ ] Startup and readiness probes on `/health`, and shared memory at `/dev/shm` (Chapters 7 and 8)
+- [ ] Weights stored close to the cluster, not downloaded from the internet on every start (Chapter 7)
+- [ ] Autoscaling on vLLM's own metrics, with alerts on requests waiting and time to first token (Chapter 7)
+- [ ] The cost math done with your own measured throughput and a week of real traffic (Chapter 9)
+- [ ] Botley's real tasks tested on the new model, with a plan to switch users over slowly (this chapter)
+- [ ] Someone is on call for the GPUs, and knows how to switch Botley back to a managed model
+
+<NoSillyQuestions>
+
+<QA q={"What if we choose wrong?"}>
+
+Because Botley only changes two settings to move between vLLM and a managed service, you can switch back. Keep the managed option set up and tested, so moving back only means changing two settings.
+
+</QA>
+
+<QA q={"How often should we check the decision again?"}>
+
+When traffic changes a lot, when prices change, or when a new model comes out that could do the job with a smaller GPU. For most teams, every few months is enough.
+
+</QA>
+
+</NoSillyQuestions>
+
+<YourTurn>
+
+Use the decision map. Which path would you choose?
+
+1. A start-up has an agent that uses Claude, and its traffic is growing fast. <Blank />
+2. A hospital wants an assistant that runs only on its own servers, which have no internet connection. <Blank />
+3. A shop's support agent gets steady traffic around the clock, uses an open model, and has no one who knows Kubernetes. <Blank />
+4. A large company with a platform team already runs GKE, and has heavy, steady traffic for an open model. The math shows the GPUs would be about 85% busy. <Blank />
+
+<Hand>
+
+The answers are at the back.
+
+</Hand>
+
+</YourTurn>
+
+<Takeaways>
+
+- Start with the hard limits: closed models need a managed service, and strict “our machines only” rules need self-hosting.
+- Then look at traffic. Low or uneven traffic means pay per token.
+- Self-host only with steady, heavy traffic, a team to run it, and math that works.
+- You can mix: small self-hosted models for easy, frequent jobs, and large managed models for hard ones.
+- Test a new model on real tasks before switching, and after every change.
+- Keep the managed option ready, so you can switch back with a settings change.
+
+</Takeaways>
