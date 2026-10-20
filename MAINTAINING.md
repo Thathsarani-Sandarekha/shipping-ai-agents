@@ -36,6 +36,16 @@ Notebook #1's older addresses (`/chapters/…`, `/how/`, `/back/`) redirect to t
 The logo is Botley sailing out on a paper-style boat. It lives in `public/favicon.svg` and is used both as the browser tab icon
 and in the top bar, so editing that one file changes both.
 
+## Making a notebook's PDF
+
+```bash
+npm run pdf -- running-your-own-models
+```
+
+This builds the site, prints the notebook to A4 with Google Chrome, fills in the page numbers in the contents table,
+and writes `public/<notebook>.pdf`. It needs Google Chrome 131 or newer and Poppler (`brew install poppler`).
+Run it again after you change a notebook, then commit the new PDF. Notebook #1's PDF was made earlier, by hand.
+
 ## Visitor counts
 
 The site uses [GoatCounter](https://www.goatcounter.com): free, no cookies, and no cookie banner needed.

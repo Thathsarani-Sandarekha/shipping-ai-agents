@@ -33,7 +33,7 @@ Written by Nimesha Jinarajadasa, with help from [contributors](https://github.co
 12. Deploying Botley for real
 13. The road to production
 
-### Notebook #2: [Running Your Own Models](https://nimeshmora.github.io/shipping-ai-agents/notebooks/running-your-own-models/)
+### Notebook #2: [Running Your Own Models](https://nimeshmora.github.io/shipping-ai-agents/notebooks/running-your-own-models/) &nbsp;·&nbsp; [PDF](https://nimeshmora.github.io/shipping-ai-agents/running-your-own-models.pdf)
 
 **The basics**
 1. Where does Botley's brain live?
