@@ -73,3 +73,13 @@ main>.paper.index{margin-top:28px}
 #theme.is-dark .i-sun{display:inline}
 #theme:not(.is-dark){background:var(--ink);color:var(--paper)}
 #theme:not(.is-dark):hover{background:#3a3d42}
+
+/* Code blocks: light colors in light mode, dark colors in dark mode (see shikiConfig in astro.config.mjs) */
+.paper pre.astro-code{background-color:var(--soft)!important;color:var(--shiki-light);border:1.5px solid var(--rule);border-radius:6px;
+ padding:12px 14px;margin:8px 0 14px;font-size:.74rem;line-height:1.55;white-space:pre;overflow-x:auto;tab-size:2}
+.paper pre.astro-code span{color:var(--shiki-light)}
+.paper pre.astro-code code{background:none;padding:0;font-size:inherit;white-space:inherit}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .paper pre.astro-code{background-color:var(--shiki-dark-bg)!important;color:var(--shiki-dark)}
+ :root:not([data-theme="light"]) .paper pre.astro-code span{color:var(--shiki-dark)}}
+:root[data-theme="dark"] .paper pre.astro-code{background-color:var(--shiki-dark-bg)!important;color:var(--shiki-dark)}
+:root[data-theme="dark"] .paper pre.astro-code span{color:var(--shiki-dark)}

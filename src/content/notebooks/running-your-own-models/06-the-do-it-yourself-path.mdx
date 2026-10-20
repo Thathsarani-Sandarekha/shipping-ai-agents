@@ -34,13 +34,15 @@ from openai import OpenAI
 
 # Before: a model service. After: your own vLLM server.
 client = OpenAI(
-    base_url="http://vllm.models.svc.cluster.local/v1",  # your vLLM address
+    base_url="http://vllm.models.svc.cluster.local/v1",
     api_key="the-key-you-gave-vllm",
 )
 
 reply = client.chat.completions.create(
     model="Qwen/Qwen3-4B-Instruct-2507",
-    messages=[{"role": "user", "content": "Find me a flight to Lisbon on Tuesday."}],
+    messages=[
+        {"role": "user", "content": "Find me a flight to Lisbon on Tuesday."},
+    ],
 )
 print(reply.choices[0].message.content)
 ```

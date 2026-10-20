@@ -68,8 +68,8 @@ spec:
           image: vllm/vllm-openai:v0.32.0
           args:
             - --model=Qwen/Qwen3-4B-Instruct-2507
-            - --max-model-len=16384          # Chapter 3: limit the KV cache per conversation
-            - --api-key=$(VLLM_API_KEY)      # Kubernetes fills this in from the secret
+            - --max-model-len=16384          # caps KV cache per chat (Ch. 3)
+            - --api-key=$(VLLM_API_KEY)      # filled in from the secret
           env:
             - name: VLLM_API_KEY
               valueFrom:
@@ -189,13 +189,15 @@ curl http://localhost:8000/v1/chat/completions \
   -H "Authorization: Bearer $KEY" \
   -H "Content-Type: application/json" \
   -d '{"model": "Qwen/Qwen3-4B-Instruct-2507",
-       "messages": [{"role": "user", "content": "Suggest one day trip from Lisbon."}]}'
+       "messages": [{"role": "user",
+                     "content": "Suggest one day trip from Lisbon."}]}'
 ```
 
 You should get an answer in the OpenAI format. Then look at vLLM's numbers (with the tunnel still open):
 
 ```bash
-curl -s http://localhost:8000/metrics | grep -E "num_requests_(running|waiting)|kv_cache_usage_perc"
+curl -s http://localhost:8000/metrics \
+  | grep -E "num_requests_(running|waiting)|kv_cache_usage_perc"
 ```
 
 <Note>

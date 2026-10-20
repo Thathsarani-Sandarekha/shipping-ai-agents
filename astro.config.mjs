@@ -23,6 +23,13 @@ export default defineConfig({
   site: 'https://nimeshmora.github.io',
   base: BASE || '/',
   integrations: [mdx()],
+  // Code blocks get both a light and a dark color theme. src/styles/site.css picks one to match the page.
+  markdown: {
+    shikiConfig: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+      defaultColor: false,
+    },
+  },
   // Old addresses from before the site held more than one notebook. Shared links keep working.
   redirects: {
     '/how': `${BASE}/notebooks/shipping-ai-agents/how/`,
