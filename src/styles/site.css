@@ -101,3 +101,10 @@ main>.paper.index{margin-top:28px}
 .pin-note.stat .big{font-family:var(--f-marker);font-size:2.6rem;line-height:1;color:var(--hl)}
 .pin-note.stat .detail{color:var(--paper);opacity:.8}
 @media (max-width:700px){.pins{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.hl-title{font-family:var(--f-hand);font-weight:700;font-size:1.05rem;color:var(--muted);margin:26px 0 8px}
+.highlights{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.highlights li{border:2px solid var(--ink);border-radius:8px;padding:10px 12px;background:var(--paper);box-shadow:3px 3px 0 var(--ink);margin:0}
+.highlights b{display:block;font-family:var(--f-marker);font-weight:400;font-size:1rem;line-height:1.15}
+.highlights span{display:block;font-family:var(--f-hand);font-size:.88rem;color:var(--hand);margin-top:3px}
+.more-talks{font-family:var(--f-hand);font-size:.95rem;margin:16px 0 0}
+@media (max-width:700px){.highlights{grid-template-columns:repeat(2,minmax(0,1fr))}}

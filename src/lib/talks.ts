@@ -17,3 +17,18 @@ export const talks: Talk[] = [
 
 // Talks given since the first one in 2018. Update the number as it grows.
 export const pastTalks = { count: '70+', since: 2018 };
+
+// The biggest past talks, shown as a row under the board.
+export const highlights: { host: string; what: string }[] = [
+  { host: 'KubeCon', what: 'Speaker' },
+  { host: 'KCD Sri Lanka', what: 'Speaker' },
+  { host: 'National University of Singapore', what: 'DevOps workshop' },
+  { host: 'AAIF', what: 'Talk, and organizer' },
+];
+
+// Where people can see more talks. Leave a link empty ('') to hide it.
+export const profiles: { name: string; url: string }[] = [
+  { name: 'LinkedIn', url: '' },
+  { name: 'Facebook', url: '' },
+  { name: 'YouTube', url: '' },
+];
