@@ -31,6 +31,12 @@ Notebook #1's older addresses (`/chapters/…`, `/how/`, `/back/`) redirect to t
 2. Put its chapters in `src/content/notebooks/<slug>/`.
 3. Add `index.astro` (cover), `how.astro` and `back.mdx` in `src/pages/notebooks/<slug>/`. Copy Notebook #1's and change the `notebook` prop.
 
+## Talks board
+
+The “Where I'm speaking” board on the front page reads `src/lib/talks.ts`. Add a new talk at the top of the list,
+set `upcoming: false` (or remove it) once it has happened, and update `pastTalks.count` as the number grows.
+A talk without a `date` shows “Date coming soon”.
+
 ## The logo
 
 The logo is Botley sailing out on a paper-style boat. It lives in `public/favicon.svg` and is used both as the browser tab icon

@@ -83,3 +83,21 @@ main>.paper.index{margin-top:28px}
  :root:not([data-theme="light"]) .paper pre.astro-code span{color:var(--shiki-dark)}}
 :root[data-theme="dark"] .paper pre.astro-code{background-color:var(--shiki-dark-bg)!important;color:var(--shiki-dark)}
 :root[data-theme="dark"] .paper pre.astro-code span{color:var(--shiki-dark)}
+
+/* "Where I'm speaking" board on the front page (talks come from src/lib/talks.ts) */
+.board h2{margin-top:0}
+.pins{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:14px}
+.pin-note{position:relative;padding:22px 14px 14px;box-shadow:1px 3px 6px rgba(0,0,0,.18);transform:rotate(-1.5deg);color:var(--ink);min-height:150px}
+.pin-note:nth-child(even){transform:rotate(1.4deg)}
+.pin-note.c0{background:var(--sy)}.pin-note.c1{background:var(--sb)}.pin-note.c2{background:var(--sg)}
+.pin-note.stat{background:var(--ink);color:var(--paper)}
+.pin{position:absolute;top:-7px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#d32f2f;border:2px solid var(--ink);box-shadow:1px 2px 0 rgba(0,0,0,.25)}
+.pin-note p{margin:0}
+.pin-note .when{font-family:var(--f-sans);font-weight:700;font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pin-note .host{font-family:var(--f-marker);font-size:1.25rem;line-height:1.1;margin:6px 0 2px}
+.pin-note .what{font-family:var(--f-hand);font-weight:700;font-size:1rem;line-height:1.2}
+.pin-note .detail{font-family:var(--f-hand);font-size:.85rem;line-height:1.25;margin-top:6px;color:var(--hand)}
+.pin-note .more{display:inline-block;margin-top:8px;font-family:var(--f-sans);font-weight:700;font-size:.7rem}
+.pin-note.stat .big{font-family:var(--f-marker);font-size:2.6rem;line-height:1;color:var(--hl)}
+.pin-note.stat .detail{color:var(--paper);opacity:.8}
+@media (max-width:700px){.pins{grid-template-columns:repeat(2,minmax(0,1fr))}}
