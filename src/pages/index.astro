@@ -9,9 +9,7 @@ import QA from '../components/QA.astro';
 import { url } from '../lib/url';
 import { REPO } from '../lib/site';
 import { notebooks } from '../lib/notebooks';
-import { talks, pastTalks, highlights, profiles } from '../lib/talks';
-const links = profiles.filter((p) => p.url);
-const upcoming = talks.filter((t) => t.upcoming);
+import Talks from '../components/Talks.astro';
 import { allChapters } from '../lib/chapters';
 const counts = Object.fromEntries(await Promise.all(notebooks.map(async (n) => [n.slug, (await allChapters(n.slug)).length])));
 ---
@@ -43,35 +41,9 @@ const counts = Object.fromEntries(await Promise.all(notebooks.map(async (n) => [
     <div class="sticky r green">Should we run our own model?</div>
   </div>
 
+  <Talks slot="aside" compact />
   <div slot="after">
-    <section class="paper board" aria-labelledby="speaking">
-      <h2 id="speaking"><span>Where I'm speaking</span></h2>
-      <div class="pins">
-        {upcoming.map((t, i) => (
-          <article class={`pin-note c${i % 3}`}>
-            <span class="pin" aria-hidden="true"></span>
-            <p class="when">{t.date ?? 'Date coming soon'}</p>
-            <p class="host">{t.host}</p>
-            <p class="what">{t.title}</p>
-            {t.detail && <p class="detail">{t.detail}</p>}
-            {t.link && <a class="more" href={t.link}>Details</a>}
-          </article>
-        ))}
-        <article class="pin-note stat">
-          <span class="pin" aria-hidden="true"></span>
-          <p class="big">{pastTalks.count}</p>
-          <p class="what">talks since {pastTalks.since}</p>
-          <p class="detail">Conferences, meetups, universities and schools</p>
-        </article>
-      </div>
-      <h3 class="hl-title">Past highlights</h3>
-      <ul class="highlights">
-        {highlights.map((h) => <li><b>{h.host}</b><span>{h.what}</span></li>)}
-      </ul>
-      <p class="more-talks">Plus talks at many state and private universities, and at schools.
-        {links.length > 0 && <> See more on {links.map((l, i) => <>{i > 0 && (i === links.length - 1 ? ' and ' : ', ')}<a href={l.url}>{l.name}</a></>)}.</>}
-      </p>
-    </section>
+    <div class="talks-inline"><Talks /></div>
     <section class="paper shelf" aria-labelledby="shelf">
       <h2 id="shelf"><span>The notebooks</span></h2>
       {notebooks.map((n) => (

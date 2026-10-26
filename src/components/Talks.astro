@@ -1,0 +1,37 @@
+---
+// The "Where I'm speaking" board. Talks come from src/lib/talks.ts.
+// compact: the narrow version for the front page's side column on wide screens.
+import { talks, pastTalks, highlights, profiles } from '../lib/talks';
+const { compact = false } = Astro.props as { compact?: boolean };
+const id = compact ? 'speaking-side' : 'speaking';
+const links = profiles.filter((p) => p.url);
+const upcoming = talks.filter((t) => t.upcoming);
+---
+<section class={compact ? 'board compact' : 'paper board'} aria-labelledby={id}>
+  <h2 id={id}><span>Where I'm speaking</span></h2>
+  <div class="pins">
+    {upcoming.map((t, i) => (
+      <article class={`pin-note c${i % 3}`}>
+        <span class="pin" aria-hidden="true"></span>
+        <p class="when">{t.date ?? 'Date coming soon'}</p>
+        <p class="host">{t.host}</p>
+        <p class="what">{t.title}</p>
+        {t.detail && <p class="detail">{t.detail}</p>}
+        {t.link && <a class="more" href={t.link}>Details</a>}
+      </article>
+    ))}
+    <article class="pin-note stat">
+      <span class="pin" aria-hidden="true"></span>
+      <p class="big">{pastTalks.count}</p>
+      <p class="what">talks since {pastTalks.since}</p>
+      <p class="detail">Conferences, meetups, universities and schools</p>
+    </article>
+  </div>
+  <h3 class="hl-title">Past highlights</h3>
+  <ul class="highlights">
+    {highlights.map((h) => <li><b>{h.host}</b><span>{h.what}</span></li>)}
+  </ul>
+  <p class="more-talks">Plus talks at many state and private universities, and at schools.
+    {links.length > 0 && <> See more on {links.map((l, i) => <>{i > 0 && (i === links.length - 1 ? ' and ' : ', ')}<a href={l.url}>{l.name}</a></>)}.</>}
+  </p>
+</section>

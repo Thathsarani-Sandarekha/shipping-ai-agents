@@ -108,3 +108,30 @@ main>.paper.index{margin-top:28px}
 .highlights span{display:block;font-family:var(--f-hand);font-size:.88rem;color:var(--hand);margin-top:3px}
 .more-talks{font-family:var(--f-hand);font-size:.95rem;margin:16px 0 0}
 @media (max-width:700px){.highlights{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Front page side column: the talks board stays in view on wide screens. Narrower screens show it inline instead. */
+.rail{display:none}
+@media (min-width:1260px){
+ .layout.hub.has-rail{max-width:1260px;grid-template-columns:minmax(0,880px) 300px;justify-content:center}
+ .rail{display:block;position:sticky;top:calc(72px + env(safe-area-inset-top,0px));align-self:start;max-height:calc(100vh - 92px);overflow-y:auto;padding:2px 6px 8px 2px}
+ .talks-inline{display:none}
+}
+.board.compact{background:var(--paper);border:2px solid var(--ink);border-radius:4px;box-shadow:4px 4px 0 var(--ink);padding:18px 16px 14px}
+.board.compact h2{font-size:1.05rem;margin:0}
+.board.compact .pins{grid-template-columns:minmax(0,1fr);gap:13px;margin-top:14px}
+.board.compact .pin-note{min-height:0;padding:11px 12px 8px}
+.board.compact .when{font-size:.56rem}
+.board.compact .pin{top:-6px;width:13px;height:13px;margin-left:-6px}
+.board.compact .host{font-size:1rem;margin:3px 0 1px}
+.board.compact .what{font-size:.9rem}
+.board.compact .detail{font-size:.78rem;margin-top:3px}
+.board.compact .stat{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center}
+.board.compact .stat .big{font-size:2rem;grid-row:span 2}
+.board.compact .stat .detail{grid-column:2;margin:0}
+.board.compact .hl-title{font-size:.9rem;margin:14px 0 2px}
+.board.compact .highlights{grid-template-columns:minmax(0,1fr);gap:0}
+.board.compact .highlights li{box-shadow:none;border:0;border-bottom:1.5px dashed var(--rule);border-radius:0;padding:5px 0;background:none;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.board.compact .highlights b{font-size:.82rem}
+.board.compact .highlights span{font-size:.76rem;margin-top:0;text-align:right;flex:none}
+.board.compact .more-talks{font-size:.78rem;margin-top:8px;line-height:1.3}
+.talks-inline .paper{margin-top:28px}
