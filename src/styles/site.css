@@ -136,16 +136,26 @@ main>.paper.index{margin-top:28px}
 .board.compact .more-talks{font-size:.78rem;margin-top:8px;line-height:1.3}
 .talks-inline .paper{margin-top:28px}
 
-/* "Share the stage" section on the front page */
-.paper.stage{background:var(--sy);border-width:2.5px}
+/* "Share the stage" panel: slides in from the right when "Want to speak too?" is clicked */
+.stage-panel{position:fixed;inset:0 0 0 auto;margin:0;width:min(460px,100vw);height:100%;max-height:none;max-width:none;padding:0;border:0;
+ border-left:2.5px solid var(--ink);box-shadow:-6px 0 0 var(--ink);background:var(--sy);color:var(--ink);overflow-y:auto}
+.stage-panel[open]{animation:stage-in .28s ease-out}
+.stage-panel::backdrop{background:rgba(0,0,0,.4)}
+@keyframes stage-in{from{transform:translateX(100%)}to{transform:none}}
+.stage{padding:30px 26px 28px}
+.stage-close{position:absolute;top:12px;right:14px;width:36px;height:36px;border-radius:50%;border:2px solid var(--ink);background:var(--paper);color:var(--ink);font-size:1.3rem;line-height:1;cursor:pointer}
+.stage-close:hover{background:var(--hl)}
 .stage-tag{display:inline-block;font-family:var(--f-sans);font-weight:800;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:4px 10px;border-radius:4px;transform:rotate(-2deg);margin:0 0 10px}
-.paper.stage h2{margin-top:0}
-.paper.stage h2 span{background:linear-gradient(transparent 58%,var(--paper) 58%)}
-.paper.stage > p{max-width:62ch}
-.stage-notes{margin:14px 0 6px}
+.stage h2{margin-top:0}
+.stage h2 span{background:linear-gradient(transparent 58%,var(--paper) 58%)}
+.stage > p{font-size:.95rem}
+.stage-notes{flex-direction:column;gap:10px;margin:14px 0 8px}
 .stage-notes .sticky{background:var(--paper)}
 .stage-notes .sticky.blue{background:var(--sb)}.stage-notes .sticky.green{background:var(--sg)}
-.paper.stage .small{margin-top:10px}
+.stage .actions{flex-direction:column;align-items:stretch}
+.stage .actions .btn{text-align:center}
+.stage .small{margin-top:10px}
+@media (prefers-reduced-motion:reduce){.stage-panel[open]{animation:none}}
 
 /* The "Want to speak too?" button at the end of the talks board */
 .stage-cta{display:flex;align-items:center;gap:12px;margin-top:16px;padding:12px 14px;background:#ffe46b;color:#1b1b1b;text-decoration:none;
@@ -162,3 +172,4 @@ main>.paper.index{margin-top:28px}
 .board.compact .stage-cta small{font-size:.74rem}
 @keyframes cta-wiggle{0%,100%{transform:rotate(-1deg)}25%{transform:rotate(1.5deg)}50%{transform:rotate(-2deg)}75%{transform:rotate(1deg)}}
 @media (prefers-reduced-motion:reduce){.stage-cta{animation:none}}
+html:has(.stage-panel[open]){overflow:hidden}
