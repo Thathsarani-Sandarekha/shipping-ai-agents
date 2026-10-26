@@ -1,7 +1,9 @@
 ---
 // The "Where I'm speaking" board. Talks come from src/lib/talks.ts.
 // compact: the narrow version for the front page's side column on wide screens.
+// The "Want to speak too?" button goes at the top of the side column, so it is always in view, and at the end of the full board.
 import { talks, pastTalks, highlights, profiles } from '../lib/talks';
+import StageCta from './StageCta.astro';
 const { compact = false } = Astro.props as { compact?: boolean };
 const id = compact ? 'speaking-side' : 'speaking';
 const links = profiles.filter((p) => p.url);
@@ -9,6 +11,7 @@ const upcoming = talks.filter((t) => t.upcoming);
 ---
 <section class={compact ? 'board compact' : 'paper board'} aria-labelledby={id}>
   <h2 id={id}><span>Where I'm speaking</span></h2>
+  {compact && <StageCta />}
   <div class="pins">
     {upcoming.map((t, i) => (
       <article class={`pin-note c${i % 3}`}>
@@ -34,5 +37,5 @@ const upcoming = talks.filter((t) => t.upcoming);
   <p class="more-talks">Plus talks at many state and private universities, and at schools.
     {links.length > 0 && <> See more on {links.map((l, i) => <>{i > 0 && (i === links.length - 1 ? ' and ' : ', ')}<a href={l.url}>{l.name}</a></>)}.</>}
   </p>
-  <p class="stage-link"><a href="#share-the-stage">Want to speak too? Share the stage &rarr;</a></p>
+  {!compact && <StageCta />}
 </section>

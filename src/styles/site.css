@@ -146,5 +146,19 @@ main>.paper.index{margin-top:28px}
 .stage-notes .sticky{background:var(--paper)}
 .stage-notes .sticky.blue{background:var(--sb)}.stage-notes .sticky.green{background:var(--sg)}
 .paper.stage .small{margin-top:10px}
-.stage-link{margin:12px 0 0;font-family:var(--f-hand);font-weight:700;font-size:.95rem}
-.board.compact .stage-link{font-size:.82rem;margin-top:8px}
+
+/* The "Want to speak too?" button at the end of the talks board */
+.stage-cta{display:flex;align-items:center;gap:12px;margin-top:16px;padding:12px 14px;background:#ffe46b;color:#1b1b1b;text-decoration:none;
+ border:2.5px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink);transform:rotate(-1deg);animation:cta-wiggle 1.2s ease-in-out .8s 2}
+.stage-cta svg{flex:none;width:34px;height:34px;padding:5px;border-radius:50%;background:#fff;border:2px solid #1b1b1b;fill:none;stroke:#1b1b1b;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.stage-cta span{flex:1;min-width:0}
+.stage-cta b{display:block;font-family:var(--f-marker);font-weight:400;font-size:1.1rem;line-height:1.1}
+.stage-cta small{display:block;font-family:var(--f-hand);font-size:.85rem;line-height:1.2;margin-top:2px}
+.stage-cta i{font-style:normal;font-family:var(--f-sans);font-weight:800;font-size:1.2rem}
+.stage-cta:hover{transform:rotate(0) translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+.board.compact .stage-cta{margin:12px 0 4px;padding:9px 10px;gap:9px}
+.board.compact .stage-cta svg{width:28px;height:28px;padding:4px}
+.board.compact .stage-cta b{font-size:.95rem}
+.board.compact .stage-cta small{font-size:.74rem}
+@keyframes cta-wiggle{0%,100%{transform:rotate(-1deg)}25%{transform:rotate(1.5deg)}50%{transform:rotate(-2deg)}75%{transform:rotate(1deg)}}
+@media (prefers-reduced-motion:reduce){.stage-cta{animation:none}}
