@@ -1,0 +1,79 @@
+name: Raise your hand to speak
+description: Take over a session, or present one together with Nimesha, at a school, university or meetup.
+title: "[Speaker] "
+labels: ["speaking"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for offering your time! Schools, universities and meetups often invite Nimesha to speak, more often than one person can say yes.
+        These sessions go to people who help with the notebooks, so please share what you have contributed.
+
+        **This issue is public.** Don't add your phone number or email. We will talk in the comments first.
+  - type: input
+    id: intro
+    attributes:
+      label: Who are you?
+      description: Your name and one line about what you do.
+      placeholder: "Kasun, DevOps engineer at a fintech start-up"
+    validations:
+      required: true
+  - type: textarea
+    id: contributions
+    attributes:
+      label: Your contributions to Ship It with Nimesha
+      description: Links to your pull requests, issues or examples. Haven't contributed yet? Start with a small fix or an example, then come back.
+    validations:
+      required: true
+  - type: checkboxes
+    id: mode
+    attributes:
+      label: How would you like to help?
+      options:
+        - label: Take over a session that Nimesha can't attend
+        - label: Present a session together with Nimesha
+  - type: checkboxes
+    id: audience
+    attributes:
+      label: Who would you like to speak to?
+      options:
+        - label: School students (IT, Maths, Biology or Technology streams)
+        - label: University students
+        - label: Meetups and communities
+        - label: Online sessions
+  - type: textarea
+    id: topics
+    attributes:
+      label: What would you like to talk about?
+      description: For example your job in software, how you got started, or a topic from the notebooks.
+    validations:
+      required: true
+  - type: checkboxes
+    id: languages
+    attributes:
+      label: Which languages can you speak in?
+      options:
+        - label: English
+        - label: Sinhala
+        - label: Tamil
+  - type: input
+    id: location
+    attributes:
+      label: Where are you based?
+      placeholder: "Colombo, Sri Lanka"
+  - type: input
+    id: availability
+    attributes:
+      label: When are you usually free?
+      placeholder: "Weekends, and some weekday afternoons"
+  - type: input
+    id: profile
+    attributes:
+      label: LinkedIn or another profile (optional)
+  - type: checkboxes
+    id: promise
+    attributes:
+      label: Before you send
+      options:
+        - label: I understand these sessions are voluntary and are for the students' benefit. I will prepare well and keep my talk free of sales pitches.
+          required: true

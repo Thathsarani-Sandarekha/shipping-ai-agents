@@ -72,6 +72,23 @@ const counts = Object.fromEntries(await Promise.all(notebooks.map(async (n) => [
       </article>
     </section>
 
+    <section class="paper stage" id="share-the-stage" aria-labelledby="stage-title">
+      <p class="stage-tag">Open to the community</p>
+      <h2 id="stage-title"><span>Share the stage</span></h2>
+      <p>Schools, universities and meetups invite me to speak more often than I can say yes. If you help with these notebooks and you would like to speak, I would be glad to hand over a session to you, or to present it together.</p>
+      <p>School students in IT, Maths, Biology and Technology streams are especially keen to meet people who work in software. A short, honest talk about your work can mean a lot to them.</p>
+      <div class="two stage-notes">
+        <div class="sticky">Take a session I can't attend</div>
+        <div class="sticky r blue">Present one together with me</div>
+        <div class="sticky green">Talk to school students who want to work in software</div>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href={`${REPO}/issues/new?template=speaking.yml`}>Raise your hand to speak</a>
+        <a class="btn" href="#join-in">First, help with the notebooks</a>
+      </div>
+      <p class="small">Contributors come first. The form opens on GitHub and becomes a public issue, so please don't share your phone number or email there.</p>
+    </section>
+
     <section class="paper" id="join-in">
       <YourTurn>
         <p>You can help improve these notebooks. Most kinds of help don't need any code.</p>

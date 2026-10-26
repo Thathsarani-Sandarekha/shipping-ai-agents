@@ -34,4 +34,5 @@ const upcoming = talks.filter((t) => t.upcoming);
   <p class="more-talks">Plus talks at many state and private universities, and at schools.
     {links.length > 0 && <> See more on {links.map((l, i) => <>{i > 0 && (i === links.length - 1 ? ' and ' : ', ')}<a href={l.url}>{l.name}</a></>)}.</>}
   </p>
+  <p class="stage-link"><a href="#share-the-stage">Want to speak too? Share the stage &rarr;</a></p>
 </section>

@@ -13,6 +13,14 @@ You don't need to be an expert, and you don't need to write code for most kinds 
 | Suggest a topic for a new notebook or chapter | [Suggest a topic](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=chapter-idea.yml) first so we can agree on the plan before you write it. |
 | Ask a question | Use [Discussions](https://github.com/nimeshmora/shipping-ai-agents/discussions) if they are turned on, otherwise open an issue. |
 
+## Share the stage: speaking opportunities
+
+Schools, universities and meetups invite Nimesha to speak more often than one person can say yes.
+If you help with these notebooks and you would like to speak, you can take over a session or present one together.
+School students in IT, Maths, Biology and Technology streams are especially keen to meet people who work in software.
+
+[Raise your hand to speak](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=speaking.yml). The form becomes a public issue, so please don't share your phone number or email there.
+
 ## How we write
 
 The notebook is written for people who are new to running agents in production. Please keep to the house style:

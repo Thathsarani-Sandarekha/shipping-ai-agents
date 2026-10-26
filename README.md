@@ -63,6 +63,8 @@ These notebooks are open to contributions, and you don't have to write code to h
 - **Small fix?** Click **Edit this page** at the bottom of any chapter.
 - **Idea for a new topic or chapter?** [Suggest it](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=chapter-idea.yml) before you start writing.
 
+- **Like to speak?** Contributors can take over a school, university or meetup session, or present one together with Nimesha. [Raise your hand](https://github.com/nimeshmora/shipping-ai-agents/issues/new?template=speaking.yml).
+
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for the writing style and how to send a pull request.
 
 ## Run it on your computer
